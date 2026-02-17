@@ -1,0 +1,2100 @@
+{
+  "fast": [
+    {
+      "id": "ACIDO",
+      "en": "Acid",
+      "es_ES": "Ácido",
+      "es_419": "Ácido",
+      "type": "poison"
+    },
+    {
+      "id": "INFESTACION",
+      "en": "Infestation",
+      "es_ES": "Acoso",
+      "es_419": "Infestación",
+      "type": "bug"
+    },
+    {
+      "id": "ALA_DE_ACERO",
+      "en": "Steel Wing",
+      "es_ES": "Ala de acero",
+      "es_419": "Ala de acero",
+      "type": "steel"
+    },
+    {
+      "id": "ALARIDO",
+      "en": "Snarl",
+      "es_ES": "Alarido",
+      "es_419": "Alarido",
+      "type": "dark"
+    },
+    {
+      "id": "ANTIAEREO",
+      "en": "Smack Down",
+      "es_ES": "Antiaéreo",
+      "es_419": "Antiaéreo",
+      "type": "rock"
+    },
+    {
+      "id": "ARANAZO",
+      "en": "Scratch",
+      "es_ES": "Arañazo",
+      "es_419": "Arañazo",
+      "type": "normal"
+    },
+    {
+      "id": "BRASAS",
+      "en": "Ember",
+      "es_ES": "Ascuas",
+      "es_419": "Brasas",
+      "type": "fire"
+    },
+    {
+      "id": "ATAQUE_DE_ALA",
+      "en": "Wing Attack",
+      "es_ES": "Ataque ala",
+      "es_419": "Ataque de ala",
+      "type": "flying"
+    },
+    {
+      "id": "ATAQUE_ARENA",
+      "en": "Sand Attack",
+      "es_ES": "Ataque arena",
+      "es_419": "Ataque arena",
+      "type": "ground"
+    },
+    {
+      "id": "ATAQUE_RAPIDO",
+      "en": "Quick Attack",
+      "es_ES": "Ataque rápido",
+      "es_419": "Ataque rápido",
+      "type": "normal"
+    },
+    {
+      "id": "BOFETON_LODO",
+      "en": "Mud-Slap",
+      "es_ES": "Bofetón lodo",
+      "es_419": "Bofetón lodo",
+      "type": null
+    },
+    {
+      "id": "BOSTEZO",
+      "en": "Yawn",
+      "es_ES": "Bostezo",
+      "es_419": "Bostezo",
+      "type": "normal"
+    },
+    {
+      "id": "BURBUJA",
+      "en": "Bubble",
+      "es_ES": "Burbuja",
+      "es_419": "Burbuja",
+      "type": "water"
+    },
+    {
+      "id": "CABEZAZO_ZEN",
+      "en": "Zen Headbutt",
+      "es_ES": "Cabezazo zen",
+      "es_419": "Cabezazo zen",
+      "type": "psychic"
+    },
+    {
+      "id": "INCINERAR",
+      "en": "Incinerate",
+      "es_ES": "Calcinación",
+      "es_419": "Incinerar",
+      "type": "fire"
+    },
+    {
+      "id": "ESQUIRLA_HELADA",
+      "en": "Ice Shard",
+      "es_ES": "Canto helado",
+      "es_419": "Esquirla helada",
+      "type": "ice"
+    },
+    {
+      "id": "CASCADA",
+      "en": "Waterfall",
+      "es_ES": "Cascada",
+      "es_419": "Cascada",
+      "type": "water"
+    },
+    {
+      "id": "CHISPA",
+      "en": "Spark",
+      "es_ES": "Chispa",
+      "es_419": "Chispa",
+      "type": "electric"
+    },
+    {
+      "id": "COLA_DE_DRAGON",
+      "en": "Dragon Tail",
+      "es_ES": "Cola dragón",
+      "es_419": "Cola de dragón",
+      "type": "dragon"
+    },
+    {
+      "id": "COLA_DE_HIERRO",
+      "en": "Iron Tail",
+      "es_ES": "Cola férrea",
+      "es_419": "Cola de hierro",
+      "type": "steel"
+    },
+    {
+      "id": "COLMILLO_DE_HIELO",
+      "en": "Ice Fang",
+      "es_ES": "Colmillo hielo",
+      "es_419": "Colmillo de hielo",
+      "type": "ice"
+    },
+    {
+      "id": "COLMILLO_DE_FUEGO",
+      "en": "Fire Fang",
+      "es_ES": "Colmillo ígneo",
+      "es_419": "Colmillo de fuego",
+      "type": "fire"
+    },
+    {
+      "id": "COLMILLO_DE_TRUENO",
+      "en": "Thunder Fang",
+      "es_ES": "Colmillo rayo",
+      "es_419": "Colmillo de trueno",
+      "type": "electric"
+    },
+    {
+      "id": "CONFUSION",
+      "en": "Confusion",
+      "es_ES": "Confusión",
+      "es_419": "Confusión",
+      "type": "psychic"
+    },
+    {
+      "id": "CONTRAATAQUE",
+      "en": "Counter",
+      "es_ES": "Contraataque",
+      "es_419": "Contraataque",
+      "type": "fighting"
+    },
+    {
+      "id": "CORTE",
+      "en": "Cut",
+      "es_ES": "Corte",
+      "es_419": "Corte",
+      "type": "normal"
+    },
+    {
+      "id": "CORTE_FURIA",
+      "en": "Fury Cutter",
+      "es_ES": "Corte furia",
+      "es_419": "Corte furia",
+      "type": "bug"
+    },
+    {
+      "id": "DERRIBO",
+      "en": "Take Down",
+      "es_ES": "Derribo",
+      "es_419": "Derribo",
+      "type": "normal"
+    },
+    {
+      "id": "RODADA",
+      "en": "Rollout",
+      "es_ES": "Desenrollar",
+      "es_419": "Rodada",
+      "type": "rock"
+    },
+    {
+      "id": "DESTRUCTOR",
+      "en": "Pound",
+      "es_ES": "Destructor",
+      "es_419": "Destructor",
+      "type": "normal"
+    },
+    {
+      "id": "DISPARO_DE_LODO",
+      "en": "Mud Shot",
+      "es_ES": "Disparo lodo",
+      "es_419": "Disparo de lodo",
+      "type": "ground"
+    },
+    {
+      "id": "DOBLE_PATADA",
+      "en": "Double Kick",
+      "es_ES": "Doble patada",
+      "es_419": "Doble patada",
+      "type": "fighting"
+    },
+    {
+      "id": "ALIENTO_DE_DRAGON",
+      "en": "Dragon Breath",
+      "es_ES": "Dragoaliento",
+      "es_419": "Aliento de dragón",
+      "type": "dragon"
+    },
+    {
+      "id": "SONIDO_METALICO",
+      "en": "Metal Sound",
+      "es_ES": "Eco metálico",
+      "es_419": "Sonido metálico",
+      "type": "steel"
+    },
+    {
+      "id": "ENCANTO",
+      "en": "Charm",
+      "es_ES": "Encanto",
+      "es_419": "Encanto",
+      "type": "fairy"
+    },
+    {
+      "id": "LUCHA_INSECTO",
+      "en": "Struggle Bug",
+      "es_ES": "Estoicismo",
+      "es_419": "Lucha insecto",
+      "type": "bug"
+    },
+    {
+      "id": "FIJAR_BLANCO",
+      "en": "Lock-On",
+      "es_ES": "Fijar blanco",
+      "es_419": "Fijar blanco",
+      "type": null
+    },
+    {
+      "id": "ATAQUE_FINTA",
+      "en": "Feint Attack",
+      "es_ES": "Finta",
+      "es_419": "Ataque finta",
+      "type": "dark"
+    },
+    {
+      "id": "FOLLAJE",
+      "en": "Leafage",
+      "es_ES": "Follaje",
+      "es_419": "Follaje",
+      "type": "grass"
+    },
+    {
+      "id": "GARRA_DE_METAL",
+      "en": "Metal Claw",
+      "es_ES": "Garra metal",
+      "es_419": "Garra de metal",
+      "type": "steel"
+    },
+    {
+      "id": "GARRA_DE_SOMBRA",
+      "en": "Shadow Claw",
+      "es_ES": "Garra umbría",
+      "es_419": "Garra de sombra",
+      "type": "ghost"
+    },
+    {
+      "id": "GEOCONTROL",
+      "en": "Geomancy",
+      "es_ES": "Geocontrol",
+      "es_419": "Geocontrol",
+      "type": "fairy"
+    },
+    {
+      "id": "GIRO_FUEGO",
+      "en": "Fire Spin",
+      "es_ES": "Giro fuego",
+      "es_419": "Giro fuego",
+      "type": "fire"
+    },
+    {
+      "id": "GOLPE_BAJO",
+      "en": "Sucker Punch",
+      "es_ES": "Golpe bajo",
+      "es_419": "Golpe bajo",
+      "type": "dark"
+    },
+    {
+      "id": "GOLPE_KARATE",
+      "en": "Karate Chop",
+      "es_ES": "Golpe kárate",
+      "es_419": "Golpe karate",
+      "type": "fighting"
+    },
+    {
+      "id": "GOLPE_ROCA",
+      "en": "Rock Smash",
+      "es_ES": "Golpe roca",
+      "es_419": "Golpe roca",
+      "type": "fighting"
+    },
+    {
+      "id": "HOJAS_NAVAJA",
+      "en": "Razor Leaf",
+      "es_ES": "Hoja afilada",
+      "es_419": "Hojas navaja",
+      "type": "grass"
+    },
+    {
+      "id": "HOJAS_MAGICAS",
+      "en": "Magical Leaf",
+      "es_ES": "Hoja mágica",
+      "es_419": "Hojas mágicas",
+      "type": "grass"
+    },
+    {
+      "id": "IMPACTRUENO",
+      "en": "Thunder Shock",
+      "es_ES": "Impactrueno",
+      "es_419": "Impactrueno",
+      "type": "electric"
+    },
+    {
+      "id": "IMPRESION",
+      "en": "Astonish",
+      "es_ES": "Impresionar",
+      "es_419": "Impresión",
+      "type": "ghost"
+    },
+    {
+      "id": "INFORTUNIO",
+      "en": "Hex",
+      "es_ES": "Infortunio",
+      "es_419": "Infortunio",
+      "type": "ghost"
+    },
+    {
+      "id": "LANZARROCAS",
+      "en": "Rock Throw",
+      "es_ES": "Lanzarrocas",
+      "es_419": "Lanzarrocas",
+      "type": "rock"
+    },
+    {
+      "id": "LATIGO_CEPA",
+      "en": "Vine Whip",
+      "es_ES": "Látigo cepa",
+      "es_419": "Látigo cepa",
+      "type": "grass"
+    },
+    {
+      "id": "LENGUETAZO",
+      "en": "Lick",
+      "es_ES": "Lengüetazo",
+      "es_419": "Lengüetazo",
+      "type": "ghost"
+    },
+    {
+      "id": "MORDIDA",
+      "en": "Bite",
+      "es_ES": "Mordisco",
+      "es_419": "Mordida",
+      "type": "dark"
+    },
+    {
+      "id": "POLVO_DE_NIEVE",
+      "en": "Powder Snow",
+      "es_ES": "Nieve polvo",
+      "es_419": "Polvo de nieve",
+      "type": "ice"
+    },
+    {
+      "id": "FUERZA_DE_PALMA",
+      "en": "Force Palm",
+      "es_ES": "Palmeo",
+      "es_419": "Fuerza de Palma",
+      "type": "fighting"
+    },
+    {
+      "id": "EXTRASENSORIAL",
+      "en": "Extrasensory",
+      "es_ES": "Paranormal",
+      "es_419": "Extrasensorial",
+      "type": "psychic"
+    },
+    {
+      "id": "PATADA_BAJA",
+      "en": "Low Kick",
+      "es_ES": "Patada baja",
+      "es_419": "Patada baja",
+      "type": "fighting"
+    },
+    {
+      "id": "PICADURA",
+      "en": "Bug Bite",
+      "es_ES": "Picadura",
+      "es_419": "Picadura",
+      "type": "bug"
+    },
+    {
+      "id": "PICOTAZO",
+      "en": "Peck",
+      "es_ES": "Picotazo",
+      "es_419": "Picotazo",
+      "type": "flying"
+    },
+    {
+      "id": "PICOTAZO_VENENO",
+      "en": "Poison Sting",
+      "es_ES": "Piquete venenoso",
+      "es_419": "Picotazo veneno",
+      "type": "poison"
+    },
+    {
+      "id": "CHORRO_DE_AGUA",
+      "en": "Water Gun",
+      "es_ES": "Pistola agua",
+      "es_419": "Chorro de agua",
+      "type": "water"
+    },
+    {
+      "id": "TACLEADA",
+      "en": "Tackle",
+      "es_ES": "Placaje",
+      "es_419": "Tacleada",
+      "type": "normal"
+    },
+    {
+      "id": "PODER_OCULTO",
+      "en": "Hidden Power",
+      "es_ES": "Poder oculto",
+      "es_419": "Poder oculto",
+      "type": "normal"
+    },
+    {
+      "id": "OBSEQUIO",
+      "en": "Present",
+      "es_ES": "Presente",
+      "es_419": "Obsequio",
+      "type": "normal"
+    },
+    {
+      "id": "PSICOCORTE",
+      "en": "Psycho Cut",
+      "es_ES": "Psicocorte",
+      "es_419": "Psicocorte",
+      "type": "psychic"
+    },
+    {
+      "id": "PSICOONDA",
+      "en": "Psywave",
+      "es_ES": "Psicoonda",
+      "es_419": "Psicoonda",
+      "type": "psychic"
+    },
+    {
+      "id": "PUNO_BALA",
+      "en": "Bullet Punch",
+      "es_ES": "Puño bala",
+      "es_419": "Puño bala",
+      "type": "steel"
+    },
+    {
+      "id": "GOLPE_VENENOSO",
+      "en": "Poison Jab",
+      "es_ES": "Puya nociva",
+      "es_419": "Golpe venenoso",
+      "type": "poison"
+    },
+    {
+      "id": "RAYO_CARGA",
+      "en": "Charge Beam",
+      "es_ES": "Rayo carga",
+      "es_419": "Rayo carga",
+      "type": "electric"
+    },
+    {
+      "id": "SALPICADURA",
+      "en": "Splash",
+      "es_ES": "Salpicadura",
+      "es_419": "Salpicadura",
+      "type": "water"
+    },
+    {
+      "id": "BALA_SEMILLA",
+      "en": "Bullet Seed",
+      "es_ES": "Semilladora",
+      "es_419": "Bala semilla",
+      "type": "grass"
+    },
+    {
+      "id": "SHURIKEN_DE_AGUA",
+      "en": "Water Shuriken",
+      "es_ES": "Shuriken de agua",
+      "es_419": "Shuriken de agua",
+      "type": "water"
+    },
+    {
+      "id": "CORTE_AEREO",
+      "en": "Air Slash",
+      "es_ES": "Tajo aéreo",
+      "es_419": "Corte aéreo",
+      "type": "flying"
+    },
+    {
+      "id": "RAFAGA_DE_AIRE",
+      "en": "Gust",
+      "es_ES": "Tornado",
+      "es_419": "Ráfaga de aire",
+      "type": "flying"
+    },
+    {
+      "id": "TRANSFORMACION",
+      "en": "Transform",
+      "es_ES": "Transformación",
+      "es_419": "Transformación",
+      "type": null
+    },
+    {
+      "id": "VAHO_HELADO",
+      "en": "Frost Breath",
+      "es_ES": "Vaho gélido",
+      "es_419": "Vaho helado",
+      "type": "ice"
+    },
+    {
+      "id": "VIENTO_FEERICO",
+      "en": "Fairy Wind",
+      "es_ES": "Viento feérico",
+      "es_419": "Viento feérico",
+      "type": "fairy"
+    },
+    {
+      "id": "CAMBIAVOLTAJE",
+      "en": "Volt Switch",
+      "es_ES": "Voltiocambio",
+      "es_419": "Cambiavoltaje",
+      "type": "electric"
+    }
+  ],
+  "charged": [
+    {
+      "id": "CUERPO_A_CUERPO",
+      "en": "Close Combat",
+      "es_ES": "A bocajarro",
+      "es_419": "Cuerpo a cuerpo",
+      "type": "fighting"
+    },
+    {
+      "id": "ABRECAMINOS",
+      "en": "Trailblaze",
+      "es_ES": "Abrecaminos",
+      "es_419": "Abrecaminos",
+      "type": "grass"
+    },
+    {
+      "id": "ACROBACIA",
+      "en": "Acrobatics",
+      "es_ES": "Acróbata",
+      "es_419": "Acrobacia",
+      "type": "flying"
+    },
+    {
+      "id": "COLA_DE_AGUA",
+      "en": "Aqua Tail",
+      "es_ES": "Acua cola",
+      "es_419": "Cola de agua",
+      "type": "water"
+    },
+    {
+      "id": "ACUAJET",
+      "en": "Aqua Jet",
+      "es_ES": "Acua jet",
+      "es_419": "Acuajet",
+      "type": "water"
+    },
+    {
+      "id": "AEROCHORRO",
+      "en": "Aeroblast",
+      "es_ES": "Aerochorro",
+      "es_419": "Aerochorro",
+      "type": "flying"
+    },
+    {
+      "id": "AEROCHORRO_2",
+      "en": "Aeroblast +",
+      "es_ES": "Aerochorro +",
+      "es_419": "Aerochorro +",
+      "type": null
+    },
+    {
+      "id": "AEROCHORRO_3",
+      "en": "Aeroblast ++",
+      "es_ES": "Aerochorro ++",
+      "es_419": "Aerochorro ++",
+      "type": null
+    },
+    {
+      "id": "FUERZA_DE_GARRA",
+      "en": "Vise Grip",
+      "es_ES": "Agarre",
+      "es_419": "Fuerza de garra",
+      "type": "normal"
+    },
+    {
+      "id": "GARRA_APLASTANTE",
+      "en": "Crush Grip",
+      "es_ES": "Agarrón",
+      "es_419": "Garra Aplastante",
+      "type": "normal"
+    },
+    {
+      "id": "AGUA_FRIA",
+      "en": "Chilling Water",
+      "es_ES": "Agua fría",
+      "es_419": "Agua fría",
+      "type": "water"
+    },
+    {
+      "id": "AGUA_LODOSA",
+      "en": "Muddy Water",
+      "es_ES": "Agua lodosa",
+      "es_419": "Agua lodosa",
+      "type": "water"
+    },
+    {
+      "id": "AGUIJON_LETAL",
+      "en": "Fell Stinger",
+      "es_ES": "Aguijón letal",
+      "es_419": "Aguijón letal",
+      "type": "bug"
+    },
+    {
+      "id": "AIRE_CORTANTE",
+      "en": "Air Cutter",
+      "es_ES": "Aire afilado",
+      "es_419": "Aire cortante",
+      "type": "flying"
+    },
+    {
+      "id": "ALA_DEL_OLVIDO",
+      "en": "Oblivion Wing",
+      "es_ES": "Ala mortífera",
+      "es_419": "Ala del olvido",
+      "type": "flying"
+    },
+    {
+      "id": "ALUD",
+      "en": "Avalanche",
+      "es_ES": "Alud",
+      "es_419": "Alud",
+      "type": "ice"
+    },
+    {
+      "id": "ANILLO_DE_FUEGO",
+      "en": "Blast Burn",
+      "es_ES": "Anillo ígneo",
+      "es_419": "Anillo de fuego",
+      "type": "fire"
+    },
+    {
+      "id": "ARENAS_ARDIENTES",
+      "en": "Scorching Sands",
+      "es_ES": "Arenas ardientes",
+      "es_419": "Arenas ardientes",
+      "type": "ground"
+    },
+    {
+      "id": "ARIA_BURBUJA",
+      "en": "Sparkling Aria",
+      "es_ES": "Aria burbuja",
+      "es_419": "Aria burbuja",
+      "type": "water"
+    },
+    {
+      "id": "ASCENSO_DRACONICO",
+      "en": "Dragon Ascent",
+      "es_ES": "Ascenso draco",
+      "es_419": "Ascenso dracónico",
+      "type": "flying"
+    },
+    {
+      "id": "ATAQUE_CELESTIAL",
+      "en": "Sky Attack",
+      "es_ES": "Ataque aéreo",
+      "es_419": "Ataque celestial",
+      "type": "flying"
+    },
+    {
+      "id": "AVALANCHA",
+      "en": "Rock Slide",
+      "es_ES": "Avalancha",
+      "es_419": "Avalancha",
+      "type": "rock"
+    },
+    {
+      "id": "BATERIA_ASALTO",
+      "en": "Drum Beating",
+      "es_ES": "Batería asalto",
+      "es_419": "Batería asalto",
+      "type": "grass"
+    },
+    {
+      "id": "BESO_DRENADOR",
+      "en": "Draining Kiss",
+      "es_ES": "Beso drenaje",
+      "es_419": "Beso drenador",
+      "type": "fairy"
+    },
+    {
+      "id": "BOLA_NEBLINA",
+      "en": "Mist Ball",
+      "es_ES": "Bola neblina",
+      "es_419": "Bola neblina",
+      "type": "psychic"
+    },
+    {
+      "id": "BOLA_SOMBRA",
+      "en": "Shadow Ball",
+      "es_ES": "Bola sombra",
+      "es_419": "Bola sombra",
+      "type": "ghost"
+    },
+    {
+      "id": "BOMBA_ACIDA",
+      "en": "Acid Spray",
+      "es_ES": "Bomba ácida",
+      "es_419": "Bomba ácida",
+      "type": "poison"
+    },
+    {
+      "id": "BOMBA_FANGO",
+      "en": "Mud Bomb",
+      "es_ES": "Bomba fango",
+      "es_419": "Bomba fango",
+      "type": "ground"
+    },
+    {
+      "id": "BOMBA_SEMILLA",
+      "en": "Seed Bomb",
+      "es_ES": "Bomba germen",
+      "es_419": "Bomba semilla",
+      "type": "grass"
+    },
+    {
+      "id": "MAGNETOBOMBA",
+      "en": "Magnet Bomb",
+      "es_ES": "Bomba imán",
+      "es_419": "Magnetobomba",
+      "type": "steel"
+    },
+    {
+      "id": "BOMBA_LODO",
+      "en": "Sludge Bomb",
+      "es_ES": "Bomba lodo",
+      "es_419": "Bomba lodo",
+      "type": "poison"
+    },
+    {
+      "id": "BRILLO_MAGICO",
+      "en": "Dazzling Gleam",
+      "es_ES": "Brillo mágico",
+      "es_419": "Brillo mágico",
+      "type": "fairy"
+    },
+    {
+      "id": "TUMBA_DE_ARENA",
+      "en": "Sand Tomb",
+      "es_ES": "Bucle arena",
+      "es_419": "Tumba de arena",
+      "type": "ground"
+    },
+    {
+      "id": "CABEZA_DE_HIERRO",
+      "en": "Iron Head",
+      "es_ES": "Cabeza de hierro",
+      "es_419": "Cabeza de hierro",
+      "type": "steel"
+    },
+    {
+      "id": "CABEZA_SORPRESA",
+      "en": "Mind Blown",
+      "es_ES": "Cabeza sorpresa",
+      "es_419": "Cabeza sorpresa",
+      "type": "fire"
+    },
+    {
+      "id": "CABEZAZO",
+      "en": "Skull Bash",
+      "es_ES": "Cabezazo",
+      "es_419": "Cabezazo",
+      "type": "normal"
+    },
+    {
+      "id": "CANTO_IGNEO",
+      "en": "Torch Song",
+      "es_ES": "Canto ardiente",
+      "es_419": "Canto Ígneo",
+      "type": "fire"
+    },
+    {
+      "id": "CANON_DINAMAX",
+      "en": "Dynamax Cannon",
+      "es_ES": "Cañón Dinamax",
+      "es_419": "Cañón Dinamax",
+      "type": "dragon"
+    },
+    {
+      "id": "LANZA_DE_HIELO",
+      "en": "Icicle Spear",
+      "es_ES": "Carámbano",
+      "es_419": "Lanza de hielo",
+      "type": "ice"
+    },
+    {
+      "id": "JUEGO_RUDO",
+      "en": "Play Rough",
+      "es_ES": "Carantoña",
+      "es_419": "Juego rudo",
+      "type": "fairy"
+    },
+    {
+      "id": "CARGA_PARABOLICA",
+      "en": "Parabolic Charge",
+      "es_ES": "Carga parábola",
+      "es_419": "Carga parabólica",
+      "type": "electric"
+    },
+    {
+      "id": "CHISPAZO",
+      "en": "Discharge",
+      "es_ES": "Chispazo",
+      "es_419": "Chispazo",
+      "type": "electric"
+    },
+    {
+      "id": "TORNADO",
+      "en": "Twister",
+      "es_ES": "Ciclón",
+      "es_419": "Tornado",
+      "type": "dragon"
+    },
+    {
+      "id": "CICLON_DE_HOJAS",
+      "en": "Leaf Tornado",
+      "es_ES": "Ciclón de hojas",
+      "es_419": "Ciclón de hojas",
+      "type": "grass"
+    },
+    {
+      "id": "COLMILLO_VENENO",
+      "en": "Poison Fang",
+      "es_ES": "Colmillo veneno",
+      "es_419": "Colmillo veneno",
+      "type": "poison"
+    },
+    {
+      "id": "CORAZA_AFILADA",
+      "en": "Razor Shell",
+      "es_ES": "Concha filo",
+      "es_419": "Coraza afilada",
+      "type": "water"
+    },
+    {
+      "id": "FORCEJEO",
+      "en": "Struggle",
+      "es_ES": "Combate",
+      "es_419": "Forcejeo",
+      "type": "normal"
+    },
+    {
+      "id": "METEORO_DRAGON",
+      "en": "Draco Meteor",
+      "es_ES": "Cometa draco",
+      "es_419": "Meteoro dragón",
+      "type": "dragon"
+    },
+    {
+      "id": "CONSTRICCION",
+      "en": "Wrap",
+      "es_ES": "Constricción",
+      "es_419": "Constricción",
+      "type": "normal"
+    },
+    {
+      "id": "ATAQUE_CUERNO",
+      "en": "Horn Attack",
+      "es_ES": "Cornada",
+      "es_419": "Ataque cuerno",
+      "type": "normal"
+    },
+    {
+      "id": "CORTE_ESPACIAL",
+      "en": "Spacial Rend",
+      "es_ES": "Corte vacío",
+      "es_419": "Corte espacial",
+      "type": "dragon"
+    },
+    {
+      "id": "GOLPE_PESADO",
+      "en": "Heavy Slam",
+      "es_ES": "Cuerpo pesado",
+      "es_419": "Golpe pesado",
+      "type": "steel"
+    },
+    {
+      "id": "DANZA_ACUATICA",
+      "en": "Aqua Step",
+      "es_ES": "Danza acuática",
+      "es_419": "Danza acuática",
+      "type": "water"
+    },
+    {
+      "id": "DANZA_DE_PLUMAS",
+      "en": "Feather Dance",
+      "es_ES": "Danza pluma",
+      "es_419": "Danza de plumas",
+      "type": "flying"
+    },
+    {
+      "id": "KARATAZO",
+      "en": "Brick Break",
+      "es_ES": "Demolición",
+      "es_419": "Karatazo",
+      "type": "fighting"
+    },
+    {
+      "id": "DESEO_FINAL",
+      "en": "Doom Desire",
+      "es_ES": "Deseo oculto",
+      "es_419": "Deseo final",
+      "type": "steel"
+    },
+    {
+      "id": "DISPARO_ESPEJO",
+      "en": "Mirror Shot",
+      "es_ES": "Disparo espejo",
+      "es_419": "Disparo espejo",
+      "type": "steel"
+    },
+    {
+      "id": "RUGIDO_TEMPORAL",
+      "en": "Roar of Time",
+      "es_ES": "Distorsión",
+      "es_419": "Rugido temporal",
+      "type": "dragon"
+    },
+    {
+      "id": "RAYO_SENAL",
+      "en": "Signal Beam",
+      "es_ES": "Doble rayo",
+      "es_419": "Rayo señal",
+      "type": "bug"
+    },
+    {
+      "id": "DRACOENERGIA",
+      "en": "Dragon Energy",
+      "es_ES": "Dracoenergía",
+      "es_419": "Dracoenergía",
+      "type": "dragon"
+    },
+    {
+      "id": "ELECTORMENTA",
+      "en": "Wildbolt Storm",
+      "es_ES": "Electormenta",
+      "es_419": "Electormenta",
+      "type": "electric"
+    },
+    {
+      "id": "ELECTROCANON",
+      "en": "Zap Cannon",
+      "es_ES": "Electrocañón",
+      "es_419": "Electrocañón",
+      "type": "electric"
+    },
+    {
+      "id": "ELECTROJAULA",
+      "en": "Thunder Cage",
+      "es_ES": "Electrojaula",
+      "es_419": "Electrojaula",
+      "type": "electric"
+    },
+    {
+      "id": "BOLA_DE_ENERGIA",
+      "en": "Energy Ball",
+      "es_ES": "Energibola",
+      "es_419": "Bola de energía",
+      "type": "grass"
+    },
+    {
+      "id": "GOLPE_SUPREMO",
+      "en": "Behemoth Bash",
+      "es_ES": "Embate supremo",
+      "es_419": "Golpe supremo",
+      "type": "steel"
+    },
+    {
+      "id": "ENFADO",
+      "en": "Outrage",
+      "es_ES": "Enfado",
+      "es_419": "Enfado",
+      "type": "dragon"
+    },
+    {
+      "id": "ESCALDAR",
+      "en": "Scald",
+      "es_ES": "Escaldar",
+      "es_419": "Escaldar",
+      "type": "water"
+    },
+    {
+      "id": "AURA_ESFERA",
+      "en": "Aura Sphere",
+      "es_ES": "Esfera aural",
+      "es_419": "Aura esfera",
+      "type": "fighting"
+    },
+    {
+      "id": "ESPADA_SAGRADA",
+      "en": "Sacred Sword",
+      "es_ES": "Espada santa",
+      "es_419": "Espada sagrada",
+      "type": "fighting"
+    },
+    {
+      "id": "ESTRUENDO",
+      "en": "Boomburst",
+      "es_ES": "Estruendo",
+      "es_419": "Estruendo",
+      "type": "normal"
+    },
+    {
+      "id": "EXCAVAR",
+      "en": "Dig",
+      "es_ES": "Excavar",
+      "es_419": "Excavar",
+      "type": "ground"
+    },
+    {
+      "id": "FERROPUNO_DOBLE",
+      "en": "Double Iron Bash",
+      "es_ES": "Ferropuño doble",
+      "es_419": "Ferropuño doble",
+      "type": "steel"
+    },
+    {
+      "id": "FILO_DEL_ABISMO",
+      "en": "Precipice Blades",
+      "es_ES": "Filo del abismo",
+      "es_419": "Filo del abismo",
+      "type": "ground"
+    },
+    {
+      "id": "CANON_DESTELLO",
+      "en": "Flash Cannon",
+      "es_ES": "Foco resplandor",
+      "es_419": "Cañón destello",
+      "type": "steel"
+    },
+    {
+      "id": "FULGOR_SEMILLA",
+      "en": "Seed Flare",
+      "es_ES": "Fogonazo",
+      "es_419": "Fulgor semilla",
+      "type": "grass"
+    },
+    {
+      "id": "FRAGOR_ESCAMAS",
+      "en": "Clanging Scales",
+      "es_ES": "Fragor escamas",
+      "es_419": "Fragor escamas",
+      "type": "dragon"
+    },
+    {
+      "id": "FRUSTRACION",
+      "en": "Frustration",
+      "es_ES": "Frustración",
+      "es_419": "Frustración",
+      "type": "normal"
+    },
+    {
+      "id": "FUEGO_SAGRADO",
+      "en": "Sacred Fire",
+      "es_ES": "Fuego sagrado",
+      "es_419": "Fuego sagrado",
+      "type": "fire"
+    },
+    {
+      "id": "FUEGO_SAGRADO_2",
+      "en": "Sacred Fire +",
+      "es_ES": "Fuego sagrado +",
+      "es_419": "Fuego sagrado +",
+      "type": null
+    },
+    {
+      "id": "FUEGO_SAGRADO_3",
+      "en": "Sacred Fire ++",
+      "es_ES": "Fuego sagrado ++",
+      "es_419": "Fuego sagrado ++",
+      "type": null
+    },
+    {
+      "id": "FUERZA_BRUTA",
+      "en": "Superpower",
+      "es_ES": "Fuerza bruta",
+      "es_419": "Fuerza bruta",
+      "type": "fighting"
+    },
+    {
+      "id": "FUERZA_EQUINA",
+      "en": "High Horsepower",
+      "es_ES": "Fuerza equina",
+      "es_419": "Fuerza equina",
+      "type": "ground"
+    },
+    {
+      "id": "FUERZA_LUNAR",
+      "en": "Moonblast",
+      "es_ES": "Fuerza lunar",
+      "es_419": "Fuerza lunar",
+      "type": "fairy"
+    },
+    {
+      "id": "IRA_NATURAL",
+      "en": "Nature's Madness",
+      "es_ES": "Furia natural",
+      "es_419": "Ira natural",
+      "type": "fairy"
+    },
+    {
+      "id": "GARRA_DRAGON",
+      "en": "Dragon Claw",
+      "es_ES": "Garra dragón",
+      "es_419": "Garra dragón",
+      "type": "dragon"
+    },
+    {
+      "id": "GIGAIMPACTO",
+      "en": "Giga Impact",
+      "es_ES": "Gigaimpacto",
+      "es_419": "Gigaimpacto",
+      "type": "normal"
+    },
+    {
+      "id": "GIRO_BOLA",
+      "en": "Gyro Ball",
+      "es_ES": "Giro bola",
+      "es_419": "Giro bola",
+      "type": "steel"
+    },
+    {
+      "id": "GIRO_VIL",
+      "en": "Brutal Swing",
+      "es_ES": "Giro vil",
+      "es_419": "Giro vil",
+      "type": "dark"
+    },
+    {
+      "id": "AS_AEREO",
+      "en": "Aerial Ace",
+      "es_ES": "Golpe aéreo",
+      "es_419": "As aéreo",
+      "type": "flying"
+    },
+    {
+      "id": "GOLPE_DE_CUERPO",
+      "en": "Body Slam",
+      "es_ES": "Golpe cuerpo",
+      "es_419": "Golpe de cuerpo",
+      "type": "normal"
+    },
+    {
+      "id": "GOLPE_UMBRIO",
+      "en": "Shadow Force",
+      "es_ES": "Golpe umbrío",
+      "es_419": "Golpe umbrío",
+      "type": "ghost"
+    },
+    {
+      "id": "HIDROARIETE",
+      "en": "Liquidation",
+      "es_ES": "Hidroariete",
+      "es_419": "Hidroariete",
+      "type": "water"
+    },
+    {
+      "id": "HIDROBOMBA",
+      "en": "Hydro Pump",
+      "es_ES": "Hidrobomba",
+      "es_419": "Hidrobomba",
+      "type": "water"
+    },
+    {
+      "id": "HIDROCANON",
+      "en": "Hydro Cannon",
+      "es_ES": "Hidrocañón",
+      "es_419": "Hidrocañón",
+      "type": "water"
+    },
+    {
+      "id": "PULSO_DE_AGUA",
+      "en": "Water Pulse",
+      "es_ES": "Hidropulso",
+      "es_419": "Pulso de agua",
+      "type": "water"
+    },
+    {
+      "id": "NUDO_DE_PASTO",
+      "en": "Grass Knot",
+      "es_ES": "Hierba lazo",
+      "es_419": "Nudo de pasto",
+      "type": "grass"
+    },
+    {
+      "id": "HIPERCOLMILLO",
+      "en": "Hyper Fang",
+      "es_ES": "Hipercolmillo",
+      "es_419": "Hipercolmillo",
+      "type": "normal"
+    },
+    {
+      "id": "HIPERRAYO",
+      "en": "Hyper Beam",
+      "es_ES": "Hiperrayo",
+      "es_419": "Hiperrayo",
+      "type": "normal"
+    },
+    {
+      "id": "HOJA_AGUDA",
+      "en": "Leaf Blade",
+      "es_ES": "Hoja aguda",
+      "es_419": "Hoja aguda",
+      "type": "grass"
+    },
+    {
+      "id": "MAZA_DE_HUESO",
+      "en": "Bone Club",
+      "es_ES": "Hueso palo",
+      "es_419": "Maza de hueso",
+      "type": "ground"
+    },
+    {
+      "id": "HUESO_SOMBRIO",
+      "en": "Shadow Bone",
+      "es_ES": "Hueso sombrío",
+      "es_419": "Hueso sombrío",
+      "type": "ghost"
+    },
+    {
+      "id": "JOYA_DE_LUZ",
+      "en": "Power Gem",
+      "es_ES": "Joya de luz",
+      "es_419": "Joya de luz",
+      "type": "rock"
+    },
+    {
+      "id": "JUEGO_SUCIO",
+      "en": "Foul Play",
+      "es_ES": "Juego sucio",
+      "es_419": "Juego sucio",
+      "type": "dark"
+    },
+    {
+      "id": "LANZALLAMAS",
+      "en": "Flamethrower",
+      "es_ES": "Lanzallamas",
+      "es_419": "Lanzallamas",
+      "type": "fire"
+    },
+    {
+      "id": "LANZAMUGRE",
+      "en": "Gunk Shot",
+      "es_ES": "Lanzamugre",
+      "es_419": "Lanzamugre",
+      "type": "poison"
+    },
+    {
+      "id": "LARIAT_OSCURO",
+      "en": "Darkest Lariat",
+      "es_ES": "Lariat oscuro",
+      "es_419": "Lariat oscuro",
+      "type": "dark"
+    },
+    {
+      "id": "LATIGAZO",
+      "en": "Power Whip",
+      "es_ES": "Latigazo",
+      "es_419": "Latigazo",
+      "type": "grass"
+    },
+    {
+      "id": "FUEGO_MISTICO",
+      "en": "Mystical Fire",
+      "es_ES": "Llama embrujada",
+      "es_419": "Fuego místico",
+      "type": "fire"
+    },
+    {
+      "id": "LLAMA_FUSION",
+      "en": "Fusion Flare",
+      "es_ES": "Llama fusión",
+      "es_419": "Llama fusión",
+      "type": "fire"
+    },
+    {
+      "id": "LLAMA_GELIDA",
+      "en": "Ice Burn",
+      "es_ES": "Llama gélida",
+      "es_419": "Llama gélida",
+      "type": "ice"
+    },
+    {
+      "id": "LLAMARADA",
+      "en": "Fire Blast",
+      "es_ES": "Llamarada",
+      "es_419": "Llamarada",
+      "type": "fire"
+    },
+    {
+      "id": "TORMENTA_DE_HOJAS",
+      "en": "Leaf Storm",
+      "es_ES": "Lluevehojas",
+      "es_419": "Tormenta de hojas",
+      "type": "grass"
+    },
+    {
+      "id": "LLUVIA_IGNEA",
+      "en": "Magma Storm",
+      "es_ES": "Lluvia ígnea",
+      "es_419": "Lluvia ígnea",
+      "type": "fire"
+    },
+    {
+      "id": "ESCUDO_ESPEJO",
+      "en": "Mirror Coat",
+      "es_ES": "Manto espejo",
+      "es_419": "Escudo espejo",
+      "type": "psychic"
+    },
+    {
+      "id": "MARTILLAZO",
+      "en": "Crabhammer",
+      "es_ES": "Martillazo",
+      "es_419": "Martillazo",
+      "type": "water"
+    },
+    {
+      "id": "MEGACUERNO",
+      "en": "Megahorn",
+      "es_ES": "Megacuerno",
+      "es_419": "Megacuerno",
+      "type": "bug"
+    },
+    {
+      "id": "METEOIMPACTO",
+      "en": "Sunsteel Strike",
+      "es_ES": "Meteoimpacto",
+      "es_419": "Meteoimpacto",
+      "type": "steel"
+    },
+    {
+      "id": "METEOROBOLA",
+      "en": "Weather Ball",
+      "es_ES": "Meteorobola",
+      "es_419": "Meteorobola",
+      "type": null
+    },
+    {
+      "id": "MUNDO_GELIDO",
+      "en": "Glaciate",
+      "es_ES": "Mundo gélido",
+      "es_419": "Mundo gélido",
+      "type": "ice"
+    },
+    {
+      "id": "CARGA_DE_FUEGO",
+      "en": "Flame Charge",
+      "es_ES": "Nitrocarga",
+      "es_419": "Carga de fuego",
+      "type": "fire"
+    },
+    {
+      "id": "OBSTRUCCION",
+      "en": "Obstruct",
+      "es_ES": "Obstrucción",
+      "es_419": "Obstrucción",
+      "type": "dark"
+    },
+    {
+      "id": "ATAQUE_CENTRADO",
+      "en": "Focus Blast",
+      "es_ES": "Onda certera",
+      "es_419": "Ataque centrado",
+      "type": "fighting"
+    },
+    {
+      "id": "ONDA_IGNEA",
+      "en": "Heat Wave",
+      "es_ES": "Onda ígnea",
+      "es_419": "Onda ígnea",
+      "type": "fire"
+    },
+    {
+      "id": "ONDA_MENTAL",
+      "en": "Psystrike",
+      "es_ES": "Onda mental",
+      "es_419": "Onda mental",
+      "type": "psychic"
+    },
+    {
+      "id": "OLA_DE_LODO",
+      "en": "Sludge Wave",
+      "es_ES": "Onda tóxica",
+      "es_419": "Ola de lodo",
+      "type": "poison"
+    },
+    {
+      "id": "AVE_BRAVA",
+      "en": "Brave Bird",
+      "es_ES": "Pájaro osado",
+      "es_419": "Ave brava",
+      "type": "flying"
+    },
+    {
+      "id": "PALMA_RAUDA",
+      "en": "Upper Hand",
+      "es_ES": "Palma rauda",
+      "es_419": "Palma rauda",
+      "type": "fighting"
+    },
+    {
+      "id": "PATADA_IGNEA",
+      "en": "Blaze Kick",
+      "es_ES": "Patada ígnea",
+      "es_419": "Patada ígnea",
+      "type": "fire"
+    },
+    {
+      "id": "PATADA_SALTO_ALTO",
+      "en": "High Jump Kick",
+      "es_ES": "Patada salto alta",
+      "es_419": "Patada salto alto",
+      "type": "fighting"
+    },
+    {
+      "id": "PEDRADA",
+      "en": "Rock Blast",
+      "es_ES": "Pedrada",
+      "es_419": "Pedrada",
+      "type": "rock"
+    },
+    {
+      "id": "PICO_CANON",
+      "en": "Beak Blast",
+      "es_ES": "Pico cañón",
+      "es_419": "Pico cañón",
+      "type": "flying"
+    },
+    {
+      "id": "PICO_TALADRO",
+      "en": "Drill Peck",
+      "es_ES": "Pico taladro",
+      "es_419": "Pico taladro",
+      "type": "flying"
+    },
+    {
+      "id": "GOLPE_DE_FUEGO",
+      "en": "Flame Burst",
+      "es_ES": "Pirotecnia",
+      "es_419": "Golpe de fuego",
+      "type": "fire"
+    },
+    {
+      "id": "PISOTON",
+      "en": "Stomp",
+      "es_ES": "Pisotón",
+      "es_419": "Pisotón",
+      "type": "normal"
+    },
+    {
+      "id": "TACLEADA_DE_VOLTIOS",
+      "en": "Volt Tackle",
+      "es_ES": "Placaje eléctrico",
+      "es_419": "Tacleada de voltios",
+      "type": "electric"
+    },
+    {
+      "id": "PLANCHA",
+      "en": "Lunge",
+      "es_ES": "Plancha",
+      "es_419": "Plancha",
+      "type": "bug"
+    },
+    {
+      "id": "PLANCHA_VOLADORA",
+      "en": "Flying Press",
+      "es_ES": "Plancha voladora",
+      "es_419": "Plancha voladora",
+      "type": "fighting"
+    },
+    {
+      "id": "PLANTA_FEROZ",
+      "en": "Frenzy Plant",
+      "es_ES": "Planta feroz",
+      "es_419": "Planta feroz",
+      "type": "grass"
+    },
+    {
+      "id": "PODER_ANTIGUO",
+      "en": "Ancient Power",
+      "es_ES": "Poder pasado",
+      "es_419": "Poder antiguo",
+      "type": "rock"
+    },
+    {
+      "id": "POLTERGEIST",
+      "en": "Poltergeist",
+      "es_ES": "Poltergeist",
+      "es_419": "Poltergeist",
+      "type": "ghost"
+    },
+    {
+      "id": "PREMONICION",
+      "en": "Future Sight",
+      "es_ES": "Premonición",
+      "es_419": "Premonición",
+      "type": "psychic"
+    },
+    {
+      "id": "PSICOIMPULSO",
+      "en": "Psycho Boost",
+      "es_ES": "Psicoataque",
+      "es_419": "Psicoimpulso",
+      "type": "psychic"
+    },
+    {
+      "id": "CHOQUE_PSIQUICO",
+      "en": "Psyshock",
+      "es_ES": "Psicocarga",
+      "es_419": "Choque psíquico",
+      "type": "psychic"
+    },
+    {
+      "id": "PSICOCOLMILLO",
+      "en": "Psychic Fangs",
+      "es_ES": "Psicocolmillo",
+      "es_419": "Psicocolmillo",
+      "type": "psychic"
+    },
+    {
+      "id": "PSICORRAYO",
+      "en": "Psybeam",
+      "es_ES": "Psicorrayo",
+      "es_419": "Psicorrayo",
+      "type": "psychic"
+    },
+    {
+      "id": "FUERZA_PSIQUICA",
+      "en": "Psychic",
+      "es_ES": "Psíquico",
+      "es_419": "Fuerza psíquica",
+      "type": "psychic"
+    },
+    {
+      "id": "OCTAZUCA",
+      "en": "Octazooka",
+      "es_ES": "Pulpocañón",
+      "es_419": "Octazuca",
+      "type": "water"
+    },
+    {
+      "id": "PULSO_DRAGON",
+      "en": "Dragon Pulse",
+      "es_ES": "Pulso dragón",
+      "es_419": "Pulso dragón",
+      "type": "dragon"
+    },
+    {
+      "id": "PULSO_PRIMIGENIO",
+      "en": "Origin Pulse",
+      "es_ES": "Pulso primigenio",
+      "es_419": "Pulso primigenio",
+      "type": "water"
+    },
+    {
+      "id": "PULSO_OSCURO",
+      "en": "Dark Pulse",
+      "es_ES": "Pulso umbrío",
+      "es_419": "Pulso oscuro",
+      "type": "dark"
+    },
+    {
+      "id": "PUNTADA_SOMBRIA",
+      "en": "Spirit Shackle",
+      "es_ES": "Puntada sombría",
+      "es_419": "Puntada sombría",
+      "type": "ghost"
+    },
+    {
+      "id": "BARREDORA",
+      "en": "Low Sweep",
+      "es_ES": "Puntapié",
+      "es_419": "Barredora",
+      "type": "fighting"
+    },
+    {
+      "id": "PUNO_DINAMICO",
+      "en": "Dynamic Punch",
+      "es_ES": "Puño dinámico",
+      "es_419": "Puño dinámico",
+      "type": "fighting"
+    },
+    {
+      "id": "PUNO_DRENADOR",
+      "en": "Drain Punch",
+      "es_ES": "Puño drenaje",
+      "es_419": "Puño drenador",
+      "type": "fighting"
+    },
+    {
+      "id": "PUNO_FUEGO",
+      "en": "Fire Punch",
+      "es_ES": "Puño fuego",
+      "es_419": "Puño fuego",
+      "type": "fire"
+    },
+    {
+      "id": "PUNO_FURIA",
+      "en": "Rage Fist",
+      "es_ES": "Puño furia",
+      "es_419": "Puño furia",
+      "type": "ghost"
+    },
+    {
+      "id": "PUNO_HIELO",
+      "en": "Ice Punch",
+      "es_ES": "Puño hielo",
+      "es_419": "Puño hielo",
+      "type": "ice"
+    },
+    {
+      "id": "PUNO_INCREMENTO",
+      "en": "Power-Up Punch",
+      "es_ES": "Puño incremento",
+      "es_419": "Puño incremento",
+      "type": "fighting"
+    },
+    {
+      "id": "PUNO_METEORO",
+      "en": "Meteor Mash",
+      "es_ES": "Puño meteoro",
+      "es_419": "Puño meteoro",
+      "type": "steel"
+    },
+    {
+      "id": "PUNO_SOMBRA",
+      "en": "Shadow Punch",
+      "es_ES": "Puño sombra",
+      "es_419": "Puño sombra",
+      "type": "ghost"
+    },
+    {
+      "id": "PUNO_TRUENO",
+      "en": "Thunder Punch",
+      "es_ES": "Puño trueno",
+      "es_419": "Puño trueno",
+      "type": "electric"
+    },
+    {
+      "id": "METEOROS",
+      "en": "Swift",
+      "es_ES": "Rapidez",
+      "es_419": "Meteoros",
+      "type": "normal"
+    },
+    {
+      "id": "ATACTRUENO",
+      "en": "Thunderbolt",
+      "es_ES": "Rayo",
+      "es_419": "Atactrueno",
+      "type": "electric"
+    },
+    {
+      "id": "RAYO_AURORA",
+      "en": "Aurora Beam",
+      "es_ES": "Rayo aurora",
+      "es_419": "Rayo aurora",
+      "type": "ice"
+    },
+    {
+      "id": "RAYO_BURBUJA",
+      "en": "Bubble Beam",
+      "es_ES": "Rayo burbuja",
+      "es_419": "Rayo burbuja",
+      "type": "water"
+    },
+    {
+      "id": "RAYO_FUSION",
+      "en": "Fusion Bolt",
+      "es_ES": "Rayo fusión",
+      "es_419": "Rayo fusión",
+      "type": "electric"
+    },
+    {
+      "id": "RAYO_GELIDO",
+      "en": "Freeze Shock",
+      "es_ES": "Rayo gélido",
+      "es_419": "Rayo gélido",
+      "type": "ice"
+    },
+    {
+      "id": "RAYO_DE_HIELO",
+      "en": "Ice Beam",
+      "es_ES": "Rayo hielo",
+      "es_419": "Rayo de hielo",
+      "type": "ice"
+    },
+    {
+      "id": "RAYO_METEORICO",
+      "en": "Meteor Beam",
+      "es_ES": "Rayo meteórico",
+      "es_419": "Rayo meteórico",
+      "type": "rock"
+    },
+    {
+      "id": "RAYO_SOLAR",
+      "en": "Solar Beam",
+      "es_ES": "Rayo solar",
+      "es_419": "Rayo solar",
+      "type": "grass"
+    },
+    {
+      "id": "RAYO_UMBRIO",
+      "en": "Moongeist Beam",
+      "es_ES": "Rayo umbrío",
+      "es_419": "Rayo umbrío",
+      "type": "ghost"
+    },
+    {
+      "id": "RESIDUOS",
+      "en": "Sludge",
+      "es_ES": "Residuos",
+      "es_419": "Residuos",
+      "type": "poison"
+    },
+    {
+      "id": "RESPLANDOR",
+      "en": "Luster Purge",
+      "es_ES": "Resplandor",
+      "es_419": "Resplandor",
+      "type": "psychic"
+    },
+    {
+      "id": "RETRIBUCION",
+      "en": "Return",
+      "es_ES": "Retribución",
+      "es_419": "Retribución",
+      "type": "normal"
+    },
+    {
+      "id": "ROCA_AFILADA",
+      "en": "Stone Edge",
+      "es_ES": "Roca afilada",
+      "es_419": "Roca afilada",
+      "type": "rock"
+    },
+    {
+      "id": "ROMPERROCAS",
+      "en": "Rock Wrecker",
+      "es_ES": "Romperrocas",
+      "es_419": "Romperrocas",
+      "type": "rock"
+    },
+    {
+      "id": "RUEDA_AURAL",
+      "en": "Aura Wheel",
+      "es_ES": "Rueda aural",
+      "es_419": "Rueda aural",
+      "type": "electric"
+    },
+    {
+      "id": "RUEDA_IGNEA",
+      "en": "Flame Wheel",
+      "es_ES": "Rueda fuego",
+      "es_419": "Rueda ígnea",
+      "type": "fire"
+    },
+    {
+      "id": "ESPADA_SECRETA",
+      "en": "Secret Sword",
+      "es_ES": "Sable místico",
+      "es_419": "Espada secreta",
+      "type": "fighting"
+    },
+    {
+      "id": "AGUA_SALADA",
+      "en": "Brine",
+      "es_ES": "Salmuera",
+      "es_419": "Agua salada",
+      "type": "water"
+    },
+    {
+      "id": "TIFON_DE_ARENA",
+      "en": "Sandsear Storm",
+      "es_ES": "Simún de arena",
+      "es_419": "Tifón de arena",
+      "type": "ground"
+    },
+    {
+      "id": "SINCRORRUIDO",
+      "en": "Synchronoise",
+      "es_ES": "Sincrorruido",
+      "es_419": "Sincrorruido",
+      "type": "psychic"
+    },
+    {
+      "id": "SUPERCALOR",
+      "en": "Overheat",
+      "es_ES": "Sofoco",
+      "es_419": "Supercalor",
+      "type": "fire"
+    },
+    {
+      "id": "SOMBRA_VIL",
+      "en": "Shadow Sneak",
+      "es_ES": "Sombra vil",
+      "es_419": "Sombra vil",
+      "type": "ghost"
+    },
+    {
+      "id": "SUMISION",
+      "en": "Submission",
+      "es_ES": "Sumisión",
+      "es_419": "Sumisión",
+      "type": "fighting"
+    },
+    {
+      "id": "SURF",
+      "en": "Surf",
+      "es_ES": "Surf",
+      "es_419": "Surf",
+      "type": "water"
+    },
+    {
+      "id": "GOLPE_CRUZADO",
+      "en": "Cross Chop",
+      "es_ES": "Tajo cruzado",
+      "es_419": "Golpe cruzado",
+      "type": "fighting"
+    },
+    {
+      "id": "CORTE_SUPREMO",
+      "en": "Behemoth Blade",
+      "es_ES": "Tajo supremo",
+      "es_419": "Corte supremo",
+      "type": "steel"
+    },
+    {
+      "id": "CORTE_UMBRIO",
+      "en": "Night Slash",
+      "es_ES": "Tajo umbrío",
+      "es_419": "Corte umbrío",
+      "type": "dark"
+    },
+    {
+      "id": "TALADRADORA",
+      "en": "Drill Run",
+      "es_ES": "Taladradora",
+      "es_419": "Taladradora",
+      "type": "ground"
+    },
+    {
+      "id": "TECNO_SHOCK",
+      "en": "Techno Blast",
+      "es_ES": "Tecno shock",
+      "es_419": "Tecno shock",
+      "type": null
+    },
+    {
+      "id": "TERRATEMBLOR",
+      "en": "Bulldoze",
+      "es_ES": "Terratemblor",
+      "es_419": "Terratemblor",
+      "type": "ground"
+    },
+    {
+      "id": "TERREMOTO",
+      "en": "Earthquake",
+      "es_ES": "Terremoto",
+      "es_419": "Terremoto",
+      "type": "ground"
+    },
+    {
+      "id": "PODER_TERRESTRE",
+      "en": "Earth Power",
+      "es_ES": "Tierra viva",
+      "es_419": "Poder terrestre",
+      "type": "ground"
+    },
+    {
+      "id": "TIJERA_X",
+      "en": "X-Scissor",
+      "es_ES": "Tijera X",
+      "es_419": "Tijera X",
+      "type": "bug"
+    },
+    {
+      "id": "TINIEBLAS",
+      "en": "Night Shade",
+      "es_ES": "Tinieblas",
+      "es_419": "Tinieblas",
+      "type": "ghost"
+    },
+    {
+      "id": "TORMENTA_DE_PETALOS",
+      "en": "Petal Blizzard",
+      "es_ES": "Tormenta floral",
+      "es_419": "Tormenta de pétalos",
+      "type": "grass"
+    },
+    {
+      "id": "TRIATAQUE",
+      "en": "Tri Attack",
+      "es_ES": "Triataque",
+      "es_419": "Triataque",
+      "type": "normal"
+    },
+    {
+      "id": "TRIPLE_AXEL",
+      "en": "Triple Axel",
+      "es_ES": "Triple axel",
+      "es_419": "Triple axel",
+      "type": "ice"
+    },
+    {
+      "id": "TRITURAR",
+      "en": "Crunch",
+      "es_ES": "Triturar",
+      "es_419": "Triturar",
+      "type": "dark"
+    },
+    {
+      "id": "TRUCO_FLORAL",
+      "en": "Flower Trick",
+      "es_ES": "Truco floral",
+      "es_419": "Truco floral",
+      "type": "grass"
+    },
+    {
+      "id": "TRUENO",
+      "en": "Thunder",
+      "es_ES": "Trueno",
+      "es_419": "Trueno",
+      "type": "electric"
+    },
+    {
+      "id": "TUMBA_DE_ROCAS",
+      "en": "Rock Tomb",
+      "es_ES": "Tumba rocas",
+      "es_419": "Tumba de rocas",
+      "type": "rock"
+    },
+    {
+      "id": "ULTIMO_RECURSO",
+      "en": "Last Resort",
+      "es_ES": "Última baza",
+      "es_419": "Último recurso",
+      "type": "normal"
+    },
+    {
+      "id": "V_DE_FUEGO",
+      "en": "V-create",
+      "es_ES": "V de fuego",
+      "es_419": "V de fuego",
+      "type": "fire"
+    },
+    {
+      "id": "VASTO_IMPACTO",
+      "en": "Breaking Swipe",
+      "es_ES": "Vasto impacto",
+      "es_419": "Vasto impacto",
+      "type": "dragon"
+    },
+    {
+      "id": "HURACAN",
+      "en": "Hurricane",
+      "es_ES": "Vendaval",
+      "es_419": "Huracán",
+      "type": "flying"
+    },
+    {
+      "id": "VENDAVAL_GELIDO",
+      "en": "Bleakwind Storm",
+      "es_ES": "Vendaval gélido",
+      "es_419": "Vendaval gélido",
+      "type": "flying"
+    },
+    {
+      "id": "REVANCHA",
+      "en": "Payback",
+      "es_ES": "Vendetta",
+      "es_419": "Revancha",
+      "type": "dark"
+    },
+    {
+      "id": "VENENO_X",
+      "en": "Cross Poison",
+      "es_ES": "Veneno X",
+      "es_419": "Veneno X",
+      "type": "poison"
+    },
+    {
+      "id": "VENTISCA",
+      "en": "Blizzard",
+      "es_ES": "Ventisca",
+      "es_419": "Ventisca",
+      "type": "ice"
+    },
+    {
+      "id": "VIENTO_OMINOSO",
+      "en": "Ominous Wind",
+      "es_ES": "Viento aciago",
+      "es_419": "Viento ominoso",
+      "type": "ghost"
+    },
+    {
+      "id": "VIENTO_HELADO",
+      "en": "Icy Wind",
+      "es_ES": "Viento hielo",
+      "es_419": "Viento helado",
+      "type": "ice"
+    },
+    {
+      "id": "VIENTO_PLATEADO",
+      "en": "Silver Wind",
+      "es_ES": "Viento plata",
+      "es_419": "Viento plateado",
+      "type": "bug"
+    },
+    {
+      "id": "CARGA_SALVAJE",
+      "en": "Wild Charge",
+      "es_ES": "Voltio cruel",
+      "es_419": "Carga salvaje",
+      "type": "electric"
+    },
+    {
+      "id": "VOZ_ENCANTADORA",
+      "en": "Disarming Voice",
+      "es_ES": "Voz cautivadora",
+      "es_419": "Voz encantadora",
+      "type": "fairy"
+    },
+    {
+      "id": "VUELO",
+      "en": "Fly",
+      "es_ES": "Vuelo",
+      "es_419": "Vuelo",
+      "type": "flying"
+    },
+    {
+      "id": "ZUMBIDO",
+      "en": "Bug Buzz",
+      "es_ES": "Zumbido",
+      "es_419": "Zumbido",
+      "type": "bug"
+    }
+  ],
+  "meta": {
+    "source": "wikidex (EN/ES) + pvpoke (type)",
+    "generatedAt": "2026-02-04T19:48:42.878Z",
+    "fixedAt": "2026-02-04T20:15:41.232Z",
+    "action": "swapped es_ES <-> es_419 globally + added id from es_419 (LatAm)",
+    "swappedCount": 298,
+    "idCount": 298
+  }
+}

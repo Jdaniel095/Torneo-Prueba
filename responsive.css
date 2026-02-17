@@ -1,0 +1,4280 @@
+/* ========================================
+   RESPONSIVE CSS - Mobile First Design
+   ======================================== */
+
+/* ---------------------------------------------------------
+   1. MÓVILES (PERFECTO)
+   --------------------------------------------------------- */
+@media (max-width: 374px) {
+    .content-wrapper { width: 100%; margin-top: -25px; }
+    .logo { width: 105px; }
+    .logo-container { margin-bottom: -32px; }
+    .contenedor-bottom { margin-top: 0; }
+    .content-area { width: 90%; padding: 20px 10px 5px; margin-top: -210px; }
+    .content-after-logo-spacer{ height: 1.25rem; }
+    .content-area h1 { font-size: 1.4rem; }
+    .content-area h2 { font-size: 1.15rem; }
+    .content-area h3 { font-size: 1rem; }
+    .content-area p { font-size: 0.88rem; text-align: left; }
+    .card { padding: 12px; margin: 10px 0; }
+    
+    /* Footer Ajustes Móvil */
+    .footer-overlay { padding-top: 30px; }
+    .copyright { font-size: 0.7rem; }
+    .footer-links { font-size: 0.75rem; }
+    .social-link svg { width: 18px; height: 18px; }
+    .social-link { padding: 6px; }
+}
+
+@media (min-width: 375px) and (max-width: 389px) {
+    .content-wrapper { margin-top: -35px; }
+    .logo { width: 115px; }
+    .logo-container { margin-bottom: -40px; }
+    .content-area { width: 89%; padding: 22px 10px 5px; margin-top: -230px; }
+    .content-after-logo-spacer{ height: 1.25rem; }
+    .content-area h1 { font-size: 1.5rem; }
+    .content-area h2 { font-size: 1.2rem; }
+    .content-area h3 { font-size: 1rem; }
+    .content-area p { font-size: 0.9rem; text-align: left; }
+    .card { padding: 12px; margin: 10px 0; }
+    
+    /* Footer Ajustes */
+    .footer-overlay { padding-top: 40px; }
+    .copyright { font-size: 0.75rem; }
+    .footer-links { font-size: 0.8rem; }
+}
+
+@media (min-width: 390px) and (max-width: 430px) {
+    .content-wrapper { margin-top: -40px; }
+    .logo { width: 120px; }
+    .logo-container { margin-bottom: -42px; }
+    .content-area { width: 89%; padding: 22px 10px 5px; margin-top: -250px; }
+    .content-after-logo-spacer{ height: 1.2rem; }
+    .content-area h1 { font-size: 1.55rem; }
+    .content-area h2 { font-size: 1.22rem; }
+    .content-area h3 { font-size: 1.02rem; }
+    .content-area p { font-size: 0.92rem; text-align: left; }
+    .card { padding: 12px; margin: 10px 0; }
+    
+    .footer-overlay { padding-top: 45px; }
+}
+
+@media (min-width: 431px) and (max-width: 540px) {
+    .content-wrapper { width: 100%; margin-top: -50px; }
+    .logo { width: 130px; }
+    .logo-container { margin-bottom: -45px; }
+    .contenedor-bottom { margin-top: 0; }
+    .content-area { width: 89%; padding: 24px 12px 5px; margin-top: -280px; }
+    .content-after-logo-spacer{ height: 1.15rem; }
+    .content-area h1 { font-size: 1.65rem; }
+    .content-area h2 { font-size: 1.3rem; }
+    .content-area h3 { font-size: 1.08rem; }
+    .content-area p { font-size: 0.95rem; }
+    .card { padding: 13px; margin: 11px 0; }
+}
+
+@media (min-width: 541px) and (max-width: 767px) {
+    .content-wrapper { width: 100%; margin-top: -60px; }
+    .logo { width: 145px; }
+    .logo-container { margin-bottom: -48px; }
+    .contenedor-bottom { margin-top: 0; }
+    .content-area { width: 88%; padding: 26px 12px 5px; margin-top: -320px; }
+    .content-after-logo-spacer{ height: 1.1rem; }
+    .content-area h1 { font-size: 1.75rem; }
+    .content-area h2 { font-size: 1.38rem; }
+    .content-area h3 { font-size: 1.12rem; }
+    .content-area p { font-size: 0.98rem; }
+    .card { padding: 13px; margin: 12px 0; }
+}
+
+/* ---------------------------------------------------------
+   2. TABLETS (PERFECTO)
+   --------------------------------------------------------- */
+@media (min-width: 768px) and (max-width: 820px) {
+    .content-wrapper { width: 100%; margin-top: -75px; }
+    .logo { width: 220px; } 
+    .logo-container { margin-bottom: -60px; }
+    .contenedor-bottom { margin-top: 0; }
+    .page-footer { margin-top: auto; }
+    .content-area { width: 88%; padding: 28px 15px 5px; margin-top: -450px; }
+    .content-after-logo-spacer{ height: 1.05rem; }
+    .content-area h1 { font-size: 1.85rem; }
+    .content-area h2 { font-size: 1.45rem; }
+    .card { padding: 14px; margin: 13px 0; }
+    
+    /* Footer */
+    .footer-overlay { justify-content: flex-end; padding-bottom: 40px; }
+    .copyright { font-size: 1rem; }
+    .footer-links { font-size: 1.05rem; }
+}
+
+@media (min-width: 821px) and (max-width: 910px) {
+    .content-wrapper { width: 100%; margin-top: -90px; }
+    .logo { width: 240px; }
+    .logo-container { margin-bottom: -70px; }
+    .page-footer { margin-top: auto; }
+    .content-area { width: 87%; padding: 30px 15px 5px; margin-top: -540px; }
+    .content-after-logo-spacer{ height: 1rem; }
+    .content-area h1 { font-size: 1.95rem; }
+    .content-area h2 { font-size: 1.5rem; }
+    .card { padding: 14px; margin: 13px 0; }
+}
+
+@media (min-width: 911px) and (max-width: 1023px) {
+    .content-wrapper { width: 100%; margin-top: -100px; }
+    .logo { width: 260px; }
+    .logo-container { margin-bottom: -75px; }
+    .page-footer { margin-top: auto; }
+    .content-area { width: 86%; padding: 32px 16px 5px; margin-top: -580px; }
+    .content-after-logo-spacer{ height: 0.95rem; }
+    .content-area h1 { font-size: 2.05rem; }
+    .content-area h2 { font-size: 1.55rem; }
+    .card { padding: 14px; margin: 13px 0; }
+}
+
+/* ---------------------------------------------------------
+   3. ESCRITORIO / PC (AQUÍ ESTÁ EL CAMBIO PARA HACERLO GRANDE)
+   --------------------------------------------------------- */
+@media (min-width: 1024px) and (max-width: 1279px) { 
+    .content-wrapper { width: 100%; margin-top: -110px; }
+    .logo { width: 260px; }
+    .logo-container { margin-bottom: -75px; }
+    .contenedor-bottom { margin-top: 0; }
+    .page-footer { margin-top: auto; }
+    .content-area { width: 86%; padding: 35px 18px 5px; margin-top: -680px; }
+    .content-after-logo-spacer{ height: 0.85rem; }
+    .content-area h1 { font-size: 2.2rem; }
+    .content-area h2 { font-size: 1.6rem; }
+    .content-area p { font-size: 1.08rem; }
+    .card { padding: 15px; margin: 14px 0; }
+    
+    /* 🔥 Footer PC Grande */
+    .footer-overlay { justify-content: center; padding-top: 100px; } 
+    .copyright { font-size: 1.1rem; }
+    .footer-links { font-size: 1.15rem; margin-bottom: 12px; }
+    .social-link svg { width: 28px; height: 28px; }
+    .social-link { padding: 10px; }
+    .social-icons { gap: 20px; }
+}
+
+@media (min-width: 1280px) and (max-width: 1439px) {
+    .content-wrapper { width: 100%; max-width: 100%; margin-top: -130px; }
+    .logo { width: 300px; }
+    .logo-container { margin-bottom: -85px; }
+    .page-footer { margin-top: auto; }
+    .content-area { width: 85%; padding: 38px 20px 5px; margin-top: -800px; }
+    .content-after-logo-spacer{ height: 0.78rem; }
+    .content-area h1 { font-size: 2.4rem; }
+    .content-area h2 { font-size: 1.7rem; }
+    .content-area p { font-size: 1.1rem; }
+    .card { padding: 16px; margin: 15px 0; }
+    
+    /* 🔥 Footer PC Más Grande */
+    .footer-overlay { padding-top: 120px; }
+    .copyright { font-size: 1.2rem; }
+    .footer-links { font-size: 1.25rem; }
+    .social-link svg { width: 32px; height: 32px; }
+    .social-link { padding: 12px; }
+}
+
+@media (min-width: 1440px) and (max-width: 1919px) {
+    .content-wrapper { max-width: 100%; margin-top: -150px; }
+    .logo { width: 340px; }
+    .logo-container { margin-bottom: -100px; }
+    .page-footer { margin-top: auto; }
+    .content-area { width: 84%; padding: 42px 25px 5px; margin-top: -920px; }
+    .content-after-logo-spacer{ height: 0.72rem; }
+    .content-area h1 { font-size: 2.6rem; }
+    .content-area h2 { font-size: 1.85rem; }
+    .content-area p { font-size: 1.14rem; }
+    .card { padding: 17px; margin: 16px 0; }
+    
+    /* 🔥 Footer Gigante */
+    .footer-overlay { padding-top: 140px; }
+    .copyright { font-size: 1.3rem; }
+    .footer-links { font-size: 1.35rem; }
+    .social-link svg { width: 36px; height: 36px; }
+    .social-link { padding: 14px; }
+}
+
+@media (min-width: 1920px) {
+    .content-wrapper { max-width: 100%; margin-top: -170px; }
+    .logo { width: 380px; }
+    .logo-container { margin-bottom: -115px; }
+    .page-footer { margin-top: auto; }
+    .content-area { width: 84%; padding: 46px 30px 5px; margin-top: -1050px; }
+    .content-after-logo-spacer{ height: 0.68rem; }
+    .content-area h1 { font-size: 2.85rem; }
+    .content-area h2 { font-size: 2.05rem; }
+    .content-area p { font-size: 1.18rem; }
+    .card { padding: 19px; margin: 18px 0; }
+    
+    /* 🔥 Footer 4K */
+    .copyright { font-size: 1.5rem; }
+    .footer-links { font-size: 1.6rem; }
+    .social-link svg { width: 42px; height: 42px; }
+}
+
+/* ---------------------------------------------------------
+   4. MODOS LANDSCAPE (MÓVILES HORIZONTALES)
+   --------------------------------------------------------- */
+@media (max-width: 767px) and (orientation: landscape) {
+    .content-wrapper { margin-top: -50px; }
+    .logo { width: 130px; }
+    .logo-container { margin-bottom: -45px; }
+    .content-area { width: 90%; padding: 18px 10px 5px; margin-top: -220px; }
+    .content-after-logo-spacer{ height: 1.1rem; }
+    .content-area h1 { font-size: 1.35rem; }
+    .content-area h2 { font-size: 1.12rem; }
+    .card { padding: 11px; margin: 9px 0; }
+    
+    .footer-overlay { padding-top: 20px; }
+    .social-link { padding: 5px; }
+    .social-link svg { width: 16px; height: 16px; }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) and (min-height: 611px) {
+    .content-wrapper { margin-top: -70px; }
+    .logo { width: 155px; }
+    .logo-container { margin-bottom: -50px; }
+    .content-area { width: 88%; padding: 22px 14px 5px; margin-top: -350px; }
+    .content-after-logo-spacer{ height: 0.95rem; }
+}
+
+/* ---------------------------------------------------------
+   5. CORRECCIONES FINALES (OVERRIDES AL FINAL)
+   --------------------------------------------------------- */
+
+
+/* ✅ iPhone SE landscape (667×375) y dispositivos similares de pantalla baja.
+   El SE tiene solo 375px de alto, la imagen de fondo queda muy pequeña
+   y el margin-top general de -220px deja el contenido demasiado abajo.
+   max-height:376px lo aísla del resto de móviles landscape.            */
+/* ✅ iPhone SE / pantallas bajas en landscape (568x320, 667x375, etc.)
+   Objetivo: que el H1 arranque arriba como en iPhone XR */
+@media (max-width: 680px) and (orientation: landscape) and (max-height: 376px) {
+
+  /* Sube el bloque completo (logo + contenedor + contenido) */
+  .content-wrapper { margin-top: -70px; }
+
+  /* Ajuste de logo (no lo achiques tanto porque luego “tira” el layout hacia abajo) */
+  .logo { width: 110px; }
+
+  /* Acerca el contenido al logo */
+  .logo-container { margin-bottom: -50px; }
+
+  /* ✅ CLAVE: sube el contenido (más negativo = más arriba) */
+  .content-area {
+    width: 92%;
+    margin-top: -400px;
+    padding: 16px 10px 5px;
+  }
+
+  /* Quita vacío extra antes del H1 */
+  .content-after-logo-spacer { height: 0.25rem; }
+
+  /* Tipos un poco más compactos en altura baja */
+  .content-area h1 { font-size: 1.25rem; }
+}
+
+
+/* ---------------------------------------------------------
+   ACCESIBILIDAD Y OTROS
+   --------------------------------------------------------- */
+@supports (padding: max(0px)) {
+    .content-area {
+        padding-left: max(20px, env(safe-area-inset-left));
+        padding-right: max(20px, env(safe-area-inset-right));
+    }
+}
+@media (hover: none) and (pointer: coarse) {
+    .card { min-height: 44px; }
+    .card:active { transform: scale(0.98); }
+}
+@media (prefers-color-scheme: dark) {
+    body { background-color: #1a1a1a; }
+    .content-area { color: #e0e0e0; }
+    .content-area h1, .content-area h2 { color: #ffffff; }
+    .card { background: rgba(40, 40, 40, 0.9); color: #e0e0e0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    .card { transition: none; }
+    .card:hover { transform: none; }
+}
+
+
+/* =========================================================
+   ✅ CONTENIDO "Primera Fase"
+   ========================================================= */
+
+/* =========================================================
+   RESPONSIVE (FASE 1 - META DEL TORNEO)
+   Solo para: titulo-principal, meta-*, league-*, format-*, bo-*, tooltip, prizes, open-modal-btn
+   Breakpoints según tus instrucciones
+   ========================================================= */
+
+/* < 374px (móviles muy pequeños / fold cover) */
+@media (max-width: 374px){
+  .titulo-principal{ font-size: 24px; line-height: 34px; margin-bottom: 18px; }
+
+  .torneo-meta, #torneoMeta{ width: calc(100% - 20px); gap: 8px; margin-top: 6px; }
+
+  .meta-row--league,
+  .meta-row--format,
+  .meta-row--datetime,
+  .meta-row--mode,
+  .meta-row--prizes{
+    gap: 10px;
+  }
+
+  /* Texto grande del meta (tamaños “gordos” del header) */
+  #torneoMeta .meta-label{ font-size: 18px; }
+  #torneoMeta .meta-value{ font-size: 24px; }
+  #torneoMeta .time-only{ font-size: 22px; }
+
+  #torneoMeta .format-text{ font-size: 20px; }
+  #torneoMeta .bo-text{ font-size: 22px; }
+  #torneoMeta .format-sep{ font-size: 26px; margin: 0 4px; }
+
+  #torneoMeta .mode-text{ font-size: 20px; }
+
+  /* En pantallas muy pequeñas: todo en columna */
+  .meta-value--format,
+  .meta-value--datetime,
+  #torneoMeta .meta-value--datetime,
+  .meta-row--datetime .meta-value--datetime{
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  /* Logos + chips */
+  .league-logo-img, #leagueLogoImg, #tiebreakLogoImg{ width: 32px; height: 32px; }
+  #torneoMeta .league-chip{ padding: 8px 12px; gap: 10px; }
+
+  /* Premios */
+  #torneoMeta .prize-item{ padding: 8px 12px; gap: 10px; }
+  #torneoMeta .prize-icon-box{ width: 38px; height: 38px; }
+  #torneoMeta .prize-name{ font-size: 16px; }
+
+  /* Botón registro */
+  .open-modal-btn, #openModalBtn, #btnRegister{
+    width: calc(100% - 20px);
+    max-width: none;
+    padding: 14px 20px;
+  }
+  .open-modal-btn{ font-size: 16px; }
+
+  /* Tooltips */
+  #boTooltip, #modeTooltip{ width: 300px; min-width: 220px; font-size: 12px; }
+}
+
+/* 375px - 389px (iPhone SE) */
+@media (min-width: 375px) and (max-width: 389px){
+  .titulo-principal{ font-size: 26px; line-height: 36px; margin-bottom: 18px; }
+
+  #torneoMeta .meta-label{ font-size: 19px; }
+  #torneoMeta .meta-value{ font-size: 25px; }
+  #torneoMeta .time-only{ font-size: 23px; }
+
+  #torneoMeta .format-text{ font-size: 21px; }
+  #torneoMeta .bo-text{ font-size: 23px; }
+  #torneoMeta .format-sep{ font-size: 27px; }
+
+  .league-logo-img, #leagueLogoImg, #tiebreakLogoImg{ width: 34px; height: 34px; }
+
+  .open-modal-btn{ font-size: 16px; }
+}
+
+/* 390px - 430px (móviles modernos estándar) */
+@media (min-width: 390px) and (max-width: 430px){
+  .titulo-principal{ font-size: 28px; line-height: 38px; margin-bottom: 20px; }
+
+  #torneoMeta .meta-label{ font-size: 20px; }
+  #torneoMeta .meta-value{ font-size: 26px; }
+  #torneoMeta .time-only{ font-size: 24px; }
+
+  #torneoMeta .format-text{ font-size: 22px; }
+  #torneoMeta .bo-text{ font-size: 24px; }
+  #torneoMeta .format-sep{ font-size: 28px; }
+
+  .league-logo-img, #leagueLogoImg, #tiebreakLogoImg{ width: 34px; height: 34px; }
+
+  .open-modal-btn{ font-size: 17px; }
+}
+
+/* 431px - 540px (móviles grandes / Max / Plus) */
+@media (min-width: 431px) and (max-width: 540px){
+  .titulo-principal{ font-size: 30px; line-height: 42px; }
+
+  #torneoMeta .meta-label{ font-size: 21px; }
+  #torneoMeta .meta-value{ font-size: 28px; }
+  #torneoMeta .time-only{ font-size: 25px; }
+
+  #torneoMeta .format-text{ font-size: 23px; }
+  #torneoMeta .bo-text{ font-size: 25px; }
+  #torneoMeta .format-sep{ font-size: 30px; }
+
+  /* En <=540: sigue siendo más cómodo en columna */
+  .meta-value--format,
+  .meta-value--datetime,
+  #torneoMeta .meta-value--datetime,
+  .meta-row--datetime .meta-value--datetime{
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .league-logo-img, #leagueLogoImg, #tiebreakLogoImg{ width: 36px; height: 36px; }
+
+  .open-modal-btn, #openModalBtn, #btnRegister{
+    width: calc(100% - 32px);
+    max-width: none;
+  }
+  .open-modal-btn{ font-size: 18px; }
+}
+
+/* 541px - 767px (phablets y móviles muy anchos) */
+@media (min-width: 541px) and (max-width: 767px){
+  .titulo-principal{ font-size: 34px; line-height: 48px; }
+
+  #torneoMeta .meta-label{ font-size: 22px; }
+  #torneoMeta .meta-value{ font-size: 30px; }
+  #torneoMeta .time-only{ font-size: 26px; }
+
+  #torneoMeta .format-text{ font-size: 24px; }
+  #torneoMeta .bo-text{ font-size: 26px; }
+  #torneoMeta .format-sep{ font-size: 32px; }
+
+  .league-logo-img, #leagueLogoImg, #tiebreakLogoImg{ width: 40px; height: 40px; }
+
+  .open-modal-btn{ font-size: 18px; padding: 14px 28px; }
+}
+
+/* 768px - 820px (iPad Mini / tablets pequeñas) */
+@media (min-width: 768px) and (max-width: 820px){
+  .titulo-principal{ font-size: 36px; line-height: 50px; }
+
+  #torneoMeta .meta-label{ font-size: 23px; }
+  #torneoMeta .meta-value{ font-size: 32px; }
+  #torneoMeta .time-only{ font-size: 27px; }
+
+  .open-modal-btn{ font-size: 18px; padding: 14px 28px; }
+}
+
+/* 821px - 910px (iPad Air / tablets medianas) */
+@media (min-width: 821px) and (max-width: 910px){
+  .titulo-principal{ font-size: 38px; line-height: 56px; }
+
+  #torneoMeta .meta-label{ font-size: 24px; }
+  #torneoMeta .meta-value{ font-size: 34px; }
+  #torneoMeta .time-only{ font-size: 28px; }
+}
+
+/* 911px - 1023px (Surface Pro 7 / iPad Pro 11") */
+@media (min-width: 911px) and (max-width: 1023px){
+  .titulo-principal{ font-size: 40px; line-height: 60px; }
+
+  #torneoMeta .meta-label{ font-size: 24px; }
+  #torneoMeta .meta-value{ font-size: 34px; }
+  #torneoMeta .time-only{ font-size: 28px; }
+}
+
+/* 1024px - 1279px (laptops pequeñas / pantallas antiguas) */
+@media (min-width: 1024px) and (max-width: 1279px){
+  .titulo-principal{ font-size: 46px; line-height: 70px; }
+}
+
+/* 1280px - 1439px (laptops medianas / monitores HD) */
+@media (min-width: 1280px) and (max-width: 1439px){
+  .titulo-principal{ font-size: 50px; line-height: 77px; }
+}
+
+/* 1440px - 1919px (Full HD estándar) */
+@media (min-width: 1440px) and (max-width: 1919px){
+  .titulo-principal{ font-size: 54px; line-height: 82px; }
+}
+
+/* 1920px+ (4K y Ultra Wide) */
+@media (min-width: 1920px){
+  .titulo-principal{ font-size: 60px; line-height: 90px; }
+}
+
+/* =========================================================
+   LANDSCAPE (poca altura, mucho ancho)
+   ========================================================= */
+
+/* Landscape móviles */
+@media (max-width: 767px) and (orientation: landscape){
+  .titulo-principal{ margin-bottom: 12px; }
+  .torneo-meta, #torneoMeta{ margin-top: 4px; gap: 8px; }
+  #boTooltip, #modeTooltip{ top: calc(100% + 6px); }
+}
+
+/* Landscape tablets */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape){
+  .titulo-principal{ margin-bottom: 16px; }
+}
+
+
+/* =========================================================
+   RESPONSIVE - BOTÓN openModalBtn / btnRegister
+   Breakpoints según tus instrucciones
+   ========================================================= */
+
+   /* =========================================================
+   RESPONSIVE — MODAL + BOTONES + POKE PICK + TEAM MODAL
+   (para el bloque que pegaste)
+   Breakpoints según tu proyecto
+   ========================================================= */
+
+/* < 374px (móviles muy pequeños / fold cover) */
+@media (max-width: 374px){
+
+  /* Botón */
+  .open-modal-btn,
+  #openModalBtn{
+    width: calc(100% - 24px);
+    max-width: none;
+    display: flex;
+    margin: 16px auto 16px;
+    padding: 14px 18px;
+    font-size: 16px;
+    border-radius: 16px;
+  }
+
+  /* Modal */
+  .modal-overlay{
+    align-items: flex-start;
+    padding: 12px 10px;
+  }
+
+  .modal-box{
+    width: 100%;
+    max-width: none;
+    padding: 18px 14px;
+    border-radius: 18px;
+    max-height: calc(100vh - 24px);
+  }
+
+  .modal-title{
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+
+  .close-modal,
+  #closeModalBtn{
+    top: 10px;
+    right: 12px;
+    font-size: 28px;
+  }
+
+  /* Form rows a columna */
+  .modal-form-row{
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .form-column{
+    min-width: 100%;
+  }
+
+  /* Subtitulo */
+  .sub1{
+    font-size: 22px;
+    line-height: 28px;
+    margin-bottom: 8px;
+  }
+
+  /* League switch */
+  .modal-league-switch{
+    margin: 6px 0 12px;
+    gap: 8px;
+  }
+
+  .modal-league-switch__buttons{
+    gap: 8px;
+  }
+
+  .modal-league-switch__hint{
+    font-size: 13px;
+    margin-top: 10px;
+    margin-bottom: 14px;
+  }
+
+  /* Poke Pick */
+  .pokePick{
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .pokeFace{
+    width: 38px;
+    height: 38px;
+  }
+
+  .poke-dropdown{
+    max-height: 200px;
+    border-radius: 12px;
+  }
+
+  /* Team modal */
+  .team-modal-box{
+    max-width: none;
+    width: 100%;
+    padding: 16px 14px;
+  }
+
+  .team-modal-title{
+    font-size: 18px;
+  }
+
+  .team-modal-meta{
+    gap: 8px;
+    font-size: 13px;
+  }
+
+  .team-poke-grid{
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+/* 375px - 389px (iPhone SE modelo oro) */
+@media (min-width: 375px) and (max-width: 389px){
+
+  .open-modal-btn,
+  #openModalBtn{
+    width: calc(100% - 28px);
+    max-width: none;
+    display: flex;
+    margin: 18px auto 18px;
+    padding: 14px 20px;
+    font-size: 17px;
+    border-radius: 16px;
+  }
+
+  .modal-overlay{
+    align-items: flex-start;
+    padding: 14px 12px;
+  }
+
+  .modal-box{
+    width: 100%;
+    max-width: none;
+    padding: 20px 16px;
+    border-radius: 18px;
+    max-height: calc(100vh - 28px);
+  }
+
+  .modal-title{ font-size: 24px; margin-bottom: 14px; }
+
+  .close-modal,
+  #closeModalBtn{
+    top: 10px;
+    right: 12px;
+    font-size: 30px;
+  }
+
+  .modal-form-row{ flex-direction: column; gap: 10px; }
+  .form-column{ min-width: 100%; }
+
+  .sub1{ font-size: 24px; line-height: 30px; margin-bottom: 8px; }
+
+  .modal-league-switch__hint{
+    font-size: 13.5px;
+    margin-top: 10px;
+    margin-bottom: 16px;
+  }
+
+  .pokeFace{ width: 40px; height: 40px; }
+  .poke-dropdown{ max-height: 220px; }
+
+  .team-modal-box{ max-width: none; width: 100%; padding: 18px 16px; }
+  .team-modal-title{ font-size: 20px; }
+  .team-poke-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 390px - 430px (móviles modernos estándar) */
+@media (min-width: 390px) and (max-width: 430px){
+
+  .open-modal-btn,
+  #openModalBtn{
+    width: calc(100% - 32px);
+    max-width: none;
+    display: flex;
+    margin: 18px auto 20px;
+    padding: 15px 22px;
+    font-size: 18px;
+    border-radius: 18px;
+  }
+
+  .modal-overlay{
+    align-items: flex-start;
+    padding: 16px 12px;
+  }
+
+  .modal-box{
+    width: 100%;
+    max-width: none;
+    padding: 22px 18px;
+    border-radius: 20px;
+    max-height: calc(100vh - 32px);
+  }
+
+  .modal-title{ font-size: 26px; margin-bottom: 16px; }
+
+  .close-modal,
+  #closeModalBtn{
+    top: 10px;
+    right: 12px;
+    font-size: 32px;
+  }
+
+  .modal-form-row{ flex-direction: column; gap: 12px; }
+  .form-column{ min-width: 100%; }
+
+  .sub1{ font-size: 26px; line-height: 32px; }
+
+  .modal-league-switch__hint{
+    font-size: 14px;
+    margin-top: 12px;
+    margin-bottom: 18px;
+  }
+
+  .pokeFace{ width: 42px; height: 42px; }
+  .poke-dropdown{ max-height: 240px; }
+
+  .team-modal-box{ max-width: none; width: 100%; }
+  .team-modal-title{ font-size: 21px; }
+  .team-poke-grid{ grid-template-columns: repeat(3, 1fr); }
+}
+
+/* 431px - 540px (móviles grandes / Max / Plus) */
+@media (min-width: 431px) and (max-width: 540px){
+
+  .open-modal-btn,
+  #openModalBtn{
+    width: calc(100% - 40px);
+    max-width: none;
+    display: flex;
+    margin: 20px auto 22px;
+    padding: 16px 26px;
+    font-size: 19px;
+    border-radius: 18px;
+  }
+
+  .modal-overlay{
+    align-items: flex-start;
+    padding: 18px 14px;
+  }
+
+  .modal-box{
+    width: 100%;
+    max-width: none;
+    padding: 26px 20px;
+    border-radius: 22px;
+    max-height: calc(100vh - 36px);
+  }
+
+  .modal-title{ font-size: 28px; }
+
+  .modal-form-row{ flex-direction: column; gap: 12px; }
+  .form-column{ min-width: 100%; }
+
+  .sub1{ font-size: 28px; line-height: 34px; }
+
+  .pokeFace{ width: 46px; height: 46px; }
+  .poke-dropdown{ max-height: 260px; }
+
+  .team-modal-box{ max-width: none; width: 100%; }
+  .team-modal-title{ font-size: 22px; }
+  .team-poke-grid{ grid-template-columns: repeat(3, 1fr); }
+}
+
+/* 541px - 767px (phablets y móviles muy anchos) */
+@media (min-width: 541px) and (max-width: 767px){
+
+  .open-modal-btn,
+  #openModalBtn{
+    width: min(560px, calc(100% - 48px));
+    display: flex;
+    margin: 24px auto 22px;
+    padding: 16px 30px;
+    font-size: 20px;
+  }
+
+  .modal-overlay{
+    padding: 18px 16px;
+  }
+
+  .modal-box{
+    width: min(720px, 100%);
+    padding: 30px 24px;
+    max-height: calc(100vh - 36px);
+  }
+
+  .modal-title{ font-size: 30px; }
+
+  .modal-form-row{ flex-direction: row; }
+  .form-column{ min-width: 240px; }
+
+  .sub1{ font-size: 30px; line-height: 38px; }
+
+  .pokeFace{ width: 48px; height: 48px; }
+  .poke-dropdown{ max-height: 280px; }
+
+  .team-modal-box{ max-width: 560px; }
+  .team-poke-grid{ grid-template-columns: repeat(3, 1fr); }
+}
+
+/* 768px - 820px (iPad Mini y tablets pequeñas) */
+@media (min-width: 768px) and (max-width: 820px){
+
+  .open-modal-btn,
+  #openModalBtn{
+    width: 560px;
+    max-width: calc(100% - 64px);
+    margin: 26px auto 22px;
+  }
+
+  .modal-overlay{ padding: 22px 18px; }
+
+  .modal-box{
+    width: min(720px, 100%);
+    padding: 34px 28px;
+  }
+
+  .modal-title{ font-size: 32px; }
+
+  .sub1{ font-size: 32px; line-height: 40px; }
+
+  .team-modal-box{ max-width: 560px; }
+  .team-poke-grid{ grid-template-columns: repeat(3, 1fr); }
+}
+
+/* 821px - 910px (iPad Air y tablets medianas) */
+@media (min-width: 821px) and (max-width: 910px){
+
+  .modal-box{
+    width: min(740px, 100%);
+    padding: 36px 30px;
+  }
+
+  .modal-title{ font-size: 33px; }
+  .sub1{ font-size: 34px; line-height: 42px; }
+}
+
+/* 911px - 1023px (Surface Pro 7 / iPad Pro 11") */
+@media (min-width: 911px) and (max-width: 1023px){
+
+  .modal-box{
+    width: min(760px, 100%);
+    padding: 38px 32px;
+  }
+
+  .modal-title{ font-size: 34px; }
+  .sub1{ font-size: 35px; line-height: 44px; }
+}
+
+/* 1024px - 1279px (laptops pequeñas) */
+@media (min-width: 1024px) and (max-width: 1279px){
+
+  .open-modal-btn,
+  #openModalBtn{
+    margin-top: 34px;
+  }
+
+  .modal-box{
+    width: min(780px, 100%);
+  }
+}
+
+/* 1280px - 1439px (laptops medianas / monitores HD) */
+@media (min-width: 1280px) and (max-width: 1439px){
+
+  .open-modal-btn,
+  #openModalBtn{
+    margin-top: 38px;
+  }
+
+  .modal-box{
+    width: min(820px, 100%);
+  }
+}
+
+/* 1440px - 1919px (Full HD estándar) */
+@media (min-width: 1440px) and (max-width: 1919px){
+
+  .open-modal-btn,
+  #openModalBtn{
+    margin-top: 40px;
+  }
+
+  .modal-box{
+    width: min(860px, 100%);
+  }
+}
+
+/* 1920px + (4K y Ultra Wide) */
+@media (min-width: 1920px){
+
+  .open-modal-btn,
+  #openModalBtn{
+    margin-top: 44px;
+    font-size: 24px;
+    padding: 18px 42px;
+  }
+
+  .modal-box{
+    width: min(920px, 100%);
+  }
+
+  .modal-title{ font-size: 36px; }
+  .sub1{ font-size: 38px; line-height: 46px; }
+}
+
+/* =========================================================
+   LANDSCAPE (Horizontal)
+   ========================================================= */
+
+/* Móviles landscape (max-width: 767px) */
+@media (max-width: 767px) and (orientation: landscape){
+  .modal-overlay{
+    align-items: flex-start;
+    padding: 10px 10px;
+  }
+
+  .modal-box{
+    max-height: calc(100vh - 20px);
+    padding: 16px 14px;
+  }
+
+  .modal-form-row{
+    flex-direction: column;
+  }
+
+  .open-modal-btn,
+  #openModalBtn{
+    margin-top: 14px;
+    margin-bottom: 14px;
+  }
+}
+
+/* Tablets landscape (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape){
+  .modal-box{
+    max-height: calc(100vh - 28px);
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — INPUTS + LEAGUE SWITCH + DROPDOWN + SEND BTN
+   (para el bloque que pegaste)
+   Breakpoints según tu proyecto
+   ========================================================= */
+
+/* < 374px (móviles muy pequeños / fold cover) */
+@media (max-width: 374px){
+
+  /* Labels e inputs */
+  .modal-box label{
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+
+  .modal-box input{
+    padding: 10px 10px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+
+  /* Botones liga */
+  .league-switch-btn{
+    gap: 8px;
+    padding: 9px 10px;
+    border-radius: 14px;
+    font-size: 14px;
+  }
+
+  .league-switch-logo{
+    width: 24px;
+    height: 24px;
+  }
+
+  .league-switch-text{
+    font-size: 13px;
+  }
+
+  /* Badge */
+  .league-hint-badge{
+    padding: 3px 10px;
+    margin-left: 6px;
+    font-size: 11px;
+    letter-spacing: .5px;
+  }
+
+  /* Dropdown */
+  .poke-dropdown{
+    max-height: 200px;
+    border-radius: 12px;
+  }
+
+  .poke-item{
+    padding: 9px 10px;
+    gap: 10px;
+  }
+
+  .poke-name{
+    font-size: 13px;
+  }
+
+  .poke-muted{
+    font-size: 11px;
+  }
+
+  /* Botón enviar */
+  .send-all-btn{
+    padding: 13px;
+    border-radius: 12px;
+    font-size: 16px;
+    margin-top: 14px;
+  }
+}
+
+/* 375px - 389px (iPhone SE modelo oro) */
+@media (min-width: 375px) and (max-width: 389px){
+
+  .modal-box label{
+    font-size: 13.5px;
+  }
+
+  .modal-box input{
+    padding: 10px 11px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    font-size: 14.5px;
+  }
+
+  .league-switch-btn{
+    gap: 9px;
+    padding: 9px 12px;
+    border-radius: 14px;
+    font-size: 14.5px;
+  }
+
+  .league-switch-logo{ width: 24px; height: 24px; }
+  .league-switch-text{ font-size: 13.5px; }
+
+  .league-hint-badge{
+    padding: 3px 10px;
+    margin-left: 6px;
+    font-size: 11.5px;
+  }
+
+  .poke-dropdown{ max-height: 220px; }
+  .poke-item{ padding: 9px 10px; }
+  .poke-name{ font-size: 13.5px; }
+  .poke-muted{ font-size: 11.5px; }
+
+  .send-all-btn{
+    padding: 13px;
+    font-size: 16.5px;
+    margin-top: 14px;
+  }
+}
+
+/* 390px - 430px (móviles modernos estándar) */
+@media (min-width: 390px) and (max-width: 430px){
+
+  .modal-box label{
+    font-size: 14px;
+  }
+
+  .modal-box input{
+    padding: 11px 12px;
+    border-radius: 11px;
+    margin-bottom: 13px;
+    font-size: 15px;
+  }
+
+  .league-switch-btn{
+    padding: 10px 13px;
+    border-radius: 16px;
+  }
+
+  .league-switch-logo{ width: 26px; height: 26px; }
+  .league-switch-text{ font-size: 14px; }
+
+  .league-hint-badge{
+    padding: 4px 11px;
+    font-size: 12px;
+  }
+
+  .poke-dropdown{ max-height: 240px; }
+  .poke-item{ padding: 10px 11px; }
+  .poke-name{ font-size: 14px; }
+  .poke-muted{ font-size: 12px; }
+
+  .send-all-btn{
+    padding: 14px;
+    font-size: 17px;
+    margin-top: 16px;
+  }
+}
+
+/* 431px - 540px (móviles grandes / Max / Plus) */
+@media (min-width: 431px) and (max-width: 540px){
+
+  .modal-box label{
+    font-size: 14.5px;
+  }
+
+  .modal-box input{
+    padding: 12px 12px;
+    border-radius: 12px;
+    margin-bottom: 14px;
+    font-size: 15.5px;
+  }
+
+  .league-switch-btn{
+    padding: 10px 14px;
+    border-radius: 18px;
+  }
+
+  .league-switch-logo{ width: 27px; height: 27px; }
+  .league-switch-text{ font-size: 14.5px; }
+
+  .league-hint-badge{
+    padding: 4px 12px;
+    font-size: 12px;
+  }
+
+  .poke-dropdown{ max-height: 260px; }
+  .poke-item{ padding: 10px 12px; }
+  .poke-name{ font-size: 14.5px; }
+  .poke-muted{ font-size: 12px; }
+
+  .send-all-btn{
+    font-size: 17.5px;
+    margin-top: 16px;
+  }
+}
+
+/* 541px - 767px (phablets y móviles muy anchos) */
+@media (min-width: 541px) and (max-width: 767px){
+
+  .modal-box label{
+    font-size: 15px;
+  }
+
+  .modal-box input{
+    font-size: 16px;
+  }
+
+  .league-switch-text{
+    font-size: 15px;
+  }
+
+  .league-switch-logo{
+    width: 28px;
+    height: 28px;
+  }
+
+  .league-hint-badge{
+    font-size: 12px;
+  }
+
+  .poke-dropdown{
+    max-height: 280px;
+  }
+
+  .send-all-btn{
+    font-size: 18px;
+  }
+}
+
+/* 768px - 820px (iPad Mini y tablets pequeñas) */
+@media (min-width: 768px) and (max-width: 820px){
+
+  .modal-box label{ font-size: 15px; }
+  .modal-box input{ font-size: 16px; }
+
+  .league-switch-btn{ padding: 10px 14px; }
+  .league-switch-text{ font-size: 15px; }
+
+  .send-all-btn{ font-size: 18px; }
+}
+
+/* 821px - 910px (iPad Air y tablets medianas) */
+@media (min-width: 821px) and (max-width: 910px){
+
+  .modal-box label{ font-size: 15px; }
+  .modal-box input{ font-size: 16px; }
+
+  .league-switch-text{ font-size: 15px; }
+}
+
+/* 911px - 1023px (Surface Pro 7 / iPad Pro 11") */
+@media (min-width: 911px) and (max-width: 1023px){
+
+  .modal-box input{ font-size: 16px; }
+  .send-all-btn{ font-size: 18px; }
+}
+
+/* 1024px - 1279px (laptops pequeñas) */
+@media (min-width: 1024px) and (max-width: 1279px){
+  /* casi igual al base, pero ajustamos un poco los badges si quieres */
+  .league-hint-badge{ font-size: 12px; }
+}
+
+/* 1280px - 1439px (laptops medianas / monitores HD) */
+@media (min-width: 1280px) and (max-width: 1439px){
+  .league-hint-badge{ font-size: 12px; }
+}
+
+/* 1440px - 1919px (Full HD estándar) */
+@media (min-width: 1440px) and (max-width: 1919px){
+  .league-hint-badge{ font-size: 12px; }
+}
+
+/* 1920px+ (4K y Ultra Wide) */
+@media (min-width: 1920px){
+  .modal-box input{ font-size: 17px; }
+  .league-switch-text{ font-size: 16px; }
+  .send-all-btn{ font-size: 19px; }
+}
+
+/* =========================================================
+   LANDSCAPE (Horizontal)
+   ========================================================= */
+
+/* Móviles landscape */
+@media (max-width: 767px) and (orientation: landscape){
+  .poke-dropdown{ max-height: 180px; }
+  .send-all-btn{ margin-top: 12px; }
+}
+
+/* Tablets landscape */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape){
+  .poke-dropdown{ max-height: 220px; }
+}
+
+/* =========================================================
+   RESPONSIVE — TOAST
+   Breakpoints según tu proyecto
+   ========================================================= */
+
+/* < 374px (móviles muy pequeños / fold cover) */
+@media (max-width: 374px){
+  .toast{
+    bottom: 12px;
+    width: calc(100% - 20px);
+    max-width: none;
+
+    padding: 10px 14px;
+    border-radius: 18px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 1.2;
+  }
+}
+
+/* 375px - 389px (iPhone SE) */
+@media (min-width: 375px) and (max-width: 389px){
+  .toast{
+    bottom: 14px;
+    width: calc(100% - 24px);
+    max-width: none;
+
+    padding: 10px 16px;
+    border-radius: 20px;
+    font-size: 13.5px;
+    text-align: center;
+    line-height: 1.2;
+  }
+}
+
+/* 390px - 430px (móviles modernos estándar) */
+@media (min-width: 390px) and (max-width: 430px){
+  .toast{
+    bottom: 16px;
+    width: calc(100% - 28px);
+    max-width: none;
+
+    padding: 11px 18px;
+    border-radius: 22px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.2;
+  }
+}
+
+/* 431px - 540px (móviles grandes / Max / Plus) */
+@media (min-width: 431px) and (max-width: 540px){
+  .toast{
+    bottom: 18px;
+    width: min(520px, calc(100% - 32px));
+    max-width: none;
+
+    padding: 12px 20px;
+    border-radius: 24px;
+    font-size: 14.5px;
+    text-align: center;
+  }
+}
+
+/* 541px - 767px (phablets y móviles muy anchos) */
+@media (min-width: 541px) and (max-width: 767px){
+  .toast{
+    bottom: 18px;
+    width: min(560px, calc(100% - 40px));
+    padding: 12px 22px;
+    border-radius: 28px;
+    font-size: 15px;
+  }
+}
+
+/* 768px - 820px (iPad Mini / tablets pequeñas) */
+@media (min-width: 768px) and (max-width: 820px){
+  .toast{
+    bottom: 20px;
+    width: min(620px, calc(100% - 56px));
+    padding: 12px 24px;
+    border-radius: 32px;
+    font-size: 15px;
+  }
+}
+
+/* 821px - 910px (iPad Air / tablets medianas) */
+@media (min-width: 821px) and (max-width: 910px){
+  .toast{
+    bottom: 20px;
+    width: min(640px, calc(100% - 64px));
+    padding: 12px 26px;
+    border-radius: 34px;
+    font-size: 15.5px;
+  }
+}
+
+/* 911px - 1023px (Surface Pro 7 / iPad Pro 11") */
+@media (min-width: 911px) and (max-width: 1023px){
+  .toast{
+    bottom: 20px;
+    width: min(660px, calc(100% - 72px));
+    padding: 12px 28px;
+    border-radius: 36px;
+    font-size: 16px;
+  }
+}
+
+/* 1024px - 1279px (laptops pequeñas) */
+@media (min-width: 1024px) and (max-width: 1279px){
+  .toast{
+    bottom: 20px;
+    width: min(680px, calc(100% - 80px));
+    padding: 12px 28px;
+    border-radius: 40px;
+    font-size: 16px;
+  }
+}
+
+/* 1280px - 1439px (laptops medianas / monitores HD) */
+@media (min-width: 1280px) and (max-width: 1439px){
+  .toast{
+    bottom: 22px;
+    width: min(720px, calc(100% - 96px));
+    padding: 13px 30px;
+    border-radius: 44px;
+    font-size: 16px;
+  }
+}
+
+/* 1440px - 1919px (Full HD estándar) */
+@media (min-width: 1440px) and (max-width: 1919px){
+  .toast{
+    bottom: 22px;
+    width: min(760px, calc(100% - 110px));
+    padding: 13px 32px;
+    border-radius: 46px;
+    font-size: 16.5px;
+  }
+}
+
+/* 1920px+ (4K y Ultra Wide) */
+@media (min-width: 1920px){
+  .toast{
+    bottom: 24px;
+    width: min(820px, calc(100% - 140px));
+    padding: 14px 34px;
+    border-radius: 50px;
+    font-size: 17px;
+  }
+}
+
+/* =========================================================
+   LANDSCAPE (Horizontal)
+   ========================================================= */
+
+/* Móviles landscape */
+@media (max-width: 767px) and (orientation: landscape){
+  .toast{
+    bottom: 10px;
+    width: calc(100% - 20px);
+    font-size: 13px;
+    padding: 10px 14px;
+    border-radius: 18px;
+  }
+}
+
+/* Tablets landscape */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape){
+  .toast{
+    bottom: 14px;
+    width: min(680px, calc(100% - 64px));
+  }
+}
+
+
+/* =========================================================
+   ✅ RESPONSIVE @media — PREP COUNTDOWN BAR
+   Pegar en: responsive.css (al final)
+========================================================= */
+
+/* =========================
+   📱 < 374px (móviles muy pequeños)
+   ========================= */
+@media (max-width: 374px){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 96%;
+    max-width: none;
+    margin: 10px auto 0;
+    padding: 10px 12px;
+    border-radius: 16px;
+  }
+
+  .prep-countdown-inner{
+    gap: 10px;
+  }
+
+  .prep-phase,
+  .prep-label{
+    font-size: 14px;
+  }
+
+  .prep-time,
+  #prepCountdown{
+    font-size: 22px;
+  }
+}
+
+/* =========================
+   📱 375px – 389px (modelo base)
+   ========================= */
+@media (min-width: 375px) and (max-width: 389px){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 95%;
+    max-width: none;
+    margin: 10px auto 0;
+    padding: 10px 14px;
+    border-radius: 16px;
+  }
+
+  .prep-countdown-inner{ gap: 12px; }
+
+  .prep-phase,
+  .prep-label{ font-size: 15px; }
+
+  .prep-time,
+  #prepCountdown{ font-size: 24px; }
+}
+
+/* =========================
+   📱 390px – 430px
+   ========================= */
+@media (min-width: 390px) and (max-width: 430px){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 94%;
+    max-width: 520px;
+    margin: 12px auto 0;
+    padding: 11px 14px;
+    border-radius: 17px;
+  }
+
+  .prep-countdown-inner{ gap: 12px; }
+
+  .prep-phase,
+  .prep-label{ font-size: 16px; }
+
+  .prep-time,
+  #prepCountdown{ font-size: 26px; }
+}
+
+/* =========================
+   📱 431px – 540px
+   ========================= */
+@media (min-width: 431px) and (max-width: 540px){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 92%;
+    max-width: 640px;
+    margin: 12px auto 0;
+    padding: 12px 16px;
+    border-radius: 18px;
+  }
+
+  .prep-countdown-inner{ gap: 14px; }
+
+  .prep-phase,
+  .prep-label{ font-size: 17px; }
+
+  .prep-time,
+  #prepCountdown{ font-size: 28px; }
+}
+
+/* =========================
+   📱 541px – 767px
+   ========================= */
+@media (min-width: 541px) and (max-width: 767px){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 90%;
+    max-width: 760px;
+    margin: 14px auto 0;
+    padding: 12px 18px;
+    border-radius: 18px;
+  }
+
+  .prep-countdown-inner{ gap: 16px; }
+
+  .prep-phase,
+  .prep-label{ font-size: 18px; }
+
+  .prep-time,
+  #prepCountdown{ font-size: 30px; }
+}
+
+/* =========================
+   📟 768px – 820px
+   ========================= */
+@media (min-width: 768px) and (max-width: 820px){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 88%;
+    max-width: 820px;
+    margin: 14px auto 0;
+    padding: 14px 18px;
+    border-radius: 18px;
+  }
+
+  .prep-countdown-inner{ gap: 16px; }
+
+  .prep-phase,
+  .prep-label{ font-size: 19px; }
+
+  .prep-time,
+  #prepCountdown{ font-size: 32px; }
+}
+
+/* =========================
+   📟 821px – 910px
+   ========================= */
+@media (min-width: 821px) and (max-width: 910px){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 86%;
+    max-width: 900px;
+    margin: 14px auto 0;
+    padding: 14px 18px;
+    border-radius: 18px;
+  }
+
+  .prep-phase,
+  .prep-label{ font-size: 19px; }
+
+  .prep-time,
+  #prepCountdown{ font-size: 33px; }
+}
+
+/* =========================
+   📟 911px – 1023px
+   ========================= */
+@media (min-width: 911px) and (max-width: 1023px){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 84%;
+    max-width: 980px;
+    margin: 14px auto 0;
+    padding: 14px 18px;
+    border-radius: 18px;
+  }
+
+  .prep-phase,
+  .prep-label{ font-size: 20px; }
+
+  .prep-time,
+  #prepCountdown{ font-size: 34px; }
+}
+
+/* =========================
+   💻 1024px – 1279px
+   ========================= */
+@media (min-width: 1024px) and (max-width: 1279px){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 82%;
+    max-width: 980px;
+    margin: 14px auto 0;
+    padding: 14px 18px;
+  }
+
+  .prep-phase,
+  .prep-label{ font-size: 20px; }
+
+  .prep-time,
+  #prepCountdown{ font-size: 34px; }
+}
+
+/* =========================
+   💻 1280px – 1439px
+   ========================= */
+@media (min-width: 1280px) and (max-width: 1439px){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 78%;
+    max-width: 1040px;
+    margin: 14px auto 0;
+    padding: 14px 20px;
+  }
+
+  .prep-phase,
+  .prep-label{ font-size: 20px; }
+
+  .prep-time,
+  #prepCountdown{ font-size: 35px; }
+}
+
+/* =========================
+   💻 1440px – 1919px
+   ========================= */
+@media (min-width: 1440px) and (max-width: 1919px){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 74%;
+    max-width: 1100px;
+    margin: 16px auto 0;
+    padding: 15px 22px;
+  }
+
+  .prep-phase,
+  .prep-label{ font-size: 21px; }
+
+  .prep-time,
+  #prepCountdown{ font-size: 36px; }
+}
+
+/* =========================
+   🖥️ 1920px +
+   ========================= */
+@media (min-width: 1920px){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 70%;
+    max-width: 1200px;
+    margin: 18px auto 0;
+    padding: 16px 24px;
+    border-radius: 20px;
+  }
+
+  .prep-countdown-inner{ gap: 18px; }
+
+  .prep-phase,
+  .prep-label{ font-size: 22px; }
+
+  .prep-time,
+  #prepCountdown{ font-size: 38px; }
+}
+
+/* =========================================================
+   🔄 LANDSCAPE (Horizontal)
+========================================================= */
+
+/* Móviles Horizontal */
+@media (max-width: 767px) and (orientation: landscape){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 96%;
+    max-width: none;
+    margin: 6px auto 0;
+    padding: 8px 10px;
+    border-radius: 14px;
+  }
+
+  .prep-countdown-inner{ gap: 10px; }
+
+  .prep-phase,
+  .prep-label{ font-size: 14px; }
+
+  .prep-time,
+  #prepCountdown{ font-size: 22px; }
+}
+
+/* Tablets Horizontal */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 88%;
+    max-width: 980px;
+    margin: 10px auto 0;
+    padding: 10px 14px;
+    border-radius: 16px;
+  }
+
+  .prep-phase,
+  .prep-label{ font-size: 18px; }
+
+  .prep-time,
+  #prepCountdown{ font-size: 28px; }
+}
+
+/* =========================================================
+   🛠️ HARDFIXES (Casos especiales)
+========================================================= */
+
+/* Google Nest Hub: 1024 x 600 */
+@media (width: 1024px) and (height: 600px){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 96%;
+    max-width: none;
+    margin: 6px auto 0;
+    padding: 8px 10px;
+    border-radius: 14px;
+  }
+
+  .prep-phase,
+  .prep-label{ font-size: 14px; }
+
+  .prep-time,
+  #prepCountdown{ font-size: 22px; }
+}
+
+/* iPad Pro 12.9": 1024 x 1366 */
+@media (width: 1024px) and (height: 1366px){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 84%;
+    max-width: 920px;
+    margin: 16px auto 0;
+    padding: 14px 18px;
+  }
+
+  .prep-phase,
+  .prep-label{ font-size: 20px; }
+
+  .prep-time,
+  #prepCountdown{ font-size: 34px; }
+}
+
+/* Asus Zenbook Fold (alto): ~853 x 1280 */
+@media (min-width: 840px) and (max-width: 870px) and (min-height: 1200px){
+  .prep-countdown-bar,
+  #prepCountdownBar{
+    width: 90%;
+    max-width: 760px;
+    margin: 14px auto 0;
+    padding: 12px 16px;
+  }
+
+  .prep-phase,
+  .prep-label{ font-size: 19px; }
+
+  .prep-time,
+  #prepCountdown{ font-size: 32px; }
+}
+
+
+/* =========================================================
+   ✅ RESPONSIVE @media — META PARTICIPANTES
+   Pegar en: responsive.css (después del CSS base)
+========================================================= */
+
+/* =========================
+   📱 < 374px
+========================= */
+@media (max-width: 374px){
+  .meta-row,
+  .meta-row--participants{
+    gap: 8px;
+    margin: 2px 0;
+  }
+
+  .meta-label{
+    font-size: 16px;
+    margin-right: 0;
+    line-height: 1.05;
+  }
+
+  .meta-value,
+  .meta-value--participants{
+    font-size: 22px;
+    gap: 8px;
+    line-height: 1.05;
+  }
+
+  .participants-text{
+    font-size: 22px;
+  }
+
+  .participants-sub{
+    font-size: 14px;
+  }
+}
+
+/* =========================
+   📱 375px – 389px (Modelo Base)
+========================= */
+@media (min-width: 375px) and (max-width: 389px){
+  .meta-row,
+  .meta-row--participants{
+    gap: 10px;
+  }
+
+  .meta-label{
+    font-size: 17px;
+    margin-right: 4px;
+  }
+
+  .meta-value,
+  .meta-value--participants{
+    font-size: 24px;
+    gap: 8px;
+  }
+
+  .participants-text{
+    font-size: 24px;
+  }
+
+  .participants-sub{
+    font-size: 14px;
+  }
+}
+
+/* =========================
+   📱 390px – 430px
+========================= */
+@media (min-width: 390px) and (max-width: 430px){
+  .meta-row,
+  .meta-row--participants{
+    gap: 12px;
+  }
+
+  .meta-label{
+    font-size: 18px;
+    margin-right: 6px;
+  }
+
+  .meta-value,
+  .meta-value--participants{
+    font-size: 26px;
+    gap: 10px;
+  }
+
+  .participants-text{
+    font-size: 26px;
+  }
+
+  .participants-sub{
+    font-size: 15px;
+  }
+}
+
+/* =========================
+   📱 431px – 540px
+========================= */
+@media (min-width: 431px) and (max-width: 540px){
+  .meta-row,
+  .meta-row--participants{
+    gap: 14px;
+  }
+
+  .meta-label{
+    font-size: 20px;
+    margin-right: 8px;
+  }
+
+  .meta-value,
+  .meta-value--participants{
+    font-size: 30px;
+    gap: 10px;
+  }
+
+  .participants-text{
+    font-size: 28px;
+  }
+
+  .participants-sub{
+    font-size: 16px;
+  }
+}
+
+/* =========================
+   📱 541px – 767px
+========================= */
+@media (min-width: 541px) and (max-width: 767px){
+  .meta-row,
+  .meta-row--participants{
+    gap: 14px;
+  }
+
+  .meta-label{
+    font-size: 22px;
+    margin-right: 10px;
+  }
+
+  .meta-value,
+  .meta-value--participants{
+    font-size: 34px;
+    gap: 10px;
+  }
+
+  .participants-text{
+    font-size: 30px;
+  }
+
+  .participants-sub{
+    font-size: 17px;
+  }
+}
+
+/* =========================
+   📟 768px – 820px
+========================= */
+@media (min-width: 768px) and (max-width: 820px){
+  .meta-row,
+  .meta-row--participants{
+    gap: 14px;
+  }
+
+  .meta-label{
+    font-size: 24px;
+  }
+
+  .meta-value,
+  .meta-value--participants{
+    font-size: 36px;
+  }
+
+  .participants-text{
+    font-size: 32px;
+  }
+
+  .participants-sub{
+    font-size: 18px;
+  }
+}
+
+/* =========================
+   📟 821px – 910px
+========================= */
+@media (min-width: 821px) and (max-width: 910px){
+  .meta-label{ font-size: 25px; }
+
+  .meta-value,
+  .meta-value--participants{ font-size: 38px; }
+
+  .participants-text{ font-size: 34px; }
+  .participants-sub{ font-size: 18px; }
+}
+
+/* =========================
+   📟 911px – 1023px
+========================= */
+@media (min-width: 911px) and (max-width: 1023px){
+  .meta-label{ font-size: 26px; }
+
+  .meta-value,
+  .meta-value--participants{ font-size: 40px; }
+
+  .participants-text{ font-size: 35px; }
+  .participants-sub{ font-size: 18px; }
+}
+
+/* =========================
+   💻 1024px – 1279px
+========================= */
+@media (min-width: 1024px) and (max-width: 1279px){
+  .meta-row,
+  .meta-row--participants{
+    gap: 14px;
+  }
+
+  .meta-label{ font-size: 26px; }
+
+  .meta-value,
+  .meta-value--participants{ font-size: 40px; }
+
+  .participants-text{ font-size: 34px; }
+  .participants-sub{ font-size: 18px; }
+}
+
+/* =========================
+   💻 1280px – 1439px
+========================= */
+@media (min-width: 1280px) and (max-width: 1439px){
+  .meta-label{ font-size: 27px; }
+
+  .meta-value,
+  .meta-value--participants{ font-size: 42px; }
+
+  .participants-text{ font-size: 36px; }
+  .participants-sub{ font-size: 18px; }
+}
+
+/* =========================
+   💻 1440px – 1919px
+========================= */
+@media (min-width: 1440px) and (max-width: 1919px){
+  .meta-label{ font-size: 28px; }
+
+  .meta-value,
+  .meta-value--participants{ font-size: 44px; }
+
+  .participants-text{ font-size: 38px; }
+  .participants-sub{ font-size: 19px; }
+}
+
+/* =========================
+   🖥️ 1920px +
+========================= */
+@media (min-width: 1920px){
+  .meta-row,
+  .meta-row--participants{
+    gap: 16px;
+  }
+
+  .meta-label{ font-size: 30px; }
+
+  .meta-value,
+  .meta-value--participants{ font-size: 48px; }
+
+  .participants-text{ font-size: 42px; }
+  .participants-sub{ font-size: 20px; }
+}
+
+/* =========================================================
+   🔄 LANDSCAPE (Horizontal)
+========================================================= */
+
+/* Móviles Horizontal */
+@media (max-width: 767px) and (orientation: landscape){
+  .meta-row,
+  .meta-row--participants{
+    gap: 8px;
+    margin: 1px 0;
+  }
+
+  .meta-label{
+    font-size: 16px;
+    margin-right: 4px;
+  }
+
+  .meta-value,
+  .meta-value--participants{
+    font-size: 24px;
+    gap: 8px;
+  }
+
+  .participants-text{ font-size: 24px; }
+  .participants-sub{ font-size: 14px; }
+}
+
+/* Tablets Horizontal */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape){
+  .meta-label{ font-size: 22px; }
+
+  .meta-value,
+  .meta-value--participants{ font-size: 34px; }
+
+  .participants-text{ font-size: 30px; }
+  .participants-sub{ font-size: 17px; }
+}
+
+/* =========================================================
+   🛠️ HARDFIXES (Casos Especiales)
+========================================================= */
+
+/* Google Nest Hub (1024 x 600) */
+@media (width: 1024px) and (height: 600px){
+  .meta-label{ font-size: 18px; }
+
+  .meta-value,
+  .meta-value--participants{ font-size: 28px; }
+
+  .participants-text{ font-size: 26px; }
+  .participants-sub{ font-size: 15px; }
+}
+
+/* iPad Pro 12.9" (1024 x 1366) */
+@media (width: 1024px) and (height: 1366px){
+  .meta-label{ font-size: 26px; }
+
+  .meta-value,
+  .meta-value--participants{ font-size: 40px; }
+
+  .participants-text{ font-size: 34px; }
+  .participants-sub{ font-size: 18px; }
+}
+
+/* Asus Zenbook Fold (~853 x 1280) */
+@media (min-width: 840px) and (max-width: 870px) and (min-height: 1200px){
+  .meta-label{ font-size: 24px; }
+
+  .meta-value,
+  .meta-value--participants{ font-size: 38px; }
+
+  .participants-text{ font-size: 32px; }
+  .participants-sub{ font-size: 18px; }
+}
+
+/* =========================================================
+   ✅ RESPONSIVE @media — PREP (Resumen + Grid + Cards)
+   Pegar en: responsive.css (después del CSS base)
+========================================================= */
+
+/* =========================
+   📱 < 374px
+========================= */
+@media (max-width: 374px){
+  .event-summary,
+  #eventSummary{
+    width: 96%;
+    max-width: none;
+    margin: 14px auto 0;
+  }
+
+  .prep-wrap{
+    width: 96%;
+    max-width: none;
+    margin: 14px auto 0;
+  }
+
+  .prep-grid{
+    grid-template-columns: 1fr;
+    column-gap: 12px;
+    row-gap: 12px;
+    margin-top: 12px;
+  }
+
+  .prep-card{
+    padding: 10px;
+    border-radius: 16px;
+    gap: 8px;
+  }
+  .prep-card::before{
+    border-radius: 16px !important;
+    padding: 2px;
+  }
+
+  .prep-name{
+    font-size: 22px;
+    letter-spacing: 0.2px;
+  }
+
+  .prep-code-row{
+    padding: 8px 8px;
+    border-radius: 12px;
+    gap: 8px;
+  }
+  .prep-code-label{ font-size: 10px; }
+  .prep-code-val{ font-size: 13px; letter-spacing: 0.8px; }
+
+  .prep-copy-btn{
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+  }
+  .prep-copy-ico{
+    width: 18px;
+    height: 18px;
+  }
+
+  .prep-team{
+    gap: 6px;
+    padding: 7px;
+    border-radius: 14px;
+  }
+
+  .prep-poke{
+    height: 44px;
+    border-radius: 14px;
+  }
+  .prep-poke img{
+    width: 38px;
+    height: 38px;
+  }
+
+  .prep-status{
+    font-size: 11px;
+    padding: 7px 10px;
+    gap: 8px;
+  }
+  .prep-status::before{
+    width: 7px;
+    height: 7px;
+  }
+}
+
+/* =========================
+   📱 375px – 389px (Modelo Base)
+========================= */
+@media (min-width: 375px) and (max-width: 389px){
+  .event-summary,
+  #eventSummary{
+    width: 95%;
+    max-width: none;
+    margin: 16px auto 0;
+  }
+
+  .prep-wrap{
+    width: 95%;
+    max-width: none;
+    margin: 16px auto 0;
+  }
+
+  .prep-grid{
+    grid-template-columns: 1fr;
+    column-gap: 14px;
+    row-gap: 14px;
+    margin-top: 12px;
+  }
+
+  .prep-card{ padding: 10px; border-radius: 16px; }
+  .prep-card::before{ border-radius: 16px !important; }
+
+  .prep-name{ font-size: 24px; }
+
+  .prep-code-row{ padding: 8px 9px; border-radius: 12px; }
+  .prep-code-label{ font-size: 10px; }
+  .prep-code-val{ font-size: 13px; }
+
+  .prep-copy-btn{ width: 34px; height: 34px; border-radius: 10px; }
+  .prep-copy-ico{ width: 18px; height: 18px; }
+
+  .prep-team{ gap: 7px; padding: 7px; border-radius: 14px; }
+  .prep-poke{ height: 46px; border-radius: 14px; }
+  .prep-poke img{ width: 40px; height: 40px; }
+
+  .prep-status{ font-size: 11px; padding: 7px 10px; }
+}
+
+/* =========================
+   📱 390px – 430px
+========================= */
+@media (min-width: 390px) and (max-width: 430px){
+  .event-summary,
+  #eventSummary{
+    width: 94%;
+    max-width: 680px;
+    margin: 16px auto 0;
+  }
+
+  .prep-wrap{
+    width: 94%;
+    max-width: 720px;
+    margin: 16px auto 0;
+  }
+
+  .prep-grid{
+    grid-template-columns: 1fr;
+    column-gap: 16px;
+    row-gap: 16px;
+    margin-top: 12px;
+  }
+
+  .prep-card{ padding: 11px; border-radius: 17px; }
+  .prep-card::before{ border-radius: 17px !important; }
+
+  .prep-name{ font-size: 26px; }
+
+  .prep-code-row{ padding: 9px 10px; border-radius: 13px; }
+  .prep-code-label{ font-size: 10px; }
+  .prep-code-val{ font-size: 14px; }
+
+  .prep-copy-btn{ width: 36px; height: 36px; border-radius: 11px; }
+  .prep-copy-ico{ width: 19px; height: 19px; }
+
+  .prep-team{ gap: 8px; padding: 8px; border-radius: 15px; }
+  .prep-poke{ height: 48px; border-radius: 15px; }
+  .prep-poke img{ width: 42px; height: 42px; }
+
+  .prep-status{ font-size: 12px; padding: 8px 12px; }
+}
+
+/* =========================
+   📱 431px – 540px
+========================= */
+@media (min-width: 431px) and (max-width: 540px){
+  .event-summary,
+  #eventSummary{
+    width: 92%;
+    max-width: 820px;
+    margin: 18px auto 0;
+  }
+
+  .prep-wrap{
+    width: 92%;
+    max-width: 880px;
+    margin: 18px auto 0;
+  }
+
+  /* ✅ ya puedes pasar a 2 columnas */
+  .prep-grid{
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    column-gap: 18px;
+    row-gap: 18px;
+    margin-top: 14px;
+  }
+
+  .prep-name{ font-size: 28px; }
+
+  .prep-code-label{ font-size: 11px; }
+  .prep-code-val{ font-size: 14px; }
+
+  .prep-copy-btn{ width: 38px; height: 38px; }
+
+  .prep-status{ font-size: 12px; }
+}
+
+/* =========================
+   📱 541px – 767px
+========================= */
+@media (min-width: 541px) and (max-width: 767px){
+  .event-summary,
+  #eventSummary{
+    width: 90%;
+    max-width: 980px;
+    margin: 18px auto 0;
+  }
+
+  .prep-wrap{
+    width: 90%;
+    max-width: 980px;
+    margin: 18px auto 0;
+  }
+
+  .prep-grid{
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    column-gap: 20px;
+    row-gap: 20px;
+  }
+
+  .prep-card{ padding: 12px; border-radius: 18px; }
+  .prep-name{ font-size: 30px; }
+
+  .prep-team{ gap: 8px; }
+  .prep-poke{ height: 50px; }
+  .prep-poke img{ width: 44px; height: 44px; }
+}
+
+/* =========================
+   📟 768px – 820px
+========================= */
+@media (min-width: 768px) and (max-width: 820px){
+  .event-summary,
+  #eventSummary{
+    width: 88%;
+    max-width: 1100px;
+  }
+
+  .prep-wrap{
+    width: 88%;
+    max-width: 1100px;
+  }
+
+  /* ✅ 2–3 columnas según espacio, lo dejamos en 2 (más legible en iPad mini) */
+  .prep-grid{
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    column-gap: 22px;
+    row-gap: 22px;
+  }
+
+  .prep-name{ font-size: 32px; }
+}
+
+/* =========================
+   📟 821px – 910px
+========================= */
+@media (min-width: 821px) and (max-width: 910px){
+  .event-summary,
+  #eventSummary{
+    width: 86%;
+    max-width: 1180px;
+  }
+
+  .prep-wrap{
+    width: 86%;
+    max-width: 1180px;
+  }
+
+  /* ✅ 3 columnas cómodas */
+  .prep-grid{
+    grid-template-columns: repeat(3, minmax(260px, 1fr));
+    column-gap: 22px;
+    row-gap: 22px;
+  }
+
+  .prep-name{ font-size: 33px; }
+}
+
+/* =========================
+   📟 911px – 1023px
+========================= */
+@media (min-width: 911px) and (max-width: 1023px){
+  .event-summary,
+  #eventSummary{
+    width: 84%;
+    max-width: 1180px;
+  }
+
+  .prep-wrap{
+    width: 84%;
+    max-width: 1180px;
+  }
+
+  .prep-grid{
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
+    column-gap: 24px;
+    row-gap: 24px;
+  }
+
+  .prep-name{ font-size: 34px; }
+}
+
+/* =========================
+   💻 1024px – 1279px
+========================= */
+@media (min-width: 1024px) and (max-width: 1279px){
+  .event-summary,
+  #eventSummary{
+    width: 82%;
+    max-width: 1180px;
+  }
+
+  .prep-wrap{
+    width: 82%;
+    max-width: 1180px;
+  }
+
+  /* ✅ 4 columnas, pero con min menor para laptops */
+  .prep-grid{
+    grid-template-columns: repeat(4, minmax(240px, 1fr));
+    column-gap: 22px;
+    row-gap: 22px;
+  }
+
+  .prep-name{ font-size: 34px; }
+}
+
+/* =========================
+   💻 1280px – 1439px
+========================= */
+@media (min-width: 1280px) and (max-width: 1439px){
+  .event-summary,
+  #eventSummary{
+    width: 78%;
+    max-width: 1180px;
+  }
+
+  .prep-wrap{
+    width: 80%;
+    max-width: 1400px;
+  }
+
+  .prep-grid{
+    grid-template-columns: repeat(4, minmax(260px, 1fr));
+    column-gap: 24px;
+    row-gap: 24px;
+  }
+
+  .prep-name{ font-size: 35px; }
+}
+
+/* =========================
+   💻 1440px – 1919px
+========================= */
+@media (min-width: 1440px) and (max-width: 1919px){
+  .event-summary,
+  #eventSummary{
+    width: 74%;
+    max-width: 1180px;
+  }
+
+  .prep-wrap{
+    width: 76%;
+    max-width: 1400px;
+  }
+
+  .prep-grid{
+    grid-template-columns: repeat(4, minmax(280px, 1fr));
+    column-gap: 24px;
+    row-gap: 24px;
+  }
+
+  .prep-name{ font-size: 36px; }
+}
+
+/* =========================
+   🖥️ 1920px +
+========================= */
+@media (min-width: 1920px){
+  .event-summary,
+  #eventSummary{
+    width: 70%;
+    max-width: 1180px;
+    margin: 20px auto 0;
+  }
+
+  .prep-wrap{
+    width: 72%;
+    max-width: 1500px;
+    margin: 20px auto 0;
+  }
+
+  .prep-grid{
+    grid-template-columns: repeat(4, minmax(300px, 1fr));
+    column-gap: 26px;
+    row-gap: 26px;
+  }
+
+  .prep-name{ font-size: 38px; }
+  .prep-status{ font-size: 13px; }
+}
+
+/* =========================================================
+   🔄 LANDSCAPE (Horizontal)
+========================================================= */
+
+/* Móviles Horizontal */
+@media (max-width: 767px) and (orientation: landscape){
+  .event-summary,
+  #eventSummary{
+    width: 96%;
+    max-width: none;
+    margin: 10px auto 0;
+  }
+
+  .prep-wrap{
+    width: 96%;
+    max-width: none;
+    margin: 10px auto 0;
+  }
+
+  /* ✅ 2 columnas en landscape para aprovechar ancho */
+  .prep-grid{
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    column-gap: 14px;
+    row-gap: 14px;
+    margin-top: 10px;
+  }
+
+  .prep-card{ padding: 10px; border-radius: 16px; }
+  .prep-card::before{ border-radius: 16px !important; }
+
+  .prep-name{ font-size: 22px; }
+
+  .prep-poke{ height: 42px; }
+  .prep-poke img{ width: 36px; height: 36px; }
+
+  .prep-status{ font-size: 11px; padding: 7px 10px; }
+}
+
+/* Tablets Horizontal */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape){
+  .event-summary,
+  #eventSummary{ width: 90%; }
+
+  .prep-wrap{ width: 90%; }
+
+  .prep-grid{
+    grid-template-columns: repeat(3, minmax(260px, 1fr));
+    column-gap: 18px;
+    row-gap: 18px;
+  }
+
+  .prep-name{ font-size: 30px; }
+}
+
+/* =========================================================
+   🛠️ HARDFIXES (Casos Especiales)
+========================================================= */
+
+/* Google Nest Hub (1024 x 600) */
+@media (width: 1024px) and (height: 600px){
+  .event-summary,
+  #eventSummary{
+    width: 96%;
+    max-width: none;
+    margin: 10px auto 0;
+  }
+
+  .prep-wrap{
+    width: 96%;
+    max-width: none;
+    margin: 10px auto 0;
+  }
+
+  .prep-grid{
+    grid-template-columns: repeat(3, minmax(240px, 1fr));
+    column-gap: 14px;
+    row-gap: 14px;
+    margin-top: 10px;
+  }
+
+  .prep-name{ font-size: 24px; }
+  .prep-poke{ height: 42px; }
+  .prep-poke img{ width: 36px; height: 36px; }
+}
+
+/* iPad Pro 12.9" (1024 x 1366) */
+@media (width: 1024px) and (height: 1366px){
+  .event-summary,
+  #eventSummary{ width: 84%; }
+
+  .prep-wrap{
+    width: 84%;
+    max-width: 1180px;
+  }
+
+  .prep-grid{
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
+    column-gap: 22px;
+    row-gap: 22px;
+  }
+
+  .prep-name{ font-size: 34px; }
+}
+
+/* Asus Zenbook Fold (~853 x 1280) */
+@media (min-width: 840px) and (max-width: 870px) and (min-height: 1200px){
+  .event-summary,
+  #eventSummary{ width: 86%; }
+
+  .prep-wrap{ width: 86%; }
+
+  .prep-grid{
+    grid-template-columns: repeat(2, minmax(320px, 1fr));
+    column-gap: 20px;
+    row-gap: 20px;
+  }
+
+  .prep-name{ font-size: 32px; }
+}
+
+/* =========================================================
+   ✅ RESPONSIVE @media — FASE DE ENFRENTAMIENTOS (BATTLE)
+   Pegar en: responsive.css (después del CSS base)
+========================================================= */
+
+/* =========================
+   📱 < 374px
+========================= */
+@media (max-width: 374px){
+
+  .battle-phase,
+  #battlePhase{
+    width: 96%;
+    max-width: none;
+    margin: 14px auto 0;
+  }
+
+  .battle-triangle{ gap: 10px; }
+
+  /* Próximos: 1 columna para no aplastar */
+  .battle-next-row{
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .liveTablesWrap{
+    margin-top: 10px;
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .liveTablesTitle{
+    font-size: 12px;
+    margin: 8px 0;
+  }
+
+  /* Mesas en vivo: 1 columna en pantallas muy chicas */
+  .liveTablesGrid{
+    grid-template-columns: 1fr !important;
+    column-gap: 10px !important;
+    row-gap: 12px !important;
+  }
+
+  .battle-card{
+    border-radius: 18px;
+    padding: 12px;
+  }
+
+  .battle-head{
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .battle-title{ font-size: 13px; }
+  .battle-meta{ font-size: 11px; gap: 4px; }
+
+  .battle-mesa-chip{
+    padding: 5px 8px;
+    font-size: 10px;
+  }
+
+  /* NOW: ancho completo + stack para evitar overflow */
+  .battle-card--now{
+    width: 100%;
+    padding: 10px 10px;
+  }
+
+  .battle-card--now .battle-title{
+    padding-left: 16px;
+  }
+  .battle-card--now .battle-title::before{
+    width: 9px;
+    height: 9px;
+  }
+
+  .battle-body--now{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .battle-player{
+    width: 100% !important;
+    padding: 8px 10px;
+    border-radius: 14px;
+  }
+
+  .battle-name{
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  /* Base pokes */
+  .battle-team{
+    grid-template-columns: repeat(3, 34px);
+    gap: 6px;
+    padding: 6px;
+    border-radius: 12px;
+  }
+  .battle-mon{
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+  }
+  .battle-mon img{ padding: 3px; }
+
+  /* NOW pokes más compactos */
+  .battle-card--now .battle-team{
+    grid-template-columns: repeat(3, 46px) !important;
+    gap: 8px !important;
+    padding: 8px !important;
+    border-radius: 14px !important;
+  }
+  .battle-card--now .battle-mon{
+    width: 46px !important;
+    height: 46px !important;
+    border-radius: 14px !important;
+  }
+
+  /* NEXT */
+  .battle-body--next{
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .battle-card--next .battle-team{
+    grid-template-columns: repeat(3, 40px) !important;
+    gap: 7px !important;
+    padding: 7px 8px !important;
+    border-radius: 12px !important;
+  }
+  .battle-card--next .battle-mon{
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 12px !important;
+  }
+  .battle-card--next .battle-player{
+    width: 100% !important;
+    padding: 9px 10px !important;
+    border-radius: 14px !important;
+  }
+
+  /* LIVE */
+  .battle-card--live{
+    width: 100%;
+    padding: 10px 10px 8px !important;
+    border-radius: 16px !important;
+  }
+
+  .battle-card--live .battle-title{ font-size: 13px !important; }
+  .battle-card--live .battle-meta{ font-size: 10px !important; }
+
+  .battle-card--live .battle-body--next{
+    column-gap: 26px !important;
+    gap: 10px !important;
+    padding-top: 8px !important;
+  }
+
+  .battle-card--live .battle-player{
+    width: 150px !important;
+    padding: 8px 9px !important;
+    border-radius: 14px !important;
+  }
+
+  .battle-card--live .battle-name{
+    font-size: 14px !important;
+    margin-bottom: 7px !important;
+  }
+
+  .battle-card--live .battle-team{
+    grid-template-columns: repeat(3, 40px) !important;
+    grid-auto-rows: 42px !important;
+    gap: 7px !important;
+    padding: 7px 8px !important;
+    border-radius: 12px !important;
+  }
+
+  .battle-card--live .battle-mon{
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 12px !important;
+  }
+
+  /* VS más pequeño */
+  .battle-card--live .battle-next-vs,
+  .battle-card--next .battle-next-vs{
+    width: 40px !important;
+    height: 30px !important;
+    border-radius: 9px !important;
+    font-size: 12px !important;
+    letter-spacing: 1.2px !important;
+  }
+
+  /* SCORE */
+  .battle-score{
+    padding: 9px 10px;
+    border-radius: 16px;
+    gap: 8px;
+  }
+}
+
+/* =========================
+   📱 375px – 389px
+========================= */
+@media (min-width: 375px) and (max-width: 389px){
+
+  .battle-phase,
+  #battlePhase{
+    width: 95%;
+    max-width: none;
+    margin: 16px auto 0;
+  }
+
+  .battle-triangle{ gap: 12px; }
+
+  .battle-next-row{
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .liveTablesGrid{
+    grid-template-columns: 1fr !important;
+    column-gap: 10px !important;
+    row-gap: 12px !important;
+  }
+
+  .battle-card{ border-radius: 19px; padding: 13px; }
+  .battle-title{ font-size: 14px; }
+  .battle-meta{ font-size: 11px; }
+
+  .battle-card--now{ width: 100%; padding: 11px 11px; }
+
+  .battle-body--now{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .battle-player{ width: 100% !important; }
+
+  .battle-card--now .battle-team{
+    grid-template-columns: repeat(3, 48px) !important;
+    gap: 8px !important;
+  }
+  .battle-card--now .battle-mon{
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .battle-body--next{ grid-template-columns: 1fr; }
+
+  .battle-card--next .battle-team{
+    grid-template-columns: repeat(3, 42px) !important;
+    gap: 7px !important;
+  }
+  .battle-card--next .battle-mon{
+    width: 42px !important;
+    height: 42px !important;
+  }
+  .battle-card--next .battle-player{ width: 100% !important; }
+
+  .battle-card--live{ width: 100%; }
+  .battle-card--live .battle-body--next{ column-gap: 30px !important; }
+
+  .battle-card--live .battle-team{
+    grid-template-columns: repeat(3, 42px) !important;
+    grid-auto-rows: 44px !important;
+  }
+  .battle-card--live .battle-mon{
+    width: 42px !important;
+    height: 42px !important;
+  }
+}
+
+/* =========================
+   📱 390px – 430px
+========================= */
+@media (min-width: 390px) and (max-width: 430px){
+
+  .battle-phase,
+  #battlePhase{
+    width: 94%;
+    max-width: 720px;
+    margin: 16px auto 0;
+  }
+
+  .battle-next-row{
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .liveTablesGrid{
+    grid-template-columns: 1fr !important;
+    column-gap: 10px !important;
+    row-gap: 14px !important;
+  }
+
+  .battle-card{ border-radius: 20px; padding: 14px; }
+  .battle-title{ font-size: 15px; }
+
+  .battle-card--now{ width: 100%; }
+
+  .battle-body--now{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .battle-player{ width: 100% !important; }
+
+  .battle-card--now .battle-team{
+    grid-template-columns: repeat(3, 50px) !important;
+    gap: 9px !important;
+  }
+  .battle-card--now .battle-mon{
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .battle-body--next{ grid-template-columns: 1fr; }
+
+  .battle-card--next .battle-team{
+    grid-template-columns: repeat(3, 44px) !important;
+    gap: 8px !important;
+  }
+  .battle-card--next .battle-mon{
+    width: 44px !important;
+    height: 44px !important;
+  }
+  .battle-card--next .battle-player{ width: 100% !important; }
+
+  .battle-card--live{ width: 100%; }
+  .battle-card--live .battle-body--next{ column-gap: 34px !important; }
+
+  .battle-card--live .battle-player{ width: 160px !important; }
+
+  .battle-card--live .battle-team{
+    grid-template-columns: repeat(3, 44px) !important;
+    grid-auto-rows: 46px !important;
+  }
+  .battle-card--live .battle-mon{
+    width: 44px !important;
+    height: 44px !important;
+  }
+}
+
+/* =========================
+   📱 431px – 540px
+========================= */
+@media (min-width: 431px) and (max-width: 540px){
+
+  .battle-phase,
+  #battlePhase{
+    width: 92%;
+    max-width: 920px;
+    margin: 18px auto 0;
+  }
+
+  /* Próximos: 2 columnas ya entra bien */
+  .battle-next-row{
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .liveTablesGrid{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 8px !important;
+    row-gap: 14px !important;
+  }
+
+  .battle-card{ padding: 15px; }
+
+  /* NOW: todavía stack (para que nunca se rompa) */
+  .battle-card--now{ width: 100%; }
+
+  .battle-body--now{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .battle-player{ width: 100% !important; }
+
+  .battle-card--now .battle-team{
+    grid-template-columns: repeat(3, 52px) !important;
+    gap: 10px !important;
+  }
+  .battle-card--now .battle-mon{
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  /* NEXT vuelve a 2 columnas */
+  .battle-body--next{
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .battle-card--next .battle-player{
+    width: clamp(180px, 44vw, 230px) !important;
+  }
+
+  .battle-card--live .battle-body--next{ column-gap: 40px !important; }
+}
+
+/* =========================
+   📱 541px – 767px
+========================= */
+@media (min-width: 541px) and (max-width: 767px){
+
+  .battle-phase,
+  #battlePhase{
+    width: 90%;
+    max-width: 980px;
+  }
+
+  .battle-triangle{ gap: 14px; }
+
+  .battle-next-row{
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .liveTablesGrid{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 10px !important;
+    row-gap: 14px !important;
+  }
+
+  /* NOW ya puede ser 3 columnas (jugador - score - jugador) */
+  .battle-body--now{
+    display: grid !important;
+    grid-template-columns: max-content auto max-content !important;
+    gap: 12px !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .battle-player{
+    width: clamp(170px, 32vw, 240px) !important;
+  }
+
+  .battle-card--now .battle-team{
+    grid-template-columns: repeat(3, 54px) !important;
+  }
+  .battle-card--now .battle-mon{
+    width: 54px !important;
+    height: 54px !important;
+  }
+}
+
+/* =========================
+   📟 768px – 820px
+========================= */
+@media (min-width: 768px) and (max-width: 820px){
+
+  .battle-phase,
+  #battlePhase{
+    width: 88%;
+    max-width: 980px;
+  }
+
+  .liveTablesWrap{ max-width: 980px; }
+
+  .liveTablesGrid{
+    column-gap: 10px !important;
+    row-gap: 14px !important;
+  }
+
+  .battle-card{ padding: 16px; }
+
+  .battle-title{ font-size: 16px; }
+
+  .battle-player{
+    width: clamp(175px, 22vw, 220px);
+  }
+}
+
+/* =========================
+   📟 821px – 910px
+========================= */
+@media (min-width: 821px) and (max-width: 910px){
+
+  .battle-phase,
+  #battlePhase{
+    width: 86%;
+    max-width: 1040px;
+  }
+
+  .liveTablesWrap{ max-width: 1040px; }
+
+  .battle-card--live .battle-player{
+    width: clamp(170px, 14vw, 200px) !important;
+  }
+}
+
+/* =========================
+   📟 911px – 1023px
+========================= */
+@media (min-width: 911px) and (max-width: 1023px){
+
+  .battle-phase,
+  #battlePhase{
+    width: 84%;
+    max-width: 1100px;
+  }
+
+  .liveTablesWrap{ max-width: 1100px; }
+
+  .battle-card--live .battle-body--next{
+    column-gap: 44px !important;
+  }
+}
+
+/* =========================
+   💻 1024px – 1279px
+========================= */
+@media (min-width: 1024px) and (max-width: 1279px){
+
+  .battle-phase,
+  #battlePhase{
+    width: 82%;
+    max-width: 1180px;
+  }
+
+  .liveTablesWrap{ max-width: 1180px; }
+
+  .battle-card{ padding: 16px; }
+
+  .battle-card--now{
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  .battle-player{
+    width: clamp(170px, 18vw, 220px);
+  }
+}
+
+/* =========================
+   💻 1280px – 1439px
+========================= */
+@media (min-width: 1280px) and (max-width: 1439px){
+
+  .battle-phase,
+  #battlePhase{
+    width: 78%;
+    max-width: 1180px;
+    margin: 18px auto 0;
+  }
+
+  .liveTablesWrap{ max-width: 1180px; }
+
+  .battle-card--live .battle-player{
+    width: clamp(168px, 12vw, 200px) !important;
+  }
+}
+
+/* =========================
+   💻 1440px – 1919px
+========================= */
+@media (min-width: 1440px) and (max-width: 1919px){
+
+  .battle-phase,
+  #battlePhase{
+    width: 74%;
+    max-width: 1180px;
+    margin: 18px auto 0;
+  }
+
+  .liveTablesWrap{ max-width: 1180px; }
+}
+
+/* =========================
+   🖥️ 1920px +
+========================= */
+@media (min-width: 1920px){
+
+  .battle-phase,
+  #battlePhase{
+    width: 70%;
+    max-width: 1280px;
+    margin: 20px auto 0;
+  }
+
+  .liveTablesWrap{ max-width: 1280px; }
+
+  .battle-card{ padding: 18px; }
+
+  .battle-title{ font-size: 17px; }
+  .battle-meta{ font-size: 12px; }
+}
+
+/* =========================================================
+   🔄 LANDSCAPE (Horizontal)
+========================================================= */
+
+/* Móviles Horizontal */
+@media (max-width: 767px) and (orientation: landscape){
+
+  .battle-phase,
+  #battlePhase{
+    width: 96%;
+    max-width: none;
+    margin: 10px auto 0;
+  }
+
+  /* Próximos: 2 columnas en landscape */
+  .battle-next-row{
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  /* Mesas: 2 columnas */
+  .liveTablesGrid{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 10px !important;
+    row-gap: 12px !important;
+  }
+
+  /* NOW: en landscape sí conviene 3 columnas */
+  .battle-body--now{
+    display: grid !important;
+    grid-template-columns: max-content auto max-content !important;
+    gap: 10px !important;
+  }
+
+  .battle-player{
+    width: clamp(160px, 26vw, 220px) !important;
+  }
+
+  .battle-card--now .battle-team{
+    grid-template-columns: repeat(3, 50px) !important;
+    gap: 8px !important;
+  }
+  .battle-card--now .battle-mon{
+    width: 50px !important;
+    height: 50px !important;
+  }
+}
+
+/* Tablets Horizontal */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape){
+
+  .battle-phase,
+  #battlePhase{ width: 90%; }
+
+  .liveTablesWrap{ width: 90%; max-width: 1180px; }
+
+  .liveTablesGrid{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 10px !important;
+    row-gap: 14px !important;
+  }
+}
+
+/* =========================================================
+   🛠️ HARDFIXES (Casos Especiales)
+========================================================= */
+
+/* Google Nest Hub (1024 x 600) */
+@media (width: 1024px) and (height: 600px){
+
+  .battle-phase,
+  #battlePhase{
+    width: 96%;
+    max-width: none;
+    margin: 10px auto 0;
+  }
+
+  .liveTablesWrap{
+    width: 96%;
+    max-width: none;
+  }
+
+  .liveTablesGrid{
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 10px !important;
+    row-gap: 12px !important;
+  }
+
+  .battle-card{ padding: 12px; border-radius: 18px; }
+
+  .battle-title{ font-size: 13px; }
+
+  .battle-card--live .battle-player{
+    width: 160px !important;
+  }
+}
+
+/* iPad Pro 12.9" (1024 x 1366) */
+@media (width: 1024px) and (height: 1366px){
+
+  .battle-phase,
+  #battlePhase{
+    width: 84%;
+    max-width: 1180px;
+    margin: 18px auto 0;
+  }
+
+  .liveTablesWrap{ max-width: 1180px; }
+
+  .battle-title{ font-size: 16px; }
+}
+
+/* Asus Zenbook Fold (~853 x 1280) */
+@media (min-width: 840px) and (max-width: 870px) and (min-height: 1200px){
+
+  .battle-phase,
+  #battlePhase{
+    width: 86%;
+    max-width: 980px;
+  }
+
+  .liveTablesWrap{ width: 86%; max-width: 980px; }
+
+  /* En alto híbrido: evita que NOW se “estire” raro */
+  .battle-card--now{
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   ✅ FASE DE ENFRENTAMIENTOS (LAYOUT GENERAL)
+========================================================= */
+
+.battle-phase,
+#battlePhase {
+    width: 92%;
+    max-width: 980px; /* Se ajusta con IDs si es necesario, base */
+    margin: 18px auto 0;
+}
+
+/* Ocultar fila de próximos si es solo final */
+.battle-phase.is-final-only .battle-next-row,
+#battlePhase.is-final-only .battle-next-row {
+    display: none !important;
+}
+
+/* Ocultar fila de próximos si es fase de pre-cuartos (presencial) */
+.battle-phase.is-prequarters .battle-next-row {
+    display: none;
+}
+
+.battle-triangle {
+    display: grid;
+    gap: 14px;
+}
+
+.battle-next-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+/* =========================================================
+   ✅ WRAPPERS DE MESAS EN VIVO Y COLA
+========================================================= */
+
+.liveTablesWrap,
+.liveTablesWrap { /* (Aparece duplicado en tu lista, es el mismo) */
+    margin-top: 14px;
+    max-width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.liveTablesTitle {
+    color: #fff;
+    font-weight: 900;
+    letter-spacing: .6px;
+    text-transform: uppercase;
+    font-size: 14px;
+    opacity: .9;
+    margin: 10px 0;
+}
+
+.liveTablesGrid {
+    display: grid;
+    /* Configuración final compacta para mesas */
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 5px !important;
+    row-gap: 14px !important;
+    justify-items: stretch !important;
+}
+
+/* =========================================================
+   ✅ TARJETAS (BATTLE CARDS) - BASE
+========================================================= */
+
+.battle-card {
+    border-radius: 22px;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.35);
+}
+
+.battle-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.battle-title {
+    color: #ffe6b3;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 16px;
+}
+
+.battle-meta {
+    color: rgba(255, 255, 255, 0.78);
+    font-weight: 800;
+    font-size: 12px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.battle-meta-text {
+    color: rgba(255, 255, 255, 0.82);
+    font-weight: 900;
+}
+
+/* Chip de Mesa/Escenario */
+.battle-mesa-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 1000;
+    letter-spacing: .7px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* =========================================================
+   ✅ TARJETA: ENFRENTAMIENTO ACTUAL (--now)
+========================================================= */
+
+.battle-card--now {
+    padding: 12px 14px;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* Animaciones para el título "En curso" */
+@keyframes livePulseText {
+    0%, 100% { text-shadow: 0 0 8px rgba(109, 255, 178, 0.25); opacity: 1; }
+    50% { text-shadow: 0 0 18px rgba(109, 255, 178, 0.85); opacity: .95; }
+}
+
+@keyframes liveBlinkDot {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: .2; }
+}
+
+.battle-card--now .battle-title {
+    color: #6dffb2;
+    position: relative;
+    padding-left: 18px;
+    animation: livePulseText 1.2s infinite ease-in-out;
+}
+
+.battle-card--now .battle-title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: #6dffb2;
+    box-shadow: 0 0 10px rgba(109, 255, 178, 0.95);
+    animation: liveBlinkDot 1s infinite ease-in-out;
+}
+
+/* Grid de Pokémon grande para el match actual */
+.battle-card--now .battle-team {
+    grid-template-columns: repeat(3, 56px) !important;
+    gap: 10px !important;
+    padding: 10px !important;
+    border-radius: 16px !important;
+}
+
+.battle-card--now .battle-mon {
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 16px !important;
+}
+
+.battle-card--now .battle-mon img {
+    padding: 4px !important;
+}
+
+/* =========================================================
+   ✅ CUERPO DEL MATCH ACTUAL (Body Now)
+========================================================= */
+
+.battle-body--now {
+    display: grid;
+    grid-template-columns: max-content auto max-content;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Colores de borde para distinguir A y B */
+.battle-body--now > .battle-player:first-child {
+    border-color: rgba(120, 170, 255, 0.28);
+}
+
+.battle-body--now > .battle-player:last-child {
+    border-color: rgba(255, 120, 220, 0.28);
+}
+
+/* =========================================================
+   ✅ TARJETA: PRÓXIMOS (--next)
+========================================================= */
+
+/* Grid de Pokémon para próximos */
+.battle-card--next .battle-team {
+    grid-template-columns: repeat(3, 46px) !important;
+    gap: 8px !important;
+    padding: 8px 10px !important;
+    border-radius: 14px !important;
+    justify-content: center !important;
+}
+
+.battle-card--next .battle-mon {
+    width: 46px !important;
+    height: 46px !important;
+    border-radius: 13px !important;
+}
+
+.battle-card--next .battle-mon img {
+    padding: 3px !important;
+}
+
+.battle-card--next .battle-player {
+    width: clamp(180px, 18vw, 205px) !important;
+    padding: 10px 12px !important;
+    border-radius: 16px !important;
+}
+
+/* =========================================================
+   ✅ TARJETA: MESAS EN VIVO (--live)
+========================================================= */
+
+.battle-card--live {
+    width: fit-content;
+    max-width: 100%;
+    padding: 12px 14px 10px !important;
+    border-radius: 18px !important;
+    overflow: hidden !important;
+    justify-self: center;
+}
+
+.battle-card--live .battle-head {
+    margin-bottom: 8px !important;
+}
+
+.battle-card--live .battle-title {
+    font-size: 14px !important;
+}
+
+.battle-card--live .battle-meta {
+    font-size: 11px !important;
+    gap: 4px !important;
+}
+
+/* Cuerpo de mesas: columnas ajustadas al contenido */
+.battle-card--live .battle-body--next {
+    grid-template-columns: max-content max-content !important;
+    justify-content: center !important;
+    column-gap: 44px !important;
+    position: relative !important;
+    display: grid !important;
+    gap: 12px !important;
+    align-items: start !important;
+    justify-items: center !important;
+    padding-top: 10px !important;
+}
+
+.battle-card--live .battle-player {
+    width: clamp(168px, 12vw, 190px) !important;
+    padding: 8px 10px !important;
+    border-radius: 16px !important;
+    justify-self: center !important;
+}
+
+.battle-card--live .battle-name {
+    margin-bottom: 8px !important;
+    font-size: 15px !important;
+}
+
+/* Pokes en mesas */
+.battle-card--live .battle-team {
+    display: inline-grid !important;
+    width: auto !important;
+    margin: 0 auto !important;
+    grid-template-columns: repeat(3, 46px) !important;
+    grid-auto-rows: 48px !important;
+    gap: 8px !important;
+    padding: 8px 10px !important;
+    border-radius: 14px !important;
+    justify-content: center !important;
+}
+
+.battle-card--live .battle-mon {
+    width: 46px !important;
+    height: 46px !important;
+    border-radius: 13px !important;
+}
+
+.battle-card--live .battle-mon img {
+    padding: 3px !important;
+}
+
+/* VS Flotante centrado */
+.battle-card--live .battle-next-vs,
+.battle-card--next .battle-next-vs {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 10 !important;
+    pointer-events: none !important;
+    
+    /* Estilos del VS */
+    width: 46px !important;
+    height: 34px !important;
+    border-radius: 10px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-weight: 1000;
+    font-size: 13px !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase;
+    background: #0b2d5a;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.38);
+}
+
+/* =========================================================
+   ✅ ELEMENTOS DE JUGADOR Y EQUIPO (GENÉRICOS)
+========================================================= */
+
+.battle-player {
+    min-width: 0;
+    padding: 8px 10px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.05);
+    width: clamp(170px, 18vw, 220px); /* Valor base, sobrescrito en live/next/now */
+}
+
+.battle-name {
+    font-weight: 900;
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.battle-name.is-win { color: #57ff9b; }
+.battle-name.is-lose { color: #ff6b6b; }
+
+.battle-team {
+    display: grid;
+    /* Valores base, suelen sobrescribirse por modificadores */
+    grid-template-columns: repeat(3, 40px);
+    gap: 6px;
+    justify-content: center;
+    justify-items: center;
+    padding: 6px;
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.battle-mon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    overflow: hidden;
+}
+
+.battle-mon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 3px;
+    filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+}
+
+.battle-mon span {
+    font-weight: 1000;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 16px;
+}
+
+/* =========================================================
+   ✅ SCORE / PUNTUACIÓN
+========================================================= */
+
+.battle-score {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 220, 120, 0.22);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.06);
+}
+
+.battle-score-num {
+    font-weight: 1000;
+    font-size: clamp(28px, 4.2vw, 44px);
+    color: #ffdcb5;
+    line-height: 1;
+}
+
+.battle-score-sep {
+    font-weight: 1000;
+    font-size: clamp(22px, 3.2vw, 36px);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* =========================================================
+   ✅ CUERPO DE PRÓXIMOS (Body Next)
+========================================================= */
+
+.battle-body--next {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: start;
+}
+
+/* =========================================================
+   ✅ PRÓXIMOS ENFRENTAMIENTOS — MISMO DISEÑO QUE MESAS EN JUEGO
+   nextQueueWrap / nextQueueList / battle-card--next en cola
+========================================================= */
+
+/* Wrapper (espejo de liveTablesWrap) */
+.nextQueueWrap {
+    margin-top: 14px;
+    max-width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Título */
+.nextQueueTitle {
+    color: #fff;
+    font-weight: 900;
+    letter-spacing: .6px;
+    text-transform: uppercase;
+    font-size: 14px;
+    opacity: .9;
+    margin: 10px 0;
+}
+
+/* ── MÓVIL PRIMERO: 1 columna, tarjeta a ancho completo ── */
+.nextQueueList {
+    display: grid;
+    grid-template-columns: 1fr;          /* 1 col en móvil por defecto */
+    column-gap: 8px;
+    row-gap: 14px;
+}
+
+/* Tarjeta ocupa todo el ancho en móvil */
+.nextQueueList .battle-card--next {
+    width: 100%;
+    padding: 12px 14px 10px !important;
+    border-radius: 18px !important;
+    overflow: hidden !important;
+    box-sizing: border-box;
+}
+
+.nextQueueList .battle-card--next .battle-head {
+    margin-bottom: 8px !important;
+}
+
+.nextQueueList .battle-card--next .battle-title {
+    font-size: 14px !important;
+}
+
+.nextQueueList .battle-card--next .battle-meta {
+    font-size: 11px !important;
+    gap: 4px !important;
+}
+
+/* Body: 2 jugadores + VS centrado, relativo para el VS absoluto */
+.nextQueueList .battle-card--next .battle-body--next {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    position: relative !important;
+    gap: 8px !important;
+    align-items: start !important;
+    padding-top: 8px !important;
+}
+
+/* Jugadores a ancho completo de su celda */
+.nextQueueList .battle-card--next .battle-player {
+    width: 100% !important;
+    padding: 8px 10px !important;
+    border-radius: 16px !important;
+    box-sizing: border-box;
+}
+
+.nextQueueList .battle-card--next .battle-name {
+    margin-bottom: 8px !important;
+    font-size: 14px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Equipo Pokémon centrado dentro de su jugador */
+.nextQueueList .battle-card--next .battle-team {
+    display: grid !important;
+    width: 100% !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-auto-rows: auto !important;
+    gap: 5px !important;
+    padding: 6px !important;
+    border-radius: 12px !important;
+    justify-items: center !important;
+    box-sizing: border-box;
+}
+
+.nextQueueList .battle-card--next .battle-mon {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 10px !important;
+    max-width: 46px;
+}
+
+.nextQueueList .battle-card--next .battle-mon img {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 2px !important;
+    object-fit: contain !important;
+}
+
+/* VS: posición absoluta centrado entre los dos jugadores */
+.nextQueueList .battle-card--next .battle-next-vs {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 10 !important;
+    pointer-events: none !important;
+    width: 38px !important;
+    height: 28px !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #ffffff;
+    font-weight: 1000;
+    font-size: 11px !important;
+    letter-spacing: 1.2px !important;
+    text-transform: uppercase;
+    background: #0b2d5a;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.38);
+}
+
+/* =========================================================
+   ✅ RESPONSIVE nextQueueList — breakpoints ascendentes
+========================================================= */
+
+/* < 374px — muy pequeño: 1 col, pokes aún más compactos */
+@media (max-width: 374px) {
+    .nextQueueWrap { max-width: none; }
+    .nextQueueList { row-gap: 10px; }
+
+    .nextQueueList .battle-card--next {
+        padding: 10px !important;
+        border-radius: 14px !important;
+    }
+    .nextQueueList .battle-card--next .battle-title { font-size: 12px !important; }
+    .nextQueueList .battle-card--next .battle-meta  { font-size: 10px !important; }
+    .nextQueueList .battle-card--next .battle-name  { font-size: 12px !important; }
+    .nextQueueList .battle-card--next .battle-mon   { max-width: 34px; }
+    .nextQueueList .battle-card--next .battle-next-vs {
+        width: 32px !important;
+        height: 24px !important;
+        font-size: 10px !important;
+    }
+}
+
+/* 375px – 430px — iPhone SE, iPhone 14/15: 1 col */
+@media (min-width: 375px) and (max-width: 430px) {
+    .nextQueueList { row-gap: 12px; }
+
+    .nextQueueList .battle-card--next .battle-name  { font-size: 13px !important; }
+    .nextQueueList .battle-card--next .battle-mon   { max-width: 40px; }
+    .nextQueueList .battle-card--next .battle-team  { gap: 6px !important; padding: 7px !important; }
+}
+
+/* 431px – 540px — móviles grandes / Plus / Max: 2 columnas ya entran */
+@media (min-width: 431px) and (max-width: 540px) {
+    .nextQueueList {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 8px;
+        row-gap: 12px;
+    }
+    .nextQueueList .battle-card--next .battle-name  { font-size: 13px !important; }
+    .nextQueueList .battle-card--next .battle-mon   { max-width: 38px; }
+    .nextQueueList .battle-card--next .battle-team  { gap: 5px !important; padding: 6px !important; }
+    .nextQueueList .battle-card--next .battle-next-vs {
+        width: 34px !important;
+        height: 26px !important;
+        font-size: 10px !important;
+    }
+}
+
+/* 541px – 767px — phablets: 2 columnas cómodas */
+@media (min-width: 541px) and (max-width: 767px) {
+    .nextQueueList {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 10px;
+        row-gap: 14px;
+    }
+    .nextQueueList .battle-card--next .battle-name  { font-size: 14px !important; }
+    .nextQueueList .battle-card--next .battle-mon   { max-width: 42px; }
+}
+
+/* 768px – 820px — iPad Mini: 2 columnas más amplias */
+@media (min-width: 768px) and (max-width: 820px) {
+    .nextQueueWrap { max-width: 980px; }
+    .nextQueueList {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 10px;
+        row-gap: 14px;
+    }
+    .nextQueueList .battle-card--next .battle-mon   { max-width: 44px; }
+}
+
+/* 821px – 910px — iPad Air */
+@media (min-width: 821px) and (max-width: 910px) {
+    .nextQueueWrap { max-width: 1040px; }
+    .nextQueueList {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 10px;
+    }
+    .nextQueueList .battle-card--next .battle-player { width: 100% !important; }
+    .nextQueueList .battle-card--next .battle-mon   { max-width: 44px; }
+}
+
+/* 911px – 1023px — Surface Pro / iPad Pro 11" */
+@media (min-width: 911px) and (max-width: 1023px) {
+    .nextQueueWrap { max-width: 1100px; }
+    .nextQueueList {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 12px;
+    }
+    .nextQueueList .battle-card--next .battle-mon   { max-width: 46px; }
+}
+
+/* 1024px – 1279px — laptop pequeña */
+@media (min-width: 1024px) and (max-width: 1279px) {
+    .nextQueueWrap { max-width: 1180px; }
+    .nextQueueList {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 5px;
+    }
+
+    /* En escritorio volvemos al layout compacto tipo --live */
+    .nextQueueList .battle-card--next {
+        width: fit-content !important;
+        justify-self: center;
+    }
+    .nextQueueList .battle-card--next .battle-body--next {
+        grid-template-columns: max-content max-content !important;
+        column-gap: 40px !important;
+        justify-content: center !important;
+        justify-items: center !important;
+    }
+    .nextQueueList .battle-card--next .battle-player {
+        width: clamp(160px, 14vw, 200px) !important;
+    }
+    .nextQueueList .battle-card--next .battle-team {
+        grid-template-columns: repeat(3, 44px) !important;
+        grid-auto-rows: 46px !important;
+        gap: 7px !important;
+        padding: 7px 9px !important;
+        width: auto !important;
+    }
+    .nextQueueList .battle-card--next .battle-mon {
+        width: 44px !important; height: 44px !important;
+        max-width: none; aspect-ratio: auto;
+    }
+    .nextQueueList .battle-card--next .battle-next-vs {
+        width: 44px !important; height: 32px !important;
+        font-size: 12px !important;
+    }
+}
+
+/* 1280px – 1439px */
+@media (min-width: 1280px) and (max-width: 1439px) {
+    .nextQueueWrap { max-width: 1180px; }
+    .nextQueueList {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 5px;
+    }
+    .nextQueueList .battle-card--next {
+        width: fit-content !important;
+        justify-self: center;
+    }
+    .nextQueueList .battle-card--next .battle-body--next {
+        grid-template-columns: max-content max-content !important;
+        column-gap: 44px !important;
+        justify-content: center !important;
+        justify-items: center !important;
+    }
+    .nextQueueList .battle-card--next .battle-player {
+        width: clamp(168px, 12vw, 200px) !important;
+    }
+    .nextQueueList .battle-card--next .battle-team {
+        grid-template-columns: repeat(3, 46px) !important;
+        grid-auto-rows: 48px !important;
+        gap: 8px !important;
+        padding: 8px 10px !important;
+        width: auto !important;
+    }
+    .nextQueueList .battle-card--next .battle-mon {
+        width: 46px !important; height: 46px !important;
+        max-width: none; aspect-ratio: auto;
+    }
+    .nextQueueList .battle-card--next .battle-next-vs {
+        width: 46px !important; height: 34px !important;
+        font-size: 13px !important; letter-spacing: 1.5px !important;
+    }
+}
+
+/* 1440px – 1919px */
+@media (min-width: 1440px) and (max-width: 1919px) {
+    .nextQueueWrap { max-width: 1180px; }
+    .nextQueueList {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 5px;
+    }
+    .nextQueueList .battle-card--next {
+        width: fit-content !important;
+        justify-self: center;
+    }
+    .nextQueueList .battle-card--next .battle-body--next {
+        grid-template-columns: max-content max-content !important;
+        column-gap: 44px !important;
+        justify-content: center !important;
+        justify-items: center !important;
+    }
+    .nextQueueList .battle-card--next .battle-player {
+        width: clamp(168px, 12vw, 200px) !important;
+    }
+    .nextQueueList .battle-card--next .battle-team {
+        grid-template-columns: repeat(3, 46px) !important;
+        grid-auto-rows: 48px !important;
+        gap: 8px !important; padding: 8px 10px !important;
+        width: auto !important;
+    }
+    .nextQueueList .battle-card--next .battle-mon {
+        width: 46px !important; height: 46px !important;
+        max-width: none; aspect-ratio: auto;
+    }
+    .nextQueueList .battle-card--next .battle-next-vs {
+        width: 46px !important; height: 34px !important;
+        font-size: 13px !important; letter-spacing: 1.5px !important;
+    }
+}
+
+/* 1920px+ — 4K */
+@media (min-width: 1920px) {
+    .nextQueueWrap { max-width: 1280px; }
+    .nextQueueList {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 5px;
+    }
+    .nextQueueList .battle-card--next {
+        width: fit-content !important;
+        justify-self: center;
+    }
+    .nextQueueList .battle-card--next .battle-body--next {
+        grid-template-columns: max-content max-content !important;
+        column-gap: 44px !important;
+        justify-content: center !important;
+        justify-items: center !important;
+    }
+    .nextQueueList .battle-card--next .battle-player {
+        width: clamp(168px, 10vw, 220px) !important;
+    }
+    .nextQueueList .battle-card--next .battle-team {
+        grid-template-columns: repeat(3, 46px) !important;
+        grid-auto-rows: 48px !important;
+        gap: 8px !important; padding: 8px 10px !important;
+        width: auto !important;
+    }
+    .nextQueueList .battle-card--next .battle-mon {
+        width: 46px !important; height: 46px !important;
+        max-width: none; aspect-ratio: auto;
+    }
+}
+
+/* ── LANDSCAPE MÓVIL: 2 columnas al girar ── */
+@media (max-width: 767px) and (orientation: landscape) {
+    .nextQueueList {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        column-gap: 10px !important;
+        row-gap: 10px !important;
+    }
+    /* En landscape el espacio es mayor: pokes ligeramente más grandes */
+    .nextQueueList .battle-card--next .battle-mon   { max-width: 38px; }
+    .nextQueueList .battle-card--next .battle-name  { font-size: 12px !important; }
+}
+
+/* ── LANDSCAPE TABLET ── */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .nextQueueWrap { width: 90%; max-width: 1180px; }
+    .nextQueueList {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        column-gap: 10px !important;
+        row-gap: 14px !important;
+    }
+}
+
+/* Google Nest Hub (1024 x 600) */
+@media (width: 1024px) and (height: 600px) {
+    .nextQueueWrap { width: 96%; max-width: none; }
+    .nextQueueList {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        column-gap: 8px !important;
+        row-gap: 10px !important;
+    }
+}
+
+/* iPad Pro 12.9" (1024 x 1366) */
+@media (width: 1024px) and (height: 1366px) {
+    .nextQueueWrap { max-width: 1180px; }
+}
+
+/* Asus Zenbook Fold (~853 x 1280) */
+@media (min-width: 840px) and (max-width: 870px) and (min-height: 1200px) {
+    .nextQueueWrap { width: 86%; max-width: 980px; }
+}
+
+
+/* ✅ FIX ESCRITORIO: Próximos enfrentamientos -> 2 arriba + 1 abajo centrado */
+@media (min-width: 1024px) {
+
+  /* Anula el flex !important de torneo.css SOLO en escritorio */
+  #nextQueueList.nextQueueList{
+    display: grid !important;
+    gap: 20px; /* separacion similar a la que tenías en flex */
+  }
+
+  /* Si hay cantidad impar (ej: 3), centra el último ocupando toda la fila */
+  #nextQueueList.nextQueueList .battle-card--next:last-child:nth-child(odd){
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+}

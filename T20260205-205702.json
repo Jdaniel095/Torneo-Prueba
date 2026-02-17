@@ -1,0 +1,481 @@
+{
+  "ok": true,
+  "exportVersion": 1,
+  "generatedAt": "2026-02-08T17:07:44.939Z",
+  "torneo": {
+    "torneoId": "T20260205-205702",
+    "title": "Torneo Verano",
+    "format": "single",
+    "leaguePlan": "super1500+mini500|tiebreak:super1500",
+    "mode": "presencial",
+    "dateTime": "Thu Feb 19 2026 10:56:00 GMT-0500 (hora estándar de Perú)",
+    "bestOf": "5",
+    "suggestedSize": 30,
+    "createdAt": "2026-02-06T01:57:02.171Z",
+    "createdBy": "daniel",
+    "rules": {
+      "bannedTypes": "ground",
+      "bannedCategories": "mythical",
+      "bannedPokemon": "4, 4_a2",
+      "allowedPokemon": "6_e2, 68_b2",
+      "bannedFastMoves": "ARANAZO, COLA_DE_HIERRO, IMPACTRUENO",
+      "bannedChargedMoves": "ABRECAMINOS, ACUAJET, COLA_DE_AGUA"
+    },
+    "championId": "P-7c48d310",
+    "runnerUpId": "P-f7aae7c3"
+  },
+  "players": [
+    {
+      "playerId": "P-485b754f",
+      "nombre": "Jose",
+      "nick": "Jose",
+      "codigo": "788787798798",
+      "campfire": "weqweqwe",
+      "team": [
+        "1_a1",
+        "17_a1",
+        "6",
+        "24",
+        "11_b1",
+        "10_b1"
+      ]
+    },
+    {
+      "playerId": "P-1e6285c8",
+      "nombre": "Carlos",
+      "nick": "Carlos",
+      "codigo": "647897987987",
+      "campfire": "",
+      "team": [
+        "150",
+        "7",
+        "5",
+        "1",
+        "25",
+        "11"
+      ]
+    },
+    {
+      "playerId": "P-dfd9b08b",
+      "nombre": "Adrian",
+      "nick": "Adrian",
+      "codigo": "654897897897",
+      "campfire": "",
+      "team": [
+        "1",
+        "21",
+        "5_b1",
+        "16_b1",
+        "9_s",
+        "22"
+      ]
+    },
+    {
+      "playerId": "P-ea11b9e3",
+      "nombre": "Daniel",
+      "nick": "Daniel",
+      "codigo": "546789789789",
+      "campfire": "",
+      "team": [
+        "22",
+        "1_a1",
+        "17_b1",
+        "16_b1",
+        "14_a1",
+        "8"
+      ]
+    },
+    {
+      "playerId": "P-f7aae7c3",
+      "nombre": "Mario",
+      "nick": "Mario",
+      "codigo": "546587987987",
+      "campfire": "",
+      "team": [
+        "12",
+        "9_b1",
+        "15_s",
+        "16",
+        "10_s",
+        "13_a1"
+      ]
+    },
+    {
+      "playerId": "P-3e3b598a",
+      "nombre": "Carlitos",
+      "nick": "Carlitos",
+      "codigo": "878787897897",
+      "campfire": "",
+      "team": [
+        "1",
+        "11",
+        "5_a1",
+        "22",
+        "9_b1",
+        "12"
+      ]
+    },
+    {
+      "playerId": "P-5241802c",
+      "nombre": "Puchito",
+      "nick": "Puchito",
+      "codigo": "489796549878",
+      "campfire": "",
+      "team": [
+        "11",
+        "9_b2",
+        "12_s",
+        "15_a1",
+        "13_b1",
+        "20_b1"
+      ]
+    },
+    {
+      "playerId": "P-7626dae6",
+      "nombre": "Jhonatan",
+      "nick": "Jhonatan",
+      "codigo": "549878978978",
+      "campfire": "",
+      "team": [
+        "1",
+        "5",
+        "484",
+        "483",
+        "3_a1",
+        "6_e3"
+      ]
+    },
+    {
+      "playerId": "P-de87876b",
+      "nombre": "Daniela",
+      "nick": "Daniela",
+      "codigo": "146897897897",
+      "campfire": "",
+      "team": [
+        "3_a1",
+        "18_e1",
+        "101",
+        "2",
+        "1_b1",
+        "331_s"
+      ]
+    },
+    {
+      "playerId": "P-e3d67895",
+      "nombre": "Lucho",
+      "nick": "Lucho",
+      "codigo": "231646549879",
+      "campfire": "",
+      "team": [
+        "1_a1",
+        "16_a1",
+        "14_a1",
+        "30_s",
+        "23_a1",
+        "24_a2"
+      ]
+    },
+    {
+      "playerId": "P-a3beb9a3",
+      "nombre": "Juana",
+      "nick": "Juana",
+      "codigo": "216546578978",
+      "campfire": "",
+      "team": [
+        "12",
+        "14",
+        "17_a1",
+        "15_a1",
+        "11_b1",
+        "18"
+      ]
+    },
+    {
+      "playerId": "P-91582239",
+      "nombre": "Xokas",
+      "nick": "Xokas",
+      "codigo": "146787987987",
+      "campfire": "",
+      "team": [
+        "1_a1",
+        "8_b1",
+        "9_a2",
+        "14",
+        "7",
+        "6_a1"
+      ]
+    },
+    {
+      "playerId": "P-2034d797",
+      "nombre": "Ramiero",
+      "nick": "Ramiero",
+      "codigo": "132646465487",
+      "campfire": "",
+      "team": [
+        "3_s",
+        "7_s",
+        "9_a2",
+        "22",
+        "8_b1",
+        "17_s"
+      ]
+    },
+    {
+      "playerId": "P-9fca6106",
+      "nombre": "Messi",
+      "nick": "Messi",
+      "codigo": "654787987897",
+      "campfire": "",
+      "team": [
+        "1_b1_f163_s",
+        "8_b1",
+        "13",
+        "15",
+        "2_a1",
+        "14_a1"
+      ]
+    },
+    {
+      "playerId": "P-573bb2c9",
+      "nombre": "ibai",
+      "nick": "ibai",
+      "codigo": "165489789644",
+      "campfire": "",
+      "team": [
+        "14",
+        "11",
+        "9_e1",
+        "12_b2",
+        "7_a2",
+        "1_b1_f163_s"
+      ]
+    },
+    {
+      "playerId": "P-7c48d310",
+      "nombre": "Lucia",
+      "nick": "Lucia",
+      "codigo": "165498897897",
+      "campfire": "",
+      "team": [
+        "1_a1",
+        "6_s",
+        "9_b2",
+        "14_b1",
+        "82",
+        "150_a1"
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "matchId": "M1-1",
+      "round": 1,
+      "slot": 1,
+      "playerAId": "P-91582239",
+      "playerBId": "P-de87876b",
+      "scoreA": 1,
+      "scoreB": 3,
+      "winnerId": "P-de87876b",
+      "loserId": "P-91582239",
+      "status": "done",
+      "nextMatchId": "M2-1",
+      "nextSide": "A"
+    },
+    {
+      "matchId": "M1-2",
+      "round": 1,
+      "slot": 2,
+      "playerAId": "P-485b754f",
+      "playerBId": "P-5241802c",
+      "scoreA": 0,
+      "scoreB": 3,
+      "winnerId": "P-5241802c",
+      "loserId": "P-485b754f",
+      "status": "done",
+      "nextMatchId": "M2-1",
+      "nextSide": "B"
+    },
+    {
+      "matchId": "M1-3",
+      "round": 1,
+      "slot": 3,
+      "playerAId": "P-f7aae7c3",
+      "playerBId": "P-a3beb9a3",
+      "scoreA": 3,
+      "scoreB": 0,
+      "winnerId": "P-f7aae7c3",
+      "loserId": "P-a3beb9a3",
+      "status": "done",
+      "nextMatchId": "M2-2",
+      "nextSide": "A"
+    },
+    {
+      "matchId": "M1-4",
+      "round": 1,
+      "slot": 4,
+      "playerAId": "P-1e6285c8",
+      "playerBId": "P-2034d797",
+      "scoreA": 0,
+      "scoreB": 3,
+      "winnerId": "P-2034d797",
+      "loserId": "P-1e6285c8",
+      "status": "done",
+      "nextMatchId": "M2-2",
+      "nextSide": "B"
+    },
+    {
+      "matchId": "M1-5",
+      "round": 1,
+      "slot": 5,
+      "playerAId": "P-dfd9b08b",
+      "playerBId": "P-573bb2c9",
+      "scoreA": 3,
+      "scoreB": 0,
+      "winnerId": "P-dfd9b08b",
+      "loserId": "P-573bb2c9",
+      "status": "done",
+      "nextMatchId": "M2-3",
+      "nextSide": "A"
+    },
+    {
+      "matchId": "M1-6",
+      "round": 1,
+      "slot": 6,
+      "playerAId": "P-7626dae6",
+      "playerBId": "P-3e3b598a",
+      "scoreA": 0,
+      "scoreB": 3,
+      "winnerId": "P-3e3b598a",
+      "loserId": "P-7626dae6",
+      "status": "done",
+      "nextMatchId": "M2-3",
+      "nextSide": "B"
+    },
+    {
+      "matchId": "M1-7",
+      "round": 1,
+      "slot": 7,
+      "playerAId": "P-9fca6106",
+      "playerBId": "P-e3d67895",
+      "scoreA": 3,
+      "scoreB": 0,
+      "winnerId": "P-9fca6106",
+      "loserId": "P-e3d67895",
+      "status": "done",
+      "nextMatchId": "M2-4",
+      "nextSide": "A"
+    },
+    {
+      "matchId": "M1-8",
+      "round": 1,
+      "slot": 8,
+      "playerAId": "P-ea11b9e3",
+      "playerBId": "P-7c48d310",
+      "scoreA": 0,
+      "scoreB": 3,
+      "winnerId": "P-7c48d310",
+      "loserId": "P-ea11b9e3",
+      "status": "done",
+      "nextMatchId": "M2-4",
+      "nextSide": "B"
+    },
+    {
+      "matchId": "M2-1",
+      "round": 2,
+      "slot": 1,
+      "playerAId": "P-de87876b",
+      "playerBId": "P-5241802c",
+      "scoreA": 0,
+      "scoreB": 3,
+      "winnerId": "P-5241802c",
+      "loserId": "P-de87876b",
+      "status": "done",
+      "nextMatchId": "M3-1",
+      "nextSide": "A"
+    },
+    {
+      "matchId": "M2-2",
+      "round": 2,
+      "slot": 2,
+      "playerAId": "P-f7aae7c3",
+      "playerBId": "P-2034d797",
+      "scoreA": 3,
+      "scoreB": 0,
+      "winnerId": "P-f7aae7c3",
+      "loserId": "P-2034d797",
+      "status": "done",
+      "nextMatchId": "M3-1",
+      "nextSide": "B"
+    },
+    {
+      "matchId": "M2-3",
+      "round": 2,
+      "slot": 3,
+      "playerAId": "P-dfd9b08b",
+      "playerBId": "P-3e3b598a",
+      "scoreA": 3,
+      "scoreB": 0,
+      "winnerId": "P-dfd9b08b",
+      "loserId": "P-3e3b598a",
+      "status": "done",
+      "nextMatchId": "M3-2",
+      "nextSide": "A"
+    },
+    {
+      "matchId": "M2-4",
+      "round": 2,
+      "slot": 4,
+      "playerAId": "P-9fca6106",
+      "playerBId": "P-7c48d310",
+      "scoreA": 0,
+      "scoreB": 3,
+      "winnerId": "P-7c48d310",
+      "loserId": "P-9fca6106",
+      "status": "done",
+      "nextMatchId": "M3-2",
+      "nextSide": "B"
+    },
+    {
+      "matchId": "M3-1",
+      "round": 3,
+      "slot": 1,
+      "playerAId": "P-5241802c",
+      "playerBId": "P-f7aae7c3",
+      "scoreA": 0,
+      "scoreB": 3,
+      "winnerId": "P-f7aae7c3",
+      "loserId": "P-5241802c",
+      "status": "done",
+      "nextMatchId": "M4-1",
+      "nextSide": "A"
+    },
+    {
+      "matchId": "M3-2",
+      "round": 3,
+      "slot": 2,
+      "playerAId": "P-dfd9b08b",
+      "playerBId": "P-7c48d310",
+      "scoreA": 1,
+      "scoreB": 3,
+      "winnerId": "P-7c48d310",
+      "loserId": "P-dfd9b08b",
+      "status": "done",
+      "nextMatchId": "M4-1",
+      "nextSide": "B"
+    },
+    {
+      "matchId": "M4-1",
+      "round": 4,
+      "slot": 1,
+      "playerAId": "P-f7aae7c3",
+      "playerBId": "P-7c48d310",
+      "scoreA": 0,
+      "scoreB": 3,
+      "winnerId": "P-7c48d310",
+      "loserId": "P-f7aae7c3",
+      "status": "done",
+      "nextMatchId": "",
+      "nextSide": "A"
+    }
+  ]
+}

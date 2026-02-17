@@ -1,0 +1,1598 @@
+/* Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body{
+  font-family: 'Lato','Arial','Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+  overflow-x: hidden;
+  background: linear-gradient(180deg,#0b2d5a 0%,#00509a 35%,#004f9a 75%,#005199 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Layout principal */
+.main-container{
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fondo superior */
+.fondo-superior{
+  width: 100%;
+  height: auto;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+/* Wrapper logo + top */
+.content-wrapper{
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: -160px auto 0; /* base desktop */
+  z-index: 2;
+}
+
+/* Logo */
+.logo-container{
+  position: relative;
+  text-align: center;
+  margin-bottom: -90px;
+  z-index: 6; /* encima del contenido */
+}
+.logo{
+  /* Tamaño base para PC */
+  width: 300px;
+  height: auto;
+  max-width: 90%;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+/* Stack */
+.contenedor-imagen{ position: relative; width: 100%; z-index: 3; }
+.contenedor-bg{ display: none; }
+.contenedor-stack{ position: relative; width: 100%; }
+
+.contenedor-top{
+  width: 100%;
+  display: block;
+  position: relative;
+  z-index: 3;
+}
+
+/* Footer */
+.page-footer{
+  margin-top: auto;     /* ✅ empuja el footer al final del viewport */
+  width: 100%;
+  position: relative;
+  z-index: 1;           /* ✅ queda por debajo del contenido */
+  line-height: 0;
+  flex-shrink: 0;
+}
+
+.contenedor-bottom{
+  width: 100%;
+  height: auto;
+  display: block;
+  position: relative;
+  margin-top: 0;
+}
+
+/* =========================================================
+   ✅ NUEVO: ESTILOS PARA EL CONTENIDO DEL FOOTER
+   ========================================================= */
+.footer-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  /* Flexbox para centrar contenido */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrado vertical sobre la imagen */
+  align-items: center;
+  
+  z-index: 10;
+  color: #fff;
+  text-align: center;
+  padding: 20px 10px; 
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 8px;
+}
+
+.social-link {
+  color: #fff;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-link:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}
+
+.footer-links {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  opacity: 0.95;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+  opacity: 1;
+}
+
+.separator {
+  margin: 0 5px;
+  opacity: 0.6;
+}
+
+.copyright {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  line-height: 1.4;
+  margin-top: 2px;
+  padding: 0 10px;
+}
+
+/* =========================================================
+   ✅ CONTENIDO "SUELTO"
+   ========================================================= */
+.content-area{
+  position: relative;
+  z-index: 5;
+
+  width: 84%;
+  max-width: 980px;
+  margin: 0 auto;
+
+  /* ✅ Valor base overrideado en responsive.css */
+  margin-top: -420px;
+
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+
+  padding: 18px 16px 5px;
+  
+  color: #fff;
+}
+
+/* 🔥 REGLA MATA-ESPACIOS */
+.content-area > :last-child {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Espacio mínimo debajo del logo */
+.content-after-logo-spacer{
+  height: 1rem; 
+}
+
+/* Título arriba (blanco sobre el fondo) */
+.content-area h1{
+  font-size: 2.35rem;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.45);
+}
+
+.intro-text{
+  color: rgba(255,255,255,0.92);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.40);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+/* Títulos fuera de cards (blancos) */
+.section-title{
+  margin: 18px 0 10px;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.45);
+}
+
+/* Separador suave */
+hr.section-sep{
+  border: none;
+  height: 1px;
+  background: rgba(255,255,255,0.20);
+  margin: 22px 0;
+}
+
+/* Cards (legibles) */
+.card{
+  background: rgba(255,255,255,0.92);
+  color: #2b2b2b;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.14);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+}
+
+.card h2{
+  margin-bottom: 8px;
+  color: #2c3e50;
+}
+.card h3{
+  margin-bottom: 8px;
+  color: #3498db;
+}
+
+/* Listas */
+.content-area ul,
+.content-area ol{
+  padding-left: 1.2rem;
+  margin-bottom: 12px;
+}
+.content-area li{ margin: 6px 0; }
+
+/* Utilidades */
+.text-center{ text-align: center; }
+.mt-3{ margin-top: 30px; }
+
+
+/* =========================================================
+   ✅ CONTENIDO "Primera Fase"
+   ========================================================= */
+
+.titulo-principal {
+        font-family: "Lato", sans-serif;
+        font-style: normal;
+        font-weight: 800;
+        font-size: 50px;
+        line-height: 77px;
+        text-transform: uppercase;
+        background: linear-gradient(90deg, #e0b96c, #ffdcb5 35%, #e0b96c 70%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0px 2px 1px rgba(0, 0, 0, .7));
+        margin: 0 0 30px 0;
+}
+
+.torneo-meta{
+  
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  backdrop-filter: none;
+
+  
+  padding: 0;
+}
+
+.torneo-meta,
+#torneoMeta{
+  width: 92%;
+  max-width: 980px;
+  margin: 10px auto 0;
+  display: grid;
+  gap: 10px;
+}
+
+#torneoMeta{
+  margin-top: 2px;   
+}
+
+.meta-row {
+        margin-bottom: 22px; 
+        padding: 10px;
+}
+
+.meta-row--league,
+.meta-row--format,
+.meta-row--datetime,
+.meta-row--participants,
+.meta-row--mode,
+.meta-row--prizes{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.meta-row--format{
+  position: relative;
+  overflow: visible;
+  z-index: 10;
+}
+
+.meta-row--mode{
+  position: relative;
+  overflow: visible;
+  z-index: 10;
+}
+
+.meta-label {
+        font-weight: 800;
+        color: #ffe8a3;
+        margin-right: 10px;
+        font-size: 16px;
+}
+
+.meta-value {
+        color: white;
+        font-size: 18px;
+}
+
+.date-only,
+.time-only {
+        font-weight: 600;
+}
+
+.meta-value--format {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+}
+
+.meta-value--datetime {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+}
+
+.meta-row--datetime .meta-value--datetime{
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.format-text,
+.bo-text {
+        font-weight: 600;
+}
+
+.format-sep {
+        color: rgba(255, 255, 255, 0.5);
+}
+
+.league-badges {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+}
+
+.league-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: rgba(255, 215, 0, 0.2);
+        border-radius: 20px;
+        border: 2px solid rgba(255, 215, 0, 0.5);
+}
+
+.league-chip--main{
+  border-color: rgba(255,220,120,0.22);
+}
+
+.league-chip--tiebreak {
+        background: rgba(100, 150, 255, 0.2);
+        border-color: rgba(100, 150, 255, 0.5);
+}
+
+.tiebreak-label { }
+
+.league-logo-img,
+#leagueLogoImg,
+#tiebreakLogoImg{
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,.55));
+}
+
+#torneoLeagueText{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.league-part{ display: inline-flex; align-items: center; gap: 8px; }
+
+.bo-help {
+        position: relative;
+        display: inline-block;
+}
+
+/* Tooltip genérico (si usas .info-btn + .tooltip) */
+.info-btn {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: rgba(255, 215, 0, 0.3);
+        border: 2px solid rgba(255, 215, 0, 0.6);
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s ease;
+}
+
+.info-btn:hover {
+        background: rgba(255, 215, 0, 0.5);
+        transform: scale(1.1);
+}
+
+.tooltip {
+        display: none;
+        position: absolute;
+        bottom: 130%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px 15px;
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        border-radius: 8px;
+        font-size: 14px;
+        white-space: nowrap;
+        z-index: 1000;
+}
+
+.info-btn:hover + .tooltip {
+        display: block;
+}
+
+/* Tooltip BO (usa #boHelpBtn + #boTooltip) */
+#boHelpWrap{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  overflow: visible;
+}
+
+#boHelpBtn{
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.35);
+  background: rgba(0,0,0,.25);
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+#boTooltip{
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 10px);
+  bottom: auto;
+  transform: translateX(-50%);
+  display: none;
+
+  width: 420px;
+  max-width: calc(100vw - 24px);
+  min-width: 240px;
+  box-sizing: border-box;
+
+  padding: 10px 12px;
+  border-radius: 14px;
+
+  background: rgba(8,12,20,0.92);
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow: 0 10px 22px rgba(0,0,0,.35);
+
+  color: #fff;
+  font-weight: 800;
+  font-size: 12.5px;
+  line-height: 1.25;
+
+  white-space: normal;
+  word-break: break-word;
+  text-align: center;
+
+  z-index: 99999;
+}
+
+#boHelpWrap.open #boTooltip{
+  display: block;
+}
+
+/* Tooltip MODE (usa #modeHelpBtn + #modeTooltip) */
+#modeHelpWrap{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  overflow: visible;
+}
+
+#modeHelpBtn{
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.35);
+  background: rgba(0,0,0,.25);
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+#modeTooltip{
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 10px);
+  bottom: auto;
+  transform: translateX(-50%);
+  display: none;
+
+  width: 420px;
+  max-width: calc(100vw - 24px);
+  min-width: 240px;
+  box-sizing: border-box;
+
+  padding: 10px 12px;
+  border-radius: 14px;
+
+  background: rgba(8,12,20,0.92);
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow: 0 10px 22px rgba(0,0,0,.35);
+
+  color: #fff;
+  font-weight: 800;
+  font-size: 12.5px;
+  line-height: 1.25;
+
+  white-space: normal;
+  word-break: break-word;
+  text-align: center;
+
+  z-index: 99999;
+}
+
+#modeHelpWrap.open #modeTooltip{
+  display: block;
+}
+
+/* Ajustes específicos cuando está dentro de #torneoMeta (tu header del torneo) */
+#torneoMeta .meta-row{
+  margin: 2px 0;     
+  padding: 0;        
+}
+
+#torneoMeta .meta-label{
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  font-size: 28px;
+  text-transform: uppercase;
+  color: #e0b96c;
+  filter: drop-shadow(0px 2px 1px rgba(0,0,0,.7));
+}
+
+#torneoMeta .meta-value{
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  font-size: 40px;
+  letter-spacing: .2px;
+  color: #ffdcb5;
+  filter: drop-shadow(0px 2px 1px rgba(0,0,0,.7));
+}
+
+#torneoMeta .meta-label,
+#torneoMeta .meta-value,
+#torneoMeta .format-text,
+#torneoMeta .bo-text,
+#torneoMeta .time-only{
+  line-height: 1.05; 
+}
+
+#torneoMeta .meta-row--league .meta-value{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#torneoMeta .league-badges{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#torneoMeta .league-chip{
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.22);
+  border: 1px solid rgba(255,220,120,0.22);
+  box-shadow:
+    inset 0 0 10px rgba(255,255,255,0.06),
+    0 0 12px rgba(0,0,0,0.25);
+}
+
+#torneoMeta .league-chip--tiebreak{
+  border-color: rgba(109,255,178,0.28);
+}
+
+#torneoMeta .league-chip--tiebreak,
+#torneoMeta .league-chip--tiebreak .tiebreak-label{
+  color: #6dffb2;
+}
+
+#torneoMeta .tiebreak-label{
+  font-weight: 900;
+  letter-spacing: .4px;
+}
+
+#torneoMeta .meta-value--datetime{
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+#torneoMeta .time-only{
+  font-size: 34px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,.35);
+}
+
+#torneoMeta .meta-row--format .meta-label{ opacity: .95; }
+
+#torneoMeta .format-text{
+  font-size: 30px;
+  font-weight: 900;
+  color: #ffe7b0;
+  text-shadow: 0 2px 10px rgba(0,0,0,.35);
+}
+
+#torneoMeta .bo-text{
+  font-size: 34px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,.35);
+}
+
+#torneoMeta .format-sep{
+  font-size: 40px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+  margin: 0 6px;
+  opacity: .95;
+}
+
+#torneoMeta .meta-row--mode .meta-label{ opacity: .95; }
+
+#torneoMeta .meta-value--mode{ display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
+#torneoMeta .mode-text{
+  font-size: 30px;
+  font-weight: 900;
+  color: #ffe7b0;
+  text-shadow: 0 2px 10px rgba(0,0,0,.35);
+}
+
+#torneoMeta .meta-row--prizes .meta-label{ opacity: .95; }
+
+#torneoMeta .meta-value--prizes{ display: flex; justify-content: center; }
+
+#torneoMeta .prize-list{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#torneoMeta .prize-item{
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.22);
+  border: 1px solid rgba(255,220,120,0.26);
+  box-shadow:
+    inset 0 0 12px rgba(255,255,255,0.07),
+    0 0 14px rgba(0,0,0,0.28);
+}
+
+#torneoMeta .prize-icon-box{
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.18);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+#torneoMeta .prize-icon-box img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#torneoMeta .prize-text{
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+#torneoMeta .prize-rank{
+  font-size: 13px;
+  font-weight: 900;
+  color: #ffffff;
+  opacity: .95;
+}
+
+#torneoMeta .prize-name{
+  font-size: 18px;
+  font-weight: 900;
+  color: #ffdcb5;
+}
+
+/* Botón abrir modal registro (clase + IDs que usas en JS) */
+/* =========================================
+   BOTÓN PRINCIPAL: Registrarme (openModalBtn)
+   Variantes: .open-modal-btn / #openModalBtn / #btnRegister
+   ========================================= */
+/* =========================================================
+   BOTONES DE ACCIÓN
+   ========================================================= */
+.open-modal-btn,
+#openModalBtn {
+  margin-top: 40px;
+  padding: 16px 36px;
+  background: linear-gradient(90deg, #ffe27a, #ffd048);
+  border-radius: 20px;
+  color: #5a3a00;
+  font-size: 22px;
+  font-weight: 900;
+  border: 2px solid #fff2a0;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 12px #ffe27a, 0 0 22px #5c80b1;
+  
+  /* Ajuste de ancho y centrado */
+  width: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 560px;
+  margin: 18px auto 22px; /* Margen inferior para separar de reglas */
+}
+
+.open-modal-btn:hover,
+#openModalBtn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #ffe27a, 0 0 45px #0d5f99;
+}
+
+/* =========================================================
+   TIPOGRAFÍA AUXILIAR
+   ========================================================= */
+.sub1 {
+  font-family: 'Lato', sans-serif;
+  font-weight: 800;
+  font-size: 36px;
+  line-height: 44px;
+  text-transform: uppercase;
+  color: white;
+  filter: drop-shadow(0px 2px 1px rgba(0, 0, 0, .7));
+  margin-bottom: 10px;
+}
+
+/* =========================================================
+   MODALES (ESTRUCTURA GENERAL)
+   ========================================================= */
+.modal-overlay,
+#formModal{
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 5, 30, 0.75);
+  backdrop-filter: blur(8px);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background: linear-gradient(135deg, rgba(20,55,110,0.55), rgba(140,20,80,0.55));
+  padding: 40px;
+  width: 90%;
+  max-width: 720px;
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 24px;
+  border: 2px solid rgba(255,220,120,0.45);
+  box-shadow: 0 0 20px rgba(255, 232, 150, 0.35), 0 0 45px rgba(0, 80, 150, 0.35);
+  backdrop-filter: blur(14px);
+  position: relative;
+  animation: fadeIn 0.25s ease-out;
+}
+
+/* Scrollbar del Modal */
+.modal-box::-webkit-scrollbar { width: 6px; }
+.modal-box::-webkit-scrollbar-track { background: rgba(255,255,255,0.08); border-radius: 10px; }
+.modal-box::-webkit-scrollbar-thumb { background: #6d1547; }
+.modal-box::-webkit-scrollbar-thumb:hover { background: #8a1f64; }
+
+.modal-title {
+  font-size: 34px;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #ffe8a3;
+  margin-bottom: 20px;
+  text-align: center;
+  letter-spacing: 1px;
+  text-shadow: 0 0 6px rgba(255,218,120,0.7);
+}
+
+.close-modal,
+#closeModalBtn {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 34px;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+  text-shadow: 0 0 8px rgba(255,220,120,0.6);
+}
+
+.close-modal:hover,
+#closeModalBtn:hover {
+  color: #ffe27a;
+  transform: scale(1.15);
+}
+
+/* =========================================================
+   FORMULARIO DE REGISTRO
+   ========================================================= */
+.modal-form-row {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+
+.form-column {
+  flex: 1;
+  min-width: 260px;
+}
+
+/* =========================================================
+   SELECTOR DE LIGA (DENTRO DEL MODAL)
+   ========================================================= */
+.modal-league-switch {
+  margin: 8px 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-league-switch__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.modal-league-switch__hint {
+  text-align: center;
+  color: rgba(255,255,255,0.92);
+  font-weight: 900;
+  text-shadow: 0 0 10px rgba(0,0,0,0.35);
+  margin-top: 14px;
+  margin-bottom: 22px;
+}
+
+/* =========================================================
+   SELECTOR DE POKÉMON (POKE PICK)
+   ========================================================= */
+.pokePick {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.pokePick input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.pokeFace {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+}
+
+.pokePick:focus-within {
+  z-index: 10000;
+}
+
+.poke-dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  margin-top: 6px;
+  display: none;
+  max-height: 280px;
+  overflow: auto;
+  border-radius: 14px;
+  background: rgba(10, 18, 35, 0.96);
+  border: 1px solid rgba(255,220,120,0.22);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+  backdrop-filter: blur(10px);
+}
+
+/* =========================================================
+   MODAL DE EQUIPO (VISUALIZACIÓN)
+   ========================================================= */
+.team-modal-box {
+  max-width: 560px;
+  padding: 22px;
+}
+
+.team-modal-title {
+  font-size: 26px;
+  font-weight: 1000;
+  text-transform: uppercase;
+  color: #ffe8a3;
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.team-modal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 14px;
+  color: rgba(255,255,255,0.90);
+  font-weight: 900;
+}
+
+.team-poke-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+/* Etiquetas de los inputs */
+.modal-box label {
+  display: block;
+  color: #fff7cc;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+/* Campos de texto */
+.modal-box input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(12,50,100,0.35);
+  border: 1px solid rgba(255,220,120,0.4);
+  color: #fff;
+  margin-bottom: 15px;
+  transition: 0.25s;
+  box-sizing: border-box;
+}
+
+/* Efecto al escribir (Focus) */
+.modal-box input:focus {
+  outline: none;
+  background: rgba(15,70,130,0.45);
+  border-color: #ffe27a;
+  box-shadow: 0 0 10px rgba(255,228,120,0.8), 0 0 20px rgba(120,200,255,0.5);
+}
+
+/* Color del texto de ayuda (Placeholder) */
+.modal-box input::placeholder {
+  color: rgba(255,255,255,0.55);
+}
+
+
+/* Botón de cada liga */
+.league-switch-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 18px;
+  background: rgba(10, 18, 35, 0.35);
+  border: 1px solid rgba(255,220,120,0.25);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 900;
+  letter-spacing: .3px;
+  transition: .18s ease;
+}
+
+.league-switch-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+  border-color: rgba(255,220,120,0.45);
+}
+
+/* Estado activo (Liga seleccionada) */
+.league-switch-btn.is-active {
+  background: linear-gradient(135deg, rgba(255,226,122,0.22), rgba(120,170,255,0.12));
+  border-color: rgba(255,226,122,0.75);
+  box-shadow: 0 0 0 2px rgba(255,226,122,0.15), 0 16px 34px rgba(0,0,0,0.28);
+}
+
+/* Icono y texto dentro del botón */
+.league-switch-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.45));
+}
+
+.league-switch-text {
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+/* Badges de color (ej: "LIGA 1500" azul) */
+.league-hint-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-left: 8px;
+  font-weight: 900;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow: 0 10px 18px rgba(0,0,0,0.20);
+}
+
+/* Colores específicos de ligas */
+.league-hint-badge--500 { background: rgba(255, 60, 60, 0.85); border-color: rgba(255, 120, 120, 0.35); }
+.league-hint-badge--1500 { background: rgba(60, 150, 255, 0.82); border-color: rgba(140, 200, 255, 0.35); }
+.league-hint-badge--2500 { background: rgba(0, 0, 0, 0.75); border-color: rgba(255, 255, 255, 0.22); }
+.league-hint-badge--9000 { background: rgba(165, 80, 255, 0.82); border-color: rgba(210, 160, 255, 0.35); }
+
+
+/* Scrollbar del dropdown */
+.poke-dropdown::-webkit-scrollbar { width: 6px; }
+.poke-dropdown::-webkit-scrollbar-track { background: rgba(255,255,255,0.06); border-radius: 10px; }
+.poke-dropdown::-webkit-scrollbar-thumb { background: rgba(255,226,122,0.35); border-radius: 10px; }
+
+/* Cada opción de la lista */
+.poke-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.poke-item:hover,
+.poke-item.is-active {
+  background: rgba(255,226,122,0.12);
+}
+
+.poke-name {
+  font-weight: 800;
+  color: rgba(255,255,255,0.95);
+}
+
+.poke-muted {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.55);
+  white-space: nowrap;
+}
+
+.poke-muted:empty { display: none; }
+
+
+.send-all-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(90deg, #6d1547, #123f82);
+  border: 1px solid rgba(255,255,255,0.35);
+  color: #fff;
+  border-radius: 14px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 18px;
+  transition: 0.3s;
+}
+
+.send-all-btn:hover {
+  background: linear-gradient(90deg, #b5114a, #06497a);
+  transform: scale(1.05);
+  box-shadow: 0 0 14px rgba(246,255,0,0.7);
+}
+
+/* --- Toast Notification --- */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #222;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 50px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  font-weight: 600;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 3000;
+}
+
+.toast.show { 
+  transform: translateX(-50%) translateY(0); 
+}
+
+/* =========================================================
+   ✅ BARRA DE PREPARACIÓN (Cuenta Regresiva)
+========================================================= */
+
+/* Contenedor principal de la barra */
+.prep-countdown-bar,
+#prepCountdownBar {
+    width: 92%;
+    max-width: 980px;
+    margin: 12px auto 0;
+    padding: 12px 16px;
+
+    background: rgba(0, 0, 0, 0.18);
+    border: 1px solid rgba(255, 220, 120, 0.18);
+    border-radius: 18px;
+    backdrop-filter: blur(8px);
+
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05), 0 0 14px rgba(0, 0, 0, 0.20);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Contenedor interno para alinear elementos */
+.prep-countdown-inner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+/* Textos de etiqueta ("FASE DE PREPARACIÓN", "TERMINA EN:") */
+.prep-phase,
+.prep-label {
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #e0b96c;
+    filter: drop-shadow(0px 2px 1px rgba(0, 0, 0, .7));
+}
+
+/* El tiempo numérico (ej: 30:00) */
+.prep-time,
+#prepCountdown {
+    font-family: 'Lato', sans-serif;
+    font-weight: 1000;
+    font-size: 28px;
+    color: #76e8ff; /* Azul neón */
+    text-shadow: 0 2px 12px rgba(0, 0, 0, .35);
+}
+
+/* Separador visual (guión) */
+.prep-sep {
+    opacity: .7;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* =========================================================
+   ✅ META: PARTICIPANTES (Fila y Textos)
+========================================================= */
+
+/* Fila contenedora general (alineación) */
+.meta-row,
+.meta-row--participants {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin: 2px 0;
+    padding: 0;
+}
+
+/* La etiqueta (ej: "PARTICIPANTES:") */
+.meta-label {
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    text-transform: uppercase;
+    color: #e0b96c;
+    filter: drop-shadow(0px 2px 1px rgba(0, 0, 0, .7));
+    line-height: 1.05;
+    margin-right: 10px;
+}
+
+/* Contenedor del valor (agrupa el número y el texto "jugadores") */
+.meta-value,
+.meta-value--participants {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    
+    /* Estilos base de texto para valores */
+    font-family: 'Lato', sans-serif;
+    font-weight: 900;
+    font-size: 40px; /* Tamaño base grande */
+    letter-spacing: .2px;
+    color: #ffdcb5;
+    filter: drop-shadow(0px 2px 1px rgba(0, 0, 0, .7));
+    line-height: 1.05;
+}
+
+/* El número de participantes (con gradiente especial) */
+.participants-text {
+    font-size: 30px;
+    font-weight: 1000;
+    background: linear-gradient(90deg, #76e8ff 0%, #a98bff 55%, #ff78d6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, .25);
+}
+
+/* El texto pequeño "jugadores" */
+.participants-sub {
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.92);
+    opacity: .9;
+    font-size: 18px; /* Ajuste visual relativo al número */
+    text-shadow: none; /* Limpia sombras pesadas si es necesario */
+}
+
+/* Responsive para móviles (ajuste de tamaños) */
+@media (max-width: 768px) {
+    .meta-label { font-size: 22px; }
+    .meta-value { font-size: 30px; }
+}
+
+/* =========================================================
+   ✅ CONTENEDORES DE RESUMEN Y GRID
+========================================================= */
+
+/* Contenedor principal del resumen */
+.event-summary,
+#eventSummary {
+    width: 92%;
+    max-width: 1180px;
+    margin: 18px auto 0;
+    text-align: left;
+}
+
+/* Wrapper específico para la fase de preparación */
+.prep-wrap {
+    width: 96%;
+    max-width: 1400px;
+    margin: 18px auto 0;
+    text-align: left;
+}
+
+/* Grid de tarjetas (4 columnas por defecto) */
+.prep-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(300px, 1fr));
+    column-gap: 24px;
+    row-gap: 24px;
+    align-items: start;
+    justify-content: center;
+    margin-top: 14px;
+}
+
+/* =========================================================
+   ✅ TARJETA DE PARTICIPANTE (PREP-CARD)
+========================================================= */
+
+.prep-card {
+    width: 100%;
+    max-width: none;
+    padding: 12px;
+    border-radius: 18px;
+    position: relative;
+    
+    /* Variable de color por defecto (azul claro) */
+    --gcol: 120, 232, 255; 
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    background: rgba(10, 18, 35, 0.55);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.42), inset 0 0 12px rgba(255, 255, 255, 0.05);
+
+    transition: none !important;
+    transform: none !important;
+    box-sizing: border-box;
+}
+
+/* Borde gradiente especial de la tarjeta */
+.prep-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 !important;
+    border-radius: 18px !important;
+    padding: 2px;
+
+    background: linear-gradient(135deg,
+        rgba(255, 220, 120, 0.70),
+        rgba(120, 170, 255, 0.35),
+        rgba(255, 120, 220, 0.45)
+    );
+
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+
+    pointer-events: none;
+}
+
+/* Nombre del jugador */
+.prep-name {
+    font-size: 35px;
+    font-weight: 900;
+    text-align: center;
+    margin: 0;
+    letter-spacing: 0.4px;
+
+    background: linear-gradient(90deg, #e0b96c, #ffdcb5 35%, #e0b96c 70%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    filter: drop-shadow(0px 2px 1px rgba(0, 0, 0, .7));
+}
+
+/* =========================================================
+   ✅ SECCIÓN DE CÓDIGO DE ENTRENADOR
+========================================================= */
+
+.prep-code-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+
+    padding: 9px 10px;
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 220, 120, 0.25);
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.prep-code {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.prep-code-label {
+    font-size: 11px;
+    font-weight: 900;
+    color: #ffe6b3;
+    text-transform: uppercase;
+}
+
+.prep-code-val {
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+/* Botón de copiar */
+.prep-copy-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 220, 120, 0.35);
+    background: rgba(255, 220, 120, 0.12);
+    box-shadow: 0 0 12px rgba(255, 220, 120, 0.22);
+    cursor: pointer;
+}
+
+.prep-copy-ico {
+    width: 20px;
+    height: 20px;
+    fill: rgba(255, 255, 255, 0.92);
+}
+
+/* =========================================================
+   ✅ EQUIPO POKÉMON (GRID DE 6)
+========================================================= */
+
+.prep-team {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+
+    padding: 8px;
+    margin: 0;
+
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.prep-poke {
+    height: 48px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 14px rgba(0, 0, 0, 0.22);
+    overflow: hidden;
+}
+
+.prep-poke img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+}
+
+/* =========================================================
+   ✅ FOOTER Y ESTADO (STATUS)
+========================================================= */
+
+.prep-footer {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.prep-status {
+    font-size: 12px;
+    font-weight: 900;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.22);
+    border: 1px solid rgba(255, 220, 120, 0.25);
+    color: #ffe6b3;
+    box-shadow: 0 0 10px rgba(255, 220, 120, 0.16);
+
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Punto indicador de estado (base) */
+.prep-status::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.70);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.10);
+}
+
+/* Estado VS (azul/cyan) */
+.prep-status--vs::before {
+    background: rgba(120, 232, 255, 0.95);
+    box-shadow: 0 0 0 3px rgba(120, 232, 255, 0.18);
+}
+
+/* ... (mantener el resto del código igual hasta llegar a las secciones de battle) ... */
+
+/* ✅ MEJORA: Contenedores Flex para centrado de impares */
+.liveTablesGrid,
+.nextQueueList {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 20px !important; /* Más espacio entre cuadros */
+    justify-content: center !important; /* Centra los cuadros, incluido el impar */
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* ✅ MEJORA: Ajuste de las tarjetas para que no se estiren raro */
+.battle-card--live, 
+.nextQueueList .battle-card--next {
+    flex: 0 1 auto;
+    min-width: 320px; /* Evita que se colapsen demasiado */
+    max-width: 100%;
+}
+
+/* ✅ MEJORA: Protección de los rostros de los Pokémon */
+.battle-mon {
+    aspect-ratio: 1 / 1 !important;
+    width: 100% !important;
+    height: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.battle-mon img {
+    width: 90% !important;
+    height: 90% !important;
+    object-fit: contain !important;
+    padding: 2px;
+}
+
+/* ✅ MEJORA: El VS no debe estorbar */
+.battle-next-vs {
+    z-index: 10;
+    flex-shrink: 0;
+}
