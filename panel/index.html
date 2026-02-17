@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Panel Pokecomas</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="stylesheet" href="panel.css" />
+</head>
+<body>
+
+  <!-- ===== LOGIN ===== -->
+  <div id="login" class="login-box">
+    <h2>Acceso Pokecomas</h2>
+
+    <form id="loginForm">
+      <input id="user" placeholder="Usuario" required />
+      <input id="pin" type="password" placeholder="PIN" required />
+      <button type="submit" class="btn-gold">Ingresar</button>
+    </form>
+  </div>
+
+  <!-- ===== LOADING ===== -->
+  <div id="loading" class="loading-box" style="display:none">
+    <div class="spinner"></div>
+    <p>Cargando usuarios…</p>
+  </div>
+
+  <!-- ===== PANEL ===== -->
+  <div id="panel" class="panel-box" style="display:none">
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="tabRegistros">Códigos entrenador</button>
+      <button class="tab-btn" data-tab="tabTorneos">Torneos</button>
+    </div>
+
+    <!-- =====================================================
+         TAB: TORNEOS
+    ====================================================== -->
+    <div id="tabTorneos" class="tab-content" style="display:none;">
+      <hr style="opacity:.25; margin:30px 0;">
+      <h2>Torneos</h2>
+
+      <!-- ✅ BOTÓN CREAR CENTRADO ARRIBA -->
+      <div class="card" style="text-align:center; margin-bottom:16px;">
+        <button class="btn-gold" id="btnOpenCreateModal" type="button" style="min-width:220px;">
+          ➕ Crear torneo
+        </button>
+        
+      </div>
+
+      <!-- ===== LISTA / SELECCIÓN ===== -->
+      <div class="card" style="margin-bottom:12px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+          <h3 style="margin:0;">Torneos creados</h3>
+
+          <!-- ✅ BOTONES HORIZONTALES (debajo del título visualmente, pero aquí van a la derecha en desktop) -->
+          <div class="row-actions" style="justify-content:flex-end;">
+            <button class="btn-gold" id="btnOpenEditModal" type="button">✏️ Editar</button>
+            <button class="btn-gold" id="btnTorneoRefrescarLista" type="button">📋 Recargar lista</button>
+            <button class="btn-gold" id="btnTorneoSetUltimo" type="button"> Participantes</button>
+            <button class="btn-gold" id="btnTorneoToggleInscripciones" type="button">Cargando</button>
+            <button class="btn-gold" id="btnTorneoForceStart" type="button">⚡ Iniciar ahora</button>
+<button class="btn-gold" id="btnTorneoSeed40" type="button">🧪 Poblar 40</button>
+
+            <button class="btn-gold" id="btnTorneoGenerarSingle" type="button">🏆 Generar</button>
+            <button id="btnExportJson">⬇ Descargar JSON</button>
+            <button class="btn-danger" id="btnTorneoEliminar" type="button">🗑️ Borrar</button>
+          </div>
+        </div>
+
+        <div class="row two" style="margin-top:12px;">
+          <div>
+            <label>Seleccionar torneo</label>
+            <select id="tSelect">
+              <option value="">Cargando…</option>
+            </select>
+          </div>
+
+          <!-- (opcional) espacio para cosas futuras / indicadores -->
+          <div style="display:flex; align-items:end; justify-content:flex-end; gap:10px; flex-wrap:wrap;">
+            <!-- Dejo estos ids por si tu JS todavía los busca (no afecta si no los usas) -->
+            <button class="btn-gold" id="btnTorneoActualizar" type="button" style="display:none;">🔄 Actualizar torneo</button>
+            <button class="btn-gold" id="btnTorneoGuardarReglas" type="button" style="display:none;">💾 Guardar reglas</button>
+          </div>
+        </div>
+
+        <!-- ✅ STATUS -->
+        <div id="torneoStatusBox" class="t-status" style="margin-top:14px;">
+          <div class="t-status-top">
+            <div class="t-title" id="tStatusTitle">—</div>
+            <div class="t-id" id="tStatusId">—</div>
+          </div>
+
+          <div class="t-badges" id="tStatusBadges"></div>
+          <div class="t-meta" id="tStatusMeta"></div>
+          <div class="t-rules" id="tStatusRules"></div>
+          <div class="t-inscritos" id="torneoInscritosInfo"></div>
+        </div>
+      </div>
+
+      <!-- ===== MATCHES ===== -->
+      <div class="card">
+        <h3 style="margin:0 0 8px;">Matches</h3>
+
+        <table>
+          <thead>
+  <tr>
+    <th>Match</th>
+    <th>Ronda</th>
+    <th>Partida</th>
+    <th>Editar</th>
+  </tr>
+</thead>
+
+          <tbody id="torneoMatchesBody"></tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- =====================================================
+         TAB: REGISTROS
+    ====================================================== -->
+    <div id="tabRegistros" class="tab-content">
+      <h2>Registros pendientes</h2>
+
+      <button id="btnActualizar" onclick="actualizarDatos()">
+        🔄 Actualizar datos
+      </button>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Pokémon</th>
+            <th>Código</th>
+            <th>Campfire</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tablaBody"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div id="toastBox"></div>
+
+  <!-- =====================================================
+       MODAL TORNEO (CREAR / EDITAR)
+       ✅ MISMO FORM, MISMOS IDS QUE TU JS USA
+  ====================================================== -->
+  <div id="torneoModal" class="modal" style="display:none;">
+    <div class="modal-backdrop" data-close="1"></div>
+
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <div class="modal-title" id="torneoModalTitle">Crear torneo</div>
+          <div class="modal-sub" id="torneoModalSub">Completa los datos</div>
+        </div>
+        <button class="modal-x" type="button" data-close="1">✕</button>
+      </div>
+
+      <div class="modal-body">
+
+  <!-- TÍTULO / FECHA -->
+  <div class="row two">
+    <div>
+      <label>Título del torneo</label>
+      <input id="tTitle" placeholder="Ej: Torneo Pokecomas - Febrero" />
+    </div>
+    <div>
+      <label>Fecha y hora</label>
+      <input id="tDateTime" type="datetime-local" />
+    </div>
+  </div>
+
+  <!-- FORMATO / MODALIDAD -->
+  <div class="row two">
+    <div>
+      <label>Formato</label>
+      <select id="tFormat">
+        <option value="single">Eliminación directa</option>
+        <option value="double">Doble eliminación</option>
+        <option value="groups">Grupos + Playoffs</option>
+        <option value="swiss">Suizo</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Modalidad</label>
+      <select id="tMode">
+        <option value="presencial">Presencial</option>
+        <option value="virtual">Virtual</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ✅ OPCIONES PRESENCIALES (AVANZADO) -->
+  <div id="tVenueCard" class="card" style="margin-top:14px; display:none;">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+      <h3 style="margin:0;">Presencial: mesas y escenario</h3>
+      <small class="poke-muted">Solo aparece si Modalidad = Presencial</small>
+    </div>
+
+    <div class="row two" style="margin-top:10px;">
+      <div>
+        <label>Mesas disponibles (partidas simultáneas)</label>
+        <input id="tTablesCount" type="number" min="1" max="64" placeholder="Ej: 8" />
+        <small class="poke-muted">El sistema asigna Mesa 1..N automáticamente por match.</small>
+      </div>
+
+      <div>
+        <label>Escenario principal</label>
+        <label class="bo-toggle" style="margin-top:6px;">
+          <input type="checkbox" id="tHasMainStage" />
+          <span>Activar</span>
+        </label>
+        <small class="poke-muted">Si está activado, la Final va siempre al escenario principal.</small>
+      </div>
+    </div>
+
+    <div id="tMainStageAdv" style="margin-top:10px; display:none;">
+      <div class="row two">
+        <div>
+          <label>Desde qué fase va al escenario</label>
+          <select id="tMainStageFrom">
+            <option value="final">Solo final</option>
+            <option value="semis" selected>Semifinales + final</option>
+            <option value="quarters">Cuartos + semis + final</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Antes de esa fase: % aleatorio en escenario</label>
+          <input id="tMainStageRandomPct" type="number" min="0" max="100" placeholder="Ej: 10" />
+<small class="poke-muted">0 = ningún turno usa escenario. 100 = 1 match en escenario en cada turno.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- BEST OF / SUGERIDO -->
+  <div class="row two">
+    <div>
+      <label>Best Of</label>
+      <select id="tBestOf">
+        <option value="3">BO3</option>
+        <option value="5">BO5</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Sugerido (participantes)</label>
+      <input id="tSuggested" placeholder="Ej: 16 (vacío = auto)" />
+    </div>
+  </div>
+
+      <!-- ✅ BO POR FASE (DEFAULT: ON) -->
+      <div class="card" style="margin-top:14px;">
+        <div class="bo-head">
+          <div class="bo-head-left">
+            <h3 style="margin:0;">BO por fase</h3>
+
+            <label class="bo-toggle" title="Si desactivas, se usa el Best Of global">
+              <input type="checkbox" id="tBoPerPhase" checked />
+              <span>Activado</span>
+            </label>
+          </div>
+
+          <button type="button" class="icon-btn" id="btnBoAdvOpen" title="Configuración avanzada">
+            ⚙
+          </button>
+        </div>
+
+        <div class="bo-summary" id="tBoPhaseSummary">
+          Grupos: BO1 · Llaves: BO3 · Final: BO5
+        </div>
+
+        <!-- hidden values (se guardan en Sheets) -->
+        <input type="hidden" id="tBoGroups" value="1" />
+        <input type="hidden" id="tBoPlayoffs" value="3" />
+        <input type="hidden" id="tBoFinal" value="5" />
+
+        <small class="poke-muted">
+          Si desactivas BO por fase, se usará el “Best Of” global de arriba.
+        </small>
+      </div>
+
+      <div id="matchesToolbar" style="display:flex;flex-direction:column;gap:8px;margin:10px 0 12px;">
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+    <span style="opacity:.85;font-size:12px;">Match actual</span>
+    <select id="currentMatchSelect" style="min-width:260px;flex:1;"></select>
+    <button id="btnSetCurrentMatch" class="btn btn-sm btn-report">Poner actual</button>
+    <button id="btnClearCurrentMatch" class="btn btn-sm btn-edit">Limpiar</button>
+  </div>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+    <span id="battlePausedBadge" class="chip" style="padding:4px 10px;border-radius:999px;font-size:12px;">EN VIVO</span>
+    <button id="btnToggleBattlePause" class="btn btn-sm">Pausar</button>
+  </div>
+
+  <div id="currentMatchHint" style="opacity:.8;font-size:12px;"></div>
+</div>
+
+
+  <!-- LIGA (DEBAJO de BestOf/Sugerido) -->
+  <div class="row one">
+    <div>
+      <label>Liga</label>
+
+      <div class="league-inline">
+        <div>
+          <div class="league-sub">Ligas principales</div>
+          <div id="tLeagueMainChips" class="mini-chips league-chips"></div>
+          <small class="poke-muted">Puedes elegir 1 a 4 ligas.</small>
+        </div>
+
+        <div>
+          <div class="league-sub">Desempate</div>
+          <div id="tLeagueTiebreakChips" class="mini-chips league-chips"></div>
+          <small class="poke-muted">Opcional: incluso con 1 liga (ej: 2 de 1500 y desempate 500).</small>
+        </div>
+      </div>
+
+      <input type="hidden" id="tLeaguePlan" value="super1500" />
+      <small class="poke-muted" id="tLeaguePlanPreview"></small>
+    </div>
+  </div>
+
+    <!-- PREMIOS + ESTADO -->
+  <div class="card" style="margin-top:14px;">
+    <h3 style="margin:0 0 8px;">Premios y estado</h3>
+
+    <!-- Estado del torneo -->
+    <div class="row two">
+      <div>
+        <label>Estado</label>
+        <select id="tStatus">
+          <option value="active">Activo</option>
+          <option value="finished">Finalizado</option>
+        </select>
+        <small class="poke-muted">Se usa para ordenar la lista (activos arriba). También puede setearse automático al terminar la final.</small>
+      </div>
+
+      <div>
+        <label>Premios (nombre + URL de ícono)</label>
+        <button type="button" class="btn-ghost" id="btnAddPrize">➕ Añadir premio</button>
+        <small class="poke-muted">Puedes subir imágenes a tu dominio y pegar aquí la URL.</small>
+      </div>
+    </div>
+
+    <!-- lista dinámica -->
+    <div id="tPrizesList" class="prize-list"></div>
+
+    <!-- hidden: se guarda como JSON -->
+    <input type="hidden" id="tPrizesJson" value="[]">
+  </div>
+
+
+  <!-- REGLAS -->
+  <div class="card" style="margin-top:14px;">
+    <h3 style="margin:0 0 8px;">Reglas del torneo</h3>
+    <!-- ✅ MULTI-LIGA: editor por liga (se activa cuando eliges 2+ ligas) -->
+<div id="leagueRulesBar" class="league-rules-bar" style="display:none;">
+  <div class="row two">
+    <div>
+      <label>Editar reglas de liga</label>
+      <select id="lrLeagueSelect"></select>
+      <div class="tiny muted" id="lrModeNote">
+        En modo multi-liga, estas reglas se guardan en <b>leagueRulesJson</b> (ya no existe “regla global”).
+      </div>
+    </div>
+
+    <div>
+      <label>Copiar reglas</label>
+      <div class="row" style="grid-template-columns:1fr auto; gap:10px;">
+        <select id="lrCopyFromSelect"></select>
+        <button type="button" class="btn" id="lrCopyBtn">Copiar →</button>
+      </div>
+      <div class="tiny muted">Copia las reglas desde otra liga hacia la liga seleccionada.</div>
+    </div>
+  </div>
+
+  <input type="hidden" id="tLeagueRulesJson" value="">
+</div>
+
+<div class="rules-grid">
+  <!-- FAST -->
+  <div>
+    <label>Ataques básicos prohibidos (busca y selecciona)</label>
+    <div class="poke-wrap">
+      <input id="tBanFastSearch" placeholder="Escribe: Contraataque / Counter / a bocajarro..." autocomplete="off" />
+      <div id="tBanFastDrop" class="poke-dropdown"></div>
+    </div>
+    <div id="tBanFastChips" class="poke-chips"></div>
+    <input type="hidden" id="tBanFast" value="" />
+    <small class="poke-muted">Se guardará como IDs separados por coma</small>
+  </div>
+
+  <!-- CHARGED -->
+  <div>
+    <label>Ataques cargados prohibidos (busca y selecciona)</label>
+    <div class="poke-wrap">
+      <input id="tBanChargedSearch" placeholder="Escribe: Hidrocañón / Hydro Cannon / ..." autocomplete="off" />
+      <div id="tBanChargedDrop" class="poke-dropdown"></div>
+    </div>
+    <div id="tBanChargedChips" class="poke-chips"></div>
+    <input type="hidden" id="tBanCharged" value="" />
+    <small class="poke-muted">Se guardará como IDs separados por coma</small>
+  </div>
+
+  <!-- POKÉMON: PROHIBIDO + PERMITIDO (MISMA FILA) -->
+  <div>
+    <label>Pokémon prohibidos (busca y selecciona)</label>
+    <div class="poke-wrap">
+      <input id="tBanPokemonSearch" placeholder="Escribe: pika, char, regi..." autocomplete="off" />
+      <div id="tBanPokemonDrop" class="poke-dropdown"></div>
+    </div>
+    <div id="tBanPokemonChips" class="poke-chips"></div>
+    <input type="hidden" id="tBanPokemon" value="" />
+    <small class="poke-muted">Se guardará como IDs separados por coma (ej: 25, 25_s, 25_b1)</small>
+  </div>
+
+  <div>
+    <label>Pokémon permitidos (excepciones) (busca y selecciona)</label>
+    <div class="poke-wrap">
+      <input id="tAllowedPokemonSearch" placeholder="Ej: registeel, sableye…" autocomplete="off" />
+      <div id="tAllowedPokemonDrop" class="poke-dropdown"></div>
+    </div>
+    <div id="tAllowedPokemonChips" class="poke-chips"></div>
+    <input type="hidden" id="tAllowedPokemon" value="" />
+    <small class="poke-muted">Se guardará como IDs separados por coma</small>
+  </div>
+
+  <!-- TIPOS: PROHIBIDOS + PERMITIDOS -->
+  <div>
+    <label>Tipos prohibidos (elige)</label>
+    <div id="tBanTypesChips" class="mini-chips mini-chips-ban"></div>
+    <input type="hidden" id="tBanTypes" value="" />
+    <small class="poke-muted">Ej: fire, water, fairy…</small>
+  </div>
+
+  <div>
+    <label>Tipos permitidos (elige)</label>
+    <div id="tAllowTypesChips" class="mini-chips mini-chips-allow"></div>
+    <input type="hidden" id="tAllowTypes" value="" />
+    <small class="poke-muted">Opcional</small>
+  </div>
+
+  <!-- CATEGORÍAS: PERMITIDAS + PROHIBIDAS -->
+  <div>
+    <label>Categorías permitidas (elige)</label>
+    <div id="tAllowCategoriesChips" class="mini-chips mini-chips-allow"></div>
+    <input type="hidden" id="tAllowCategories" value="" />
+    <small class="poke-muted">Ej: shiny, mega, purified…</small>
+  </div>
+
+  <div>
+    <label>Categorías prohibidas (elige)</label>
+    <div id="tBanCategoriesChips" class="mini-chips mini-chips-ban"></div>
+    <input type="hidden" id="tBanCategories" value="" />
+    <small class="poke-muted">Ej: legendary, mythical, baby…</small>
+  </div>
+</div>
+
+
+      <div class="modal-foot">
+        <button class="btn-danger" id="btnModalCancel" type="button" data-close="1">Cancelar</button>
+
+        <!-- Crear -->
+        <button class="btn-gold" id="btnTorneoCrear" type="button">➕ Crear torneo</button>
+
+        <!-- Editar -->
+        <button class="btn-gold" id="btnTorneoGuardarCambios" type="button" style="display:none;">💾 Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SUBMODAL: BO CONFIGURACIÓN AVANZADA
+  ====================================================== -->
+  <div id="boAdvModal" class="submodal" style="display:none;">
+    <div class="submodal-backdrop" data-boadv-close="1"></div>
+
+    <div class="submodal-card">
+      <div class="submodal-head">
+        <div>
+          <div class="submodal-title">BO - Configuración avanzada</div>
+          <div class="modal-sub">Define BO por fase (Grupos / Llaves / Final)</div>
+        </div>
+        <button class="modal-x" type="button" data-boadv-close="1">✕</button>
+      </div>
+
+      <div class="submodal-body">
+
+        <div class="row three">
+          <div>
+            <label>Grupos</label>
+            <select id="boAdvGroups">
+              <option value="1">BO1</option>
+              <option value="3">BO3</option>
+              <option value="5">BO5</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Llaves / Playoffs</label>
+            <select id="boAdvPlayoffs">
+              <option value="1">BO1</option>
+              <option value="3">BO3</option>
+              <option value="5">BO5</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Final</label>
+            <select id="boAdvFinal">
+              <option value="1">BO1</option>
+              <option value="3">BO3</option>
+              <option value="5">BO5</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="bo-preview">
+          <div class="tiny muted">Vista previa</div>
+          <div id="boAdvPreview" class="bo-summary">
+            Grupos: BO1 · Llaves: BO3 · Final: BO5
+          </div>
+        </div>
+
+      </div>
+
+      <div class="submodal-foot">
+        <button class="btn-danger" type="button" data-boadv-close="1">Cancelar</button>
+        <button class="btn-gold" type="button" id="btnBoAdvApply">Aplicar</button>
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- ===========================
+     👥 PARTICIPANTES (ADMIN)
+     =========================== -->
+<div id="participantsModal" class="modal" style="display:none;">
+  <div class="modal-backdrop" data-pclose="1"></div>
+
+  <div class="modal-card modal-wide">
+    <div class="modal-head">
+      <div>
+        <div class="modal-title">Participantes</div>
+        <div class="modal-sub">
+          Torneo: <span id="pTorneoId" class="mono">—</span>
+          <span class="muted">·</span>
+          Total: <b id="pCountTotal">0</b>
+          <span class="muted">·</span>
+          Activos: <b id="pCountActivos">0</b>
+          <span class="muted">·</span>
+          Reemplazo: <b id="pCountReplace">0</b>
+        </div>
+      </div>
+      <button class="modal-x" type="button" data-pclose="1">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="p-toolbar">
+        <div class="p-left">
+          <button class="btn-gold" id="pBtnRefresh" type="button">🔄 Actualizar</button>
+
+          <label class="p-auto">
+            <input type="checkbox" id="pAutoRefresh" checked>
+            <span>Auto</span>
+          </label>
+
+          <button class="btn-gold" id="pBtnUrl" type="button">⚙ URL torneo</button>
+        </div>
+
+        <div class="p-right">
+          <input id="pSearch" type="text" placeholder="Buscar: nombre, nick, código, playerId…" />
+        </div>
+      </div>
+
+      <div id="pList" class="p-list"></div>
+    </div>
+
+    <div class="modal-foot">
+      <div style="flex:1; opacity:.7; font-size:12px;">
+        Tip: “Reemplazar” mantiene el mismo <b>PlayerId</b> (slot) para no romper llaves / matches.
+      </div>
+      <button class="btn-danger" type="button" data-pclose="1">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Submodal: REEMPLAZO ===== -->
+<div id="replaceModal" class="submodal" style="display:none;">
+  <div class="submodal-backdrop" data-replace-close="1"></div>
+
+  <div class="submodal-card" style="width:min(740px, calc(100vw - 24px));">
+    <div class="submodal-head">
+      <div>
+        <div class="submodal-title">Reemplazar participante</div>
+        <div class="modal-sub">Genera link con token o reemplaza manualmente.</div>
+      </div>
+      <button class="modal-x" type="button" data-replace-close="1">✕</button>
+    </div>
+
+    <div class="submodal-body">
+      <div class="row two">
+        <div>
+          <label>Participante actual</label>
+          <div id="repWho" class="pill mono">—</div>
+        </div>
+        <div>
+          <label>PlayerId (slot)</label>
+          <div id="repPlayerId" class="pill mono">—</div>
+        </div>
+      </div>
+
+      <div class="row two">
+        <label class="p-auto" style="justify-content:flex-start;">
+          <input type="checkbox" id="repClearParty" checked>
+          <span>Limpiar sus 6 Pokémon (recomendado)</span>
+        </label>
+
+        <div style="display:flex; gap:10px; justify-content:flex-end; align-items:flex-end;">
+          <button class="btn-gold" id="repBtnGenLink" type="button">🔗 Generar link</button>
+          <button class="btn-gold" id="repBtnManualShow" type="button">✏ Reemplazar aquí</button>
+        </div>
+      </div>
+
+      <div id="repLinkBox" class="rep-box" style="display:none;">
+        <label>Link de reemplazo (pásalo al nuevo participante)</label>
+        <div class="rep-linkrow">
+          <input id="repLink" type="text" readonly value="">
+          <button class="btn-gold" id="repBtnCopy" type="button">Copiar</button>
+        </div>
+        <div class="tiny muted">Token: <span id="repToken" class="mono">—</span></div>
+      </div>
+
+      <div id="repManualBox" class="rep-box" style="display:none;">
+        <div class="row two">
+          <div>
+            <label>Nombre real</label>
+            <input id="repNombre" type="text" placeholder="Ej: Daniel Kesi">
+          </div>
+          <div>
+            <label>Nombre Pokémon GO</label>
+            <input id="repNick" type="text" placeholder="Ej: PokeKesi">
+          </div>
+        </div>
+
+        <div class="row two">
+          <div>
+            <label>Código entrenador</label>
+            <input id="repCodigo" type="text" placeholder="0000 0000 0000">
+          </div>
+          <div>
+            <label>Campfire (opcional)</label>
+            <input id="repCampfire" type="text" placeholder="@usuario">
+          </div>
+        </div>
+
+        <div class="row one">
+          <button class="btn-gold" id="repBtnManualSave" type="button">✅ Guardar reemplazo manual</button>
+        </div>
+      </div>
+
+      <div class="tiny muted" style="margin-top:6px;">
+        Nota: El link funciona incluso si ya cerraste inscripciones, mientras el token esté vigente.
+      </div>
+    </div>
+
+    <div class="submodal-foot">
+      <button class="btn-danger" type="button" data-replace-close="1">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+  <script src="panel.js"></script>
+</body>
+</html>
