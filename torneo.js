@@ -1849,16 +1849,23 @@ async function torneoRegisterGET(payload = {}) {
 
 /* Modal */
 let scrollPos = 0;
+
 function bloquearScrollBody() {
-  scrollPos = window.scrollY;
+  if (document.body.classList.contains("modal-open")) return; // evita doble lock
+  scrollPos = window.scrollY || 0;
+
+  document.documentElement.classList.add("modal-open");
   document.body.classList.add("modal-open");
   document.body.style.top = `-${scrollPos}px`;
 }
+
 function restaurarScrollBody() {
+  document.documentElement.classList.remove("modal-open");
   document.body.classList.remove("modal-open");
   document.body.style.top = "";
   window.scrollTo(0, scrollPos);
 }
+
 
 $("openModalBtn").onclick = async () => {
   MODAL_JUST_OPENED = true;
