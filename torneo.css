@@ -320,17 +320,14 @@ hr.section-sep{
   flex-wrap: wrap;
 }
 
-.meta-row--format{
-  position: relative;
-  overflow: visible;
-  z-index: 10;
-}
-
+/* ✅ IMPORTANTE: sin z-index fijo, porque crea stacking y tapa tooltips */
+.meta-row--format,
 .meta-row--mode{
   position: relative;
   overflow: visible;
-  z-index: 10;
+  z-index: auto;
 }
+
 
 .meta-label {
         font-weight: 800;
@@ -430,130 +427,54 @@ hr.section-sep{
 
 .league-part{ display: inline-flex; align-items: center; gap: 8px; }
 
-.bo-help {
-        position: relative;
-        display: inline-block;
-}
+/* =========================================================
+   TOOLTIP (ícono i) - siempre al frente
+   ========================================================= */
 
-/* Tooltip genérico (si usas .info-btn + .tooltip) */
-.info-btn {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background: rgba(255, 215, 0, 0.3);
-        border: 2px solid rgba(255, 215, 0, 0.6);
-        color: white;
-        font-size: 14px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.2s ease;
-}
-
-.info-btn:hover {
-        background: rgba(255, 215, 0, 0.5);
-        transform: scale(1.1);
-}
-
-.tooltip {
-        display: none;
-        position: absolute;
-        bottom: 130%;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 10px 15px;
-        background: rgba(0, 0, 0, 0.9);
-        color: white;
-        border-radius: 8px;
-        font-size: 14px;
-        white-space: nowrap;
-        z-index: 1000;
-}
-
-.info-btn:hover + .tooltip {
-        display: block;
-}
-
-/* Tooltip BO (usa #boHelpBtn + #boTooltip) */
-#boHelpWrap{
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  overflow: visible;
-}
-
-#boHelpBtn{
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.35);
-  background: rgba(0,0,0,.25);
-  color: #fff;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-#boTooltip{
-  position: absolute;
-  left: 50%;
-  top: calc(100% + 10px);
-  bottom: auto;
-  transform: translateX(-50%);
-  display: none;
-
-  width: 420px;
-  max-width: calc(100vw - 24px);
-  min-width: 240px;
-  box-sizing: border-box;
-
-  padding: 10px 12px;
-  border-radius: 14px;
-
-  background: rgba(8,12,20,0.92);
-  border: 1px solid rgba(255,255,255,.16);
-  box-shadow: 0 10px 22px rgba(0,0,0,.35);
-
-  color: #fff;
-  font-weight: 800;
-  font-size: 12.5px;
-  line-height: 1.25;
-
-  white-space: normal;
-  word-break: break-word;
-  text-align: center;
-
-  z-index: 99999;
-}
-
-#boHelpWrap.open #boTooltip{
-  display: block;
-}
-
-/* Tooltip MODE (usa #modeHelpBtn + #modeTooltip) */
+.bo-help,
+#boHelpWrap,
 #modeHelpWrap{
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   overflow: visible;
+
+  /* ✅ ayuda a que “suba” por encima de otras filas */
+  z-index: 1;
 }
 
-#modeHelpBtn{
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.35);
-  background: rgba(0,0,0,.25);
+/* Cuando está abierto por click (JS .open) */
+.bo-help.open,
+#boHelpWrap.open,
+#modeHelpWrap.open{
+  z-index: 999999;
+}
+
+/* Botón i */
+.info-btn{
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 215, 0, 0.3);
+  border: 2px solid rgba(255, 215, 0, 0.6);
   color: #fff;
+  font-size: 14px;
   font-weight: 900;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-#modeTooltip{
+.info-btn:hover{
+  background: rgba(255, 215, 0, 0.5);
+  transform: scale(1.1);
+}
+
+/* Tooltip (sirve para BO y MODALIDAD) */
+.tooltip{
   position: absolute;
   left: 50%;
   top: calc(100% + 10px);
-  bottom: auto;
   transform: translateX(-50%);
   display: none;
 
@@ -573,17 +494,25 @@ hr.section-sep{
   font-weight: 800;
   font-size: 12.5px;
   line-height: 1.25;
-
   white-space: normal;
   word-break: break-word;
   text-align: center;
 
-  z-index: 99999;
+  /* ✅ SIEMPRE adelante */
+  z-index: 999999;
 }
 
+/* Mostrar tooltip por hover (PC) */
+.bo-help:hover .tooltip{
+  display: block;
+}
+
+/* Mostrar tooltip por click (móvil / JS agrega .open) */
+#boHelpWrap.open #boTooltip,
 #modeHelpWrap.open #modeTooltip{
   display: block;
 }
+
 
 /* Ajustes específicos cuando está dentro de #torneoMeta (tu header del torneo) */
 #torneoMeta .meta-row{
@@ -774,10 +703,6 @@ hr.section-sep{
 }
 
 /* Botón abrir modal registro (clase + IDs que usas en JS) */
-/* =========================================
-   BOTÓN PRINCIPAL: Registrarme (openModalBtn)
-   Variantes: .open-modal-btn / #openModalBtn / #btnRegister
-   ========================================= */
 /* =========================================================
    BOTÓN PRINCIPAL: Registrarme (openModalBtn)
    ========================================================= */
