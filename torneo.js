@@ -832,9 +832,10 @@ function buildVariantOptionsForPokemon(p){
   if(!dex) return [];
 
   const name = pokeDisplayName(p);
-  const rec = p?.uicons?.recommended || {};
+  const rec  = p?.uicons?.recommended || {};
   const options = [];
 
+  // ---------- BASE (forma principal) ----------
   const normalId = String(rec.normal || dex);
   options.push({ id: normalId, dex, label: makeLabel(name, ""), variantKey: "" });
 
@@ -876,6 +877,57 @@ function buildVariantOptionsForPokemon(p){
     options.push({ id, dex, label: makeLabel(name, variantLabel("mega", n)), variantKey: "mega" });
   });
 
+  // ---------- FORMAS REGIONALES (Alola, Galar, Hisui, Paldea...) ----------
+  const forms = Array.isArray(p.forms) ? p.forms : [];
+  forms.forEach(f => {
+    if(!f) return;
+
+    const region = String(f.region || "").trim();
+    const fRec = f.recommended || {};
+
+    const baseName = region ? `${name} · ${region}` : name;
+    const formTag = region || "regional";
+
+    const fNormal = String(fRec.normal || f.uicon || "");
+    if(fNormal && fNormal !== "undefined" && fNormal !== "null"){
+      options.push({ id: fNormal, dex, label: makeLabel(baseName, ""), variantKey: "", formRegion: formTag });
+    }
+
+    const fShadow = String(fRec.shadow || "");
+    if(fShadow && fShadow !== "undefined" && fShadow !== "null"){
+      options.push({ id: fShadow, dex, label: makeLabel(baseName, variantLabel("shadow")), variantKey: "shadow", formRegion: formTag });
+    }
+
+    const fPurified = String(fRec.purified || "");
+    if(fPurified && fPurified !== "undefined" && fPurified !== "null"){
+      options.push({ id: fPurified, dex, label: makeLabel(baseName, variantLabel("purified")), variantKey: "purified", formRegion: formTag });
+    }
+
+    const fShiny = String(fRec.shiny || "");
+    if(fShiny && fShiny !== "undefined" && fShiny !== "null"){
+      options.push({ id: fShiny, dex, label: makeLabel(baseName, variantLabel("shiny")), variantKey: "shiny", formRegion: formTag });
+    }
+
+    const fDmax = String(fRec.dynamax || "");
+    if(fDmax && fDmax !== "undefined" && fDmax !== "null"){
+      options.push({ id: fDmax, dex, label: makeLabel(baseName, variantLabel("dynamax")), variantKey: "dynamax", formRegion: formTag });
+    }
+
+    const fGmax = String(fRec.gigamax || "");
+    if(fGmax && fGmax !== "undefined" && fGmax !== "null"){
+      options.push({ id: fGmax, dex, label: makeLabel(baseName, variantLabel("gigamax")), variantKey: "gigamax", formRegion: formTag });
+    }
+
+    const fMegaArr = Array.isArray(fRec.mega) ? fRec.mega : [];
+    fMegaArr.forEach((mid, idx) => {
+      if(!mid) return;
+      const id = String(mid);
+      const n = idx + 1;
+      options.push({ id, dex, label: makeLabel(baseName, variantLabel("mega", n)), variantKey: "mega", formRegion: formTag });
+    });
+  });
+
+  // quitar duplicados por id
   const seen = new Set();
   return options.filter(o => {
     const k = String(o.id).toLowerCase();
@@ -2980,7 +3032,7 @@ function renderSelected(){
   $("torneoInfo").style.display = "none";
 
   if (t.open) {
-    $("openModalBtn").style.display = "inline-block";
+    $("openModalBtn").style.display = ""; 
     $("eventSummary").style.display = "none";
     $("eventSummary").innerHTML = "";
     if(battleBox) battleBox.style.display = "none";
