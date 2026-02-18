@@ -1367,8 +1367,7 @@
         "19_f46_a1",
         "19_f46_a2",
         "19_f46_s",
-        "19_s",
-        "19_f46"
+        "19_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -1387,26 +1386,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Siniestro",
-          "Normal"
-        ],
-        "uicon": "19_f46",
-        "recommended": {
-          "normal": "19_f46",
-          "shadow": "19_f46_a1",
-          "purified": "19_f46_a2",
-          "shiny": "19_f46_s",
-          "dynamax": "19_b1_f46",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 20,
@@ -1456,8 +1436,7 @@
         "20_f48_a1",
         "20_f48_a2",
         "20_f48_s",
-        "20_s",
-        "20_f48"
+        "20_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -1476,26 +1455,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Siniestro",
-          "Normal"
-        ],
-        "uicon": "20_f48",
-        "recommended": {
-          "normal": "20_f48",
-          "shadow": "20_f48_a1",
-          "purified": "20_f48_a2",
-          "shiny": "20_f48_s",
-          "dynamax": "20_b1_f48",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 21,
@@ -1980,8 +1940,7 @@
         "26_c9_b1",
         "26_c9_s",
         "26_f50_s",
-        "26_s",
-        "26_f50"
+        "26_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -2000,26 +1959,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Eléctrico",
-          "Psíquico"
-        ],
-        "uicon": "26_f50",
-        "recommended": {
-          "normal": "26_f50",
-          "shadow": null,
-          "purified": null,
-          "shiny": "26_f50_s",
-          "dynamax": "26_b1_f50",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 27,
@@ -2067,8 +2007,7 @@
         "27_f52_a1",
         "27_f52_a2",
         "27_f52_s",
-        "27_s",
-        "27_f52"
+        "27_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -2087,26 +2026,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Hielo",
-          "Acero"
-        ],
-        "uicon": "27_f52",
-        "recommended": {
-          "normal": "27_f52",
-          "shadow": "27_f52_a1",
-          "purified": "27_f52_a2",
-          "shiny": "27_f52_s",
-          "dynamax": "27_b1_f52",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 28,
@@ -2154,8 +2074,7 @@
         "28_f54_a1",
         "28_f54_a2",
         "28_f54_s",
-        "28_s",
-        "28_f54"
+        "28_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -2174,26 +2093,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Hielo",
-          "Acero"
-        ],
-        "uicon": "28_f54",
-        "recommended": {
-          "normal": "28_f54",
-          "shadow": "28_f54_a1",
-          "purified": "28_f54_a2",
-          "shiny": "28_f54_s",
-          "dynamax": "28_b1_f54",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 29,
@@ -2742,8 +2642,7 @@
         "37_f56_a1",
         "37_f56_a2",
         "37_f56_s",
-        "37_s",
-        "37_f56"
+        "37_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -2762,25 +2661,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Hielo"
-        ],
-        "uicon": "37_f56",
-        "recommended": {
-          "normal": "37_f56",
-          "shadow": "37_f56_a1",
-          "purified": "37_f56_a2",
-          "shiny": "37_f56_s",
-          "dynamax": "37_b1_f56",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 38,
@@ -2829,8 +2710,7 @@
         "38_f58_a1",
         "38_f58_a2",
         "38_f58_s",
-        "38_s",
-        "38_f58"
+        "38_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -2849,26 +2729,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Hielo",
-          "Hada"
-        ],
-        "uicon": "38_f58",
-        "recommended": {
-          "normal": "38_f58",
-          "shadow": "38_f58_a1",
-          "purified": "38_f58_a2",
-          "shiny": "38_f58_s",
-          "dynamax": "38_b1_f58",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 39,
@@ -3629,8 +3490,7 @@
         "50_f60_a1",
         "50_f60_a2",
         "50_f60_s",
-        "50_s",
-        "50_f60"
+        "50_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -3649,26 +3509,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Tierra",
-          "Acero"
-        ],
-        "uicon": "50_f60",
-        "recommended": {
-          "normal": "50_f60",
-          "shadow": "50_f60_a1",
-          "purified": "50_f60_a2",
-          "shiny": "50_f60_s",
-          "dynamax": "50_b1_f60",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 51,
@@ -3718,8 +3559,7 @@
         "51_f62_a1",
         "51_f62_a2",
         "51_f62_s",
-        "51_s",
-        "51_f62"
+        "51_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -3738,26 +3578,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Tierra",
-          "Acero"
-        ],
-        "uicon": "51_f62",
-        "recommended": {
-          "normal": "51_f62",
-          "shadow": "51_f62_a1",
-          "purified": "51_f62_a2",
-          "shiny": "51_f62_s",
-          "dynamax": "51_b1_f62",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 52,
@@ -3806,9 +3627,7 @@
         "52_b2",
         "52_f2335_s",
         "52_f64_s",
-        "52_s",
-        "52_f64",
-        "52_f2335"
+        "52_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -3827,41 +3646,7 @@
         "gigamax": "52_b2",
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Siniestro"
-        ],
-        "uicon": "52_f64",
-        "recommended": {
-          "normal": "52_f64",
-          "shadow": null,
-          "purified": null,
-          "shiny": "52_f64_s",
-          "dynamax": "52_b1_f64",
-          "gigamax": "52_b2",
-          "mega": []
-        }
-      },
-      {
-        "region": "Galar",
-        "types": [
-          "Acero"
-        ],
-        "uicon": "52_f2335",
-        "recommended": {
-          "normal": "52_f2335",
-          "shadow": null,
-          "purified": null,
-          "shiny": "52_f2335_s",
-          "dynamax": "52_b1_f2335",
-          "gigamax": "52_b2",
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 53,
@@ -3907,8 +3692,7 @@
         "53_b1",
         "53_b1_f66",
         "53_f66_s",
-        "53_s",
-        "53_f66"
+        "53_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -3927,25 +3711,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Siniestro"
-        ],
-        "uicon": "53_f66",
-        "recommended": {
-          "normal": "53_f66",
-          "shadow": null,
-          "purified": null,
-          "shiny": "53_f66_s",
-          "dynamax": "53_b1_f66",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 54,
@@ -4237,8 +4003,7 @@
         "58_a2",
         "58_b1",
         "58_b1_f2792",
-        "58_s",
-        "58_f2792"
+        "58_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -4257,26 +4022,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Hisui",
-        "types": [
-          "Fuego",
-          "Roca"
-        ],
-        "uicon": "58_f2792",
-        "recommended": {
-          "normal": "58_f2792",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "58_b1_f2792",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 59,
@@ -4320,8 +4066,7 @@
         "59_a2",
         "59_b1",
         "59_b1_f2793",
-        "59_s",
-        "59_f2793"
+        "59_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -4340,26 +4085,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Hisui",
-        "types": [
-          "Fuego",
-          "Roca"
-        ],
-        "uicon": "59_f2793",
-        "recommended": {
-          "normal": "59_f2793",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "59_b1_f2793",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 60,
@@ -5317,8 +5043,7 @@
         "74_f68_a1",
         "74_f68_a2",
         "74_f68_s",
-        "74_s",
-        "74_f68"
+        "74_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -5337,26 +5062,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Roca",
-          "Eléctrico"
-        ],
-        "uicon": "74_f68",
-        "recommended": {
-          "normal": "74_f68",
-          "shadow": "74_f68_a1",
-          "purified": "74_f68_a2",
-          "shiny": "74_f68_s",
-          "dynamax": "74_b1_f68",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 75,
@@ -5407,8 +5113,7 @@
         "75_f70_a1",
         "75_f70_a2",
         "75_f70_s",
-        "75_s",
-        "75_f70"
+        "75_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -5427,26 +5132,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Roca",
-          "Eléctrico"
-        ],
-        "uicon": "75_f70",
-        "recommended": {
-          "normal": "75_f70",
-          "shadow": "75_f70_a1",
-          "purified": "75_f70_a2",
-          "shiny": "75_f70_s",
-          "dynamax": "75_b1_f70",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 76,
@@ -5497,8 +5183,7 @@
         "76_f72_a1",
         "76_f72_a2",
         "76_f72_s",
-        "76_s",
-        "76_f72"
+        "76_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -5517,26 +5202,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Roca",
-          "Eléctrico"
-        ],
-        "uicon": "76_f72",
-        "recommended": {
-          "normal": "76_f72",
-          "shadow": "76_f72_a1",
-          "purified": "76_f72_a2",
-          "shiny": "76_f72_s",
-          "dynamax": "76_b1",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 77,
@@ -5581,8 +5247,7 @@
         "77_f2336_c47_b1",
         "77_f2336_c47_s",
         "77_f2336_s",
-        "77_s",
-        "77_f2336"
+        "77_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -5601,25 +5266,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Psíquico"
-        ],
-        "uicon": "77_f2336",
-        "recommended": {
-          "normal": "77_f2336",
-          "shadow": null,
-          "purified": null,
-          "shiny": "77_f2336_s",
-          "dynamax": "77_b1_f2336",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 78,
@@ -5662,8 +5309,7 @@
         "78_b1",
         "78_b1_f2337",
         "78_f2337_s",
-        "78_s",
-        "78_f2337"
+        "78_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -5682,26 +5328,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Psíquico",
-          "Hada"
-        ],
-        "uicon": "78_f2337",
-        "recommended": {
-          "normal": "78_f2337",
-          "shadow": null,
-          "purified": null,
-          "shiny": "78_f2337_s",
-          "dynamax": "78_b1_f2337",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 79,
@@ -5752,8 +5379,7 @@
         "79_c72_s",
         "79_f2582_s",
         "79_f2673_s",
-        "79_s",
-        "79_f2582"
+        "79_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -5772,29 +5398,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Psíquico"
-        ],
-        "uicon": "79_f2582",
-        "uiconCandidates": [
-          "79_f2582",
-          "79_f2673"
-        ],
-        "recommended": {
-          "normal": "79_f2582",
-          "shadow": null,
-          "purified": null,
-          "shiny": "79_f2582_s",
-          "dynamax": "79_b1_f2582",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 80,
@@ -5861,8 +5465,7 @@
         "80_e1_s",
         "80_f2583_s",
         "80_f2674_s",
-        "80_s",
-        "80_f2583"
+        "80_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -5874,7 +5477,7 @@
       },
       "recommended": {
         "normal": "80",
-        "shadow": null,
+        "shadow": "80",
         "purified": null,
         "shiny": "80_s",
         "dynamax": "80_b1",
@@ -5883,32 +5486,7 @@
           "80_e1"
         ]
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Veneno",
-          "Psíquico"
-        ],
-        "uicon": "80_f2583",
-        "uiconCandidates": [
-          "80_f2583",
-          "80_f2674"
-        ],
-        "recommended": {
-          "normal": "80_f2583",
-          "shadow": null,
-          "purified": null,
-          "shiny": "80_f2583_s",
-          "dynamax": "80_b1_f2583",
-          "gigamax": null,
-          "mega": [
-            "80_e1"
-          ]
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 81,
@@ -6084,8 +5662,7 @@
         "83_b1",
         "83_b1_f2338",
         "83_f2338_s",
-        "83_s",
-        "83_f2338"
+        "83_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -6104,25 +5681,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Lucha"
-        ],
-        "uicon": "83_f2338",
-        "recommended": {
-          "normal": "83_f2338",
-          "shadow": null,
-          "purified": null,
-          "shiny": "83_f2338_s",
-          "dynamax": "83_b1_f2338",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 84,
@@ -6419,8 +5978,7 @@
         "88_f74_a1",
         "88_f74_a2",
         "88_f74_s",
-        "88_s",
-        "88_f74"
+        "88_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -6439,26 +5997,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Veneno",
-          "Siniestro"
-        ],
-        "uicon": "88_f74",
-        "recommended": {
-          "normal": "88_f74",
-          "shadow": "88_f74_a1",
-          "purified": "88_f74_a2",
-          "shiny": "88_f74_s",
-          "dynamax": "88_b1_f74",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 89,
@@ -6506,8 +6045,7 @@
         "89_f76_a1",
         "89_f76_a2",
         "89_f76_s",
-        "89_s",
-        "89_f76"
+        "89_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -6526,26 +6064,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Veneno",
-          "Siniestro"
-        ],
-        "uicon": "89_f76",
-        "recommended": {
-          "normal": "89_f76",
-          "shadow": "89_f76_a1",
-          "purified": "89_f76_a2",
-          "shiny": "89_f76_s",
-          "dynamax": "89_b1_f76",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 90,
@@ -7256,8 +6775,7 @@
         "100_b1",
         "100_b1_f2728",
         "100_f2728_s",
-        "100_s",
-        "100_f2728"
+        "100_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -7276,26 +6794,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Hisui",
-        "types": [
-          "Eléctrico",
-          "Planta"
-        ],
-        "uicon": "100_f2728",
-        "recommended": {
-          "normal": "100_f2728",
-          "shadow": null,
-          "purified": null,
-          "shiny": "100_f2728_s",
-          "dynamax": "100_b1_f2728",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 101,
@@ -7340,8 +6839,7 @@
         "101_b1",
         "101_b1_f2735",
         "101_f2735_s",
-        "101_s",
-        "101_f2735"
+        "101_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -7360,26 +6858,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Hisui",
-        "types": [
-          "Eléctrico",
-          "Planta"
-        ],
-        "uicon": "101_f2735",
-        "recommended": {
-          "normal": "101_f2735",
-          "shadow": null,
-          "purified": null,
-          "shiny": "101_f2735_s",
-          "dynamax": "101_b1_f2735",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 102,
@@ -7495,8 +6974,7 @@
         "103_f78_a1",
         "103_f78_a2",
         "103_f78_s",
-        "103_s",
-        "103_f78"
+        "103_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -7515,26 +6993,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Planta",
-          "Dragón"
-        ],
-        "uicon": "103_f78",
-        "recommended": {
-          "normal": "103_f78",
-          "shadow": "103_f78_a1",
-          "purified": "103_f78_a2",
-          "shiny": "103_f78_s",
-          "dynamax": "103_b1_f78",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 104,
@@ -7648,8 +7107,7 @@
         "105_f80_a1",
         "105_f80_a2",
         "105_f80_s",
-        "105_s",
-        "105_f80"
+        "105_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -7668,26 +7126,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Alola",
-        "types": [
-          "Fuego",
-          "Fantasma"
-        ],
-        "uicon": "105_f80",
-        "recommended": {
-          "normal": "105_f80",
-          "shadow": "105_f80_a1",
-          "purified": "105_f80_a2",
-          "shiny": "105_f80_s",
-          "dynamax": "105_b1_f80",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 106,
@@ -7978,8 +7417,7 @@
         "110_b1",
         "110_b1_f944",
         "110_f944_s",
-        "110_s",
-        "110_f944"
+        "110_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -7998,26 +7436,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Veneno",
-          "Hada"
-        ],
-        "uicon": "110_f944",
-        "recommended": {
-          "normal": "110_f944",
-          "shadow": null,
-          "purified": null,
-          "shiny": "110_f944_s",
-          "dynamax": "110_b1_f944",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 111,
@@ -8765,8 +8184,7 @@
         "122_b1",
         "122_b1_f2339",
         "122_f2339_s",
-        "122_s",
-        "122_f2339"
+        "122_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -8785,26 +8203,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Hielo",
-          "Psíquico"
-        ],
-        "uicon": "122_f2339",
-        "recommended": {
-          "normal": "122_f2339",
-          "shadow": null,
-          "purified": null,
-          "shiny": "122_f2339_s",
-          "dynamax": "122_b1_f2339",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 123,
@@ -9183,10 +8582,7 @@
         "128_b1_f3006",
         "128_b1_f3007",
         "128_b1_f3008",
-        "128_s",
-        "128_f3006",
-        "128_f3007",
-        "128_f3008"
+        "128_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -9205,59 +8601,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Paldea (Combat)",
-        "types": [
-          "Lucha"
-        ],
-        "uicon": "128_f3006",
-        "recommended": {
-          "normal": "128_f3006",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "128_b1_f3006",
-          "gigamax": null,
-          "mega": []
-        }
-      },
-      {
-        "region": "Paldea (Fuego)",
-        "types": [
-          "Lucha",
-          "Fuego"
-        ],
-        "uicon": "128_f3007",
-        "recommended": {
-          "normal": "128_f3007",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "128_b1_f3007",
-          "gigamax": null,
-          "mega": []
-        }
-      },
-      {
-        "region": "Paldea (Agua)",
-        "types": [
-          "Lucha",
-          "Agua"
-        ],
-        "uicon": "128_f3008",
-        "recommended": {
-          "normal": "128_f3008",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "128_b1_f3008",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 129,
@@ -10313,8 +9657,7 @@
         "144_b1",
         "144_b1_f2801",
         "144_f2801_s",
-        "144_s",
-        "144_f2801"
+        "144_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -10333,26 +9676,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Psíquico",
-          "Volador"
-        ],
-        "uicon": "144_f2801",
-        "recommended": {
-          "normal": "144_f2801",
-          "shadow": null,
-          "purified": null,
-          "shiny": "144_f2801_s",
-          "dynamax": "144_b1_f2801",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 145,
@@ -10400,8 +9724,7 @@
         "145_b1",
         "145_b1_f2800",
         "145_f2800_s",
-        "145_s",
-        "145_f2800"
+        "145_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -10420,26 +9743,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Lucha",
-          "Volador"
-        ],
-        "uicon": "145_f2800",
-        "recommended": {
-          "normal": "145_f2800",
-          "shadow": null,
-          "purified": null,
-          "shiny": "145_f2800_s",
-          "dynamax": "145_b1_f2800",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 146,
@@ -10487,8 +9791,7 @@
         "146_b1",
         "146_b1_f2799",
         "146_f2799_s",
-        "146_s",
-        "146_f2799"
+        "146_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -10507,26 +9810,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Siniestro",
-          "Volador"
-        ],
-        "uicon": "146_f2799",
-        "recommended": {
-          "normal": "146_f2799",
-          "shadow": null,
-          "purified": null,
-          "shiny": "146_f2799_s",
-          "dynamax": "146_b1_f2799",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 147,
@@ -11205,8 +10489,7 @@
         "157_a2",
         "157_b1",
         "157_b1_f2786",
-        "157_s",
-        "157_f2786"
+        "157_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -11225,26 +10508,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Hisui",
-        "types": [
-          "Fuego",
-          "Fantasma"
-        ],
-        "uicon": "157_f2786",
-        "recommended": {
-          "normal": "157_f2786",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "157_b1_f2786",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 158,
@@ -13026,7 +12290,7 @@
       },
       "recommended": {
         "normal": "185",
-        "shadow": null,
+        "shadow": "185",
         "purified": null,
         "shiny": "185_s",
         "dynamax": "185_b1",
@@ -13279,7 +12543,7 @@
       },
       "recommended": {
         "normal": "189",
-        "shadow": null,
+        "shadow": "189",
         "purified": null,
         "shiny": "189_s",
         "dynamax": "189_b1",
@@ -13339,7 +12603,7 @@
       },
       "recommended": {
         "normal": "190",
-        "shadow": null,
+        "shadow": "190",
         "purified": null,
         "shiny": "190_s",
         "dynamax": "190_b1",
@@ -13581,8 +12845,7 @@
         "194_c70_s",
         "194_g2_b1",
         "194_g2_s",
-        "194_s",
-        "194_f3009"
+        "194_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -13601,26 +12864,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Paldea",
-        "types": [
-          "Veneno",
-          "Tierra"
-        ],
-        "uicon": "194_f3009",
-        "recommended": {
-          "normal": "194_f3009",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "194_b1_f3009",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 195,
@@ -13928,8 +13172,7 @@
         "199_b1_f2734",
         "199_f2584_s",
         "199_f2734_s",
-        "199_s",
-        "199_f2734"
+        "199_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -13941,37 +13184,14 @@
       },
       "recommended": {
         "normal": "199",
-        "shadow": null,
+        "shadow": "199",
         "purified": null,
         "shiny": "199_s",
         "dynamax": "199_b1",
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Veneno",
-          "Psíquico"
-        ],
-        "uicon": "199_f2734",
-        "uiconCandidates": [
-          "199_f2734",
-          "199_f2584"
-        ],
-        "recommended": {
-          "normal": "199_f2734",
-          "shadow": null,
-          "purified": null,
-          "shiny": "199_f2734_s",
-          "dynamax": "199_b1_f2734",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 200,
@@ -14274,7 +13494,7 @@
       },
       "recommended": {
         "normal": "203",
-        "shadow": null,
+        "shadow": "203",
         "purified": null,
         "shiny": "203_s",
         "dynamax": "203_b1",
@@ -14776,7 +13996,7 @@
         "id": 211,
         "name": "Qwilfish"
       },
-      "shadow": false,
+      "shadow": true,
       "mega": false,
       "megaForms": []
     },
@@ -14785,8 +14005,7 @@
         "211",
         "211_b1",
         "211_b1_f2788",
-        "211_s",
-        "211_f2788"
+        "211_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -14798,33 +14017,14 @@
       },
       "recommended": {
         "normal": "211",
-        "shadow": null,
+        "shadow": "211",
         "purified": null,
         "shiny": "211_s",
         "dynamax": "211_b1",
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Hisui",
-        "types": [
-          "Siniestro",
-          "Veneno"
-        ],
-        "uicon": "211_f2788",
-        "recommended": {
-          "normal": "211_f2788",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "211_b1_f2788",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 212,
@@ -15115,8 +14315,7 @@
         "215_f2794_g2_b1",
         "215_g2_a1",
         "215_g2_s",
-        "215_s",
-        "215_f2794"
+        "215_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -15135,26 +14334,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Hisui",
-        "types": [
-          "Lucha",
-          "Veneno"
-        ],
-        "uicon": "215_f2794",
-        "recommended": {
-          "normal": "215_f2794",
-          "shadow": "215_f2794_a1",
-          "purified": "215_f2794_a2",
-          "shiny": null,
-          "dynamax": "215_b1_f2794",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 216,
@@ -15520,7 +14700,7 @@
       },
       "recommended": {
         "normal": "221",
-        "shadow": null,
+        "shadow": "221",
         "purified": null,
         "shiny": "221_s",
         "dynamax": "221_b1",
@@ -15573,8 +14753,7 @@
         "222_b1",
         "222_b1_f2340",
         "222_f2340_s",
-        "222_s",
-        "222_f2340"
+        "222_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -15593,25 +14772,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Fantasma"
-        ],
-        "uicon": "222_f2340",
-        "recommended": {
-          "normal": "222_f2340",
-          "shadow": null,
-          "purified": null,
-          "shiny": "222_f2340_s",
-          "dynamax": "222_b1_f2340",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 223,
@@ -18258,8 +17419,7 @@
         "263_f946_c47_b1",
         "263_f946_c47_s",
         "263_f946_s",
-        "263_s",
-        "263_f946"
+        "263_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -18278,26 +17438,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Siniestro",
-          "Normal"
-        ],
-        "uicon": "263_f946",
-        "recommended": {
-          "normal": "263_f946",
-          "shadow": null,
-          "purified": null,
-          "shiny": "263_f946_s",
-          "dynamax": "263_b1_f946",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 264,
@@ -18340,8 +17481,7 @@
         "264_b1",
         "264_b1_f948",
         "264_f948_s",
-        "264_s",
-        "264_f948"
+        "264_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -18360,26 +17500,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Siniestro",
-          "Normal"
-        ],
-        "uicon": "264_f948",
-        "recommended": {
-          "normal": "264_f948",
-          "shadow": null,
-          "purified": null,
-          "shiny": "264_f948_s",
-          "dynamax": "264_b1_f948",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 265,
@@ -20461,7 +19582,7 @@
       },
       "recommended": {
         "normal": "297",
-        "shadow": null,
+        "shadow": "297",
         "purified": null,
         "shiny": "297_s",
         "dynamax": "297_b1",
@@ -22140,7 +21261,7 @@
       },
       "recommended": {
         "normal": "322",
-        "shadow": null,
+        "shadow": "322",
         "purified": null,
         "shiny": "322_s",
         "dynamax": "322_b1",
@@ -22222,7 +21343,7 @@
       },
       "recommended": {
         "normal": "323",
-        "shadow": null,
+        "shadow": "323",
         "purified": null,
         "shiny": "323_s",
         "dynamax": "323_b1",
@@ -24946,7 +24067,7 @@
       },
       "recommended": {
         "normal": "365",
-        "shadow": null,
+        "shadow": "365",
         "purified": null,
         "shiny": "365_s",
         "dynamax": "365_b1",
@@ -26024,7 +25145,7 @@
       },
       "recommended": {
         "normal": "381",
-        "shadow": null,
+        "shadow": "381",
         "purified": null,
         "shiny": "381_s",
         "dynamax": "381_b1",
@@ -28794,7 +27915,7 @@
       },
       "recommended": {
         "normal": "424",
-        "shadow": null,
+        "shadow": "424",
         "purified": null,
         "shiny": "424_s",
         "dynamax": "424_b1",
@@ -31468,7 +30589,7 @@
       },
       "recommended": {
         "normal": "465",
-        "shadow": null,
+        "shadow": "465",
         "purified": null,
         "shiny": "465_s",
         "dynamax": "465_b1",
@@ -31977,7 +31098,7 @@
       },
       "recommended": {
         "normal": "473",
-        "shadow": null,
+        "shadow": "473",
         "purified": null,
         "shiny": "473_s",
         "dynamax": "473_b1",
@@ -32188,7 +31309,7 @@
       },
       "recommended": {
         "normal": "476",
-        "shadow": null,
+        "shadow": "476",
         "purified": null,
         "shiny": "476_s",
         "dynamax": "476_b1",
@@ -33837,7 +32958,7 @@
         "id": 503,
         "name": "Samurott"
       },
-      "shadow": false,
+      "shadow": true,
       "mega": false,
       "megaForms": []
     },
@@ -33846,8 +32967,7 @@
         "503",
         "503_b1",
         "503_b1_f2787",
-        "503_s",
-        "503_f2787"
+        "503_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -33859,33 +32979,14 @@
       },
       "recommended": {
         "normal": "503",
-        "shadow": null,
+        "shadow": "503",
         "purified": null,
         "shiny": "503_s",
         "dynamax": "503_b1",
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Hisui",
-        "types": [
-          "Agua",
-          "Siniestro"
-        ],
-        "uicon": "503_f2787",
-        "recommended": {
-          "normal": "503_f2787",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "503_b1_f2787",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 504,
@@ -33938,7 +33039,7 @@
       },
       "recommended": {
         "normal": "504",
-        "shadow": null,
+        "shadow": "504",
         "purified": null,
         "shiny": "504_s",
         "dynamax": "504_b1",
@@ -33998,7 +33099,7 @@
       },
       "recommended": {
         "normal": "505",
-        "shadow": null,
+        "shadow": "505",
         "purified": null,
         "shiny": "505_s",
         "dynamax": "505_b1",
@@ -34238,7 +33339,7 @@
       },
       "recommended": {
         "normal": "509",
-        "shadow": null,
+        "shadow": "509",
         "purified": null,
         "shiny": "509_s",
         "dynamax": "509_b1",
@@ -34298,7 +33399,7 @@
       },
       "recommended": {
         "normal": "510",
-        "shadow": null,
+        "shadow": "510",
         "purified": null,
         "shiny": "510_s",
         "dynamax": "510_b1",
@@ -36715,8 +35816,7 @@
         "549",
         "549_b1",
         "549_b1_f2789",
-        "549_s",
-        "549_f2789"
+        "549_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -36735,26 +35835,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Hisui",
-        "types": [
-          "Planta",
-          "Lucha"
-        ],
-        "uicon": "549_f2789",
-        "recommended": {
-          "normal": "549_f2789",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "549_b1_f2789",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 550,
@@ -37051,8 +36132,7 @@
         "554_b1",
         "554_b1_f2341",
         "554_f2341_s",
-        "554_s",
-        "554_f2341"
+        "554_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -37071,25 +36151,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Hielo"
-        ],
-        "uicon": "554_f2341",
-        "recommended": {
-          "normal": "554_f2341",
-          "shadow": null,
-          "purified": null,
-          "shiny": "554_f2341_s",
-          "dynamax": "554_b1_f2341",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 555,
@@ -37138,8 +36200,7 @@
         "555_f139_s",
         "555_f2342_s",
         "555_f2343_s",
-        "555_s",
-        "555_f139"
+        "555_s"
       ],
       "flags": {
         "hasShadowIcon": true,
@@ -37158,30 +36219,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Hielo"
-        ],
-        "uicon": "555_f139",
-        "uiconCandidates": [
-          "555_f139",
-          "555_f2342",
-          "555_f2343"
-        ],
-        "recommended": {
-          "normal": "555_f139",
-          "shadow": null,
-          "purified": null,
-          "shiny": "555_f139_s",
-          "dynamax": "555_b1_f139",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 556,
@@ -37603,8 +36641,7 @@
         "562_b1",
         "562_b1_f2344",
         "562_f2344_s",
-        "562_s",
-        "562_f2344"
+        "562_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -37623,26 +36660,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Tierra",
-          "Fantasma"
-        ],
-        "uicon": "562_f2344",
-        "recommended": {
-          "normal": "562_f2344",
-          "shadow": null,
-          "purified": null,
-          "shiny": "562_f2344_s",
-          "dynamax": "562_b1_f2344",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 563,
@@ -38125,8 +37143,7 @@
         "570",
         "570_b1",
         "570_b1_f2796",
-        "570_s",
-        "570_f2796"
+        "570_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -38145,26 +37162,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Hisui",
-        "types": [
-          "Normal",
-          "Fantasma"
-        ],
-        "uicon": "570_f2796",
-        "recommended": {
-          "normal": "570_f2796",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "570_b1_f2796",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 571,
@@ -38206,8 +37204,7 @@
         "571",
         "571_b1",
         "571_b1_f2797",
-        "571_s",
-        "571_f2797"
+        "571_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -38226,26 +37223,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Hisui",
-        "types": [
-          "Normal",
-          "Fantasma"
-        ],
-        "uicon": "571_f2797",
-        "recommended": {
-          "normal": "571_f2797",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "571_b1_f2797",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 572,
@@ -38793,7 +37771,7 @@
       },
       "recommended": {
         "normal": "580",
-        "shadow": null,
+        "shadow": "580",
         "purified": null,
         "shiny": "580_s",
         "dynamax": "580_b1",
@@ -38856,7 +37834,7 @@
       },
       "recommended": {
         "normal": "581",
-        "shadow": null,
+        "shadow": "581",
         "purified": null,
         "shiny": "581_s",
         "dynamax": "581_b1",
@@ -41154,8 +40132,7 @@
         "618_b1",
         "618_b1_f2345",
         "618_f2345_s",
-        "618_s",
-        "618_f2345"
+        "618_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -41174,26 +40151,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Galar",
-        "types": [
-          "Tierra",
-          "Acero"
-        ],
-        "uicon": "618_f2345",
-        "recommended": {
-          "normal": "618_f2345",
-          "shadow": null,
-          "purified": null,
-          "shiny": "618_f2345_s",
-          "dynamax": "618_b1_f2345",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 619,
@@ -41797,8 +40755,7 @@
         "628",
         "628_b1",
         "628_b1_f2798",
-        "628_s",
-        "628_f2798"
+        "628_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -41817,26 +40774,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Hisui",
-        "types": [
-          "Psíquico",
-          "Volador"
-        ],
-        "uicon": "628_f2798",
-        "recommended": {
-          "normal": "628_f2798",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "628_b1_f2798",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 629,
@@ -46680,8 +45618,7 @@
         "705",
         "705_b1",
         "705_b1_f2790",
-        "705_s",
-        "705_f2790"
+        "705_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -46700,26 +45637,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Hisui",
-        "types": [
-          "Acero",
-          "Dragón"
-        ],
-        "uicon": "705_f2790",
-        "recommended": {
-          "normal": "705_f2790",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "705_b1_f2790",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 706,
@@ -46761,8 +45679,7 @@
         "706",
         "706_b1",
         "706_b1_f2791",
-        "706_s",
-        "706_f2791"
+        "706_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -46781,26 +45698,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Hisui",
-        "types": [
-          "Acero",
-          "Dragón"
-        ],
-        "uicon": "706_f2791",
-        "recommended": {
-          "normal": "706_f2791",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "706_b1_f2791",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 707,
@@ -47224,8 +46122,7 @@
         "713",
         "713_b1",
         "713_b1_f2795",
-        "713_s",
-        "713_f2795"
+        "713_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -47244,26 +46141,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Hisui",
-        "types": [
-          "Hielo",
-          "Roca"
-        ],
-        "uicon": "713_f2795",
-        "recommended": {
-          "normal": "713_f2795",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "713_b1_f2795",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 714,
@@ -47933,8 +46811,7 @@
         "724",
         "724_b1",
         "724_b1_f2785",
-        "724_s",
-        "724_f2785"
+        "724_s"
       ],
       "flags": {
         "hasShadowIcon": false,
@@ -47953,26 +46830,7 @@
         "gigamax": null,
         "mega": []
       }
-    },
-    "forms": [
-      {
-        "region": "Hisui",
-        "types": [
-          "Planta",
-          "Lucha"
-        ],
-        "uicon": "724_f2785",
-        "recommended": {
-          "normal": "724_f2785",
-          "shadow": null,
-          "purified": null,
-          "shiny": null,
-          "dynamax": "724_b1_f2785",
-          "gigamax": null,
-          "mega": []
-        }
-      }
-    ]
+    }
   },
   {
     "dex": 725,
