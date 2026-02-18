@@ -840,33 +840,7 @@ hr.section-sep{
 }
 
 /* =========================================================
-   SELECTOR DE LIGA (DENTRO DEL MODAL)
-   ========================================================= */
-.modal-league-switch {
-  margin: 8px 0 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.modal-league-switch__buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-}
-
-.modal-league-switch__hint {
-  text-align: center;
-  color: rgba(255,255,255,0.92);
-  font-weight: 900;
-  text-shadow: 0 0 10px rgba(0,0,0,0.35);
-  margin-top: 14px;
-  margin-bottom: 22px;
-}
-
-/* =========================================================
-   SELECTOR DE POKÉMON (POKE PICK)
+   SELECTOR DE POKÉMON (POKE PICK) - ARREGLADO
    ========================================================= */
 .pokePick {
   position: relative;
@@ -874,6 +848,16 @@ hr.section-sep{
   align-items: center;
   gap: 10px;
   margin-bottom: 15px;
+  /* El z-index base es bajo para que no tape otros elementos */
+  z-index: 1; 
+}
+
+/* 🔥 ESTO ARREGLA EL BUG: 
+   Cuando se está escribiendo (:focus-within) O la lista está abierta (.is-open),
+   forzamos que este contenedor suba al nivel máximo (10000). */
+.pokePick:focus-within,
+.pokePick.is-open {
+  z-index: 10000 !important;
 }
 
 .pokePick input {
@@ -889,6 +873,7 @@ hr.section-sep{
 }
 
 .pokePick:focus-within {
+  /* Mantenemos compatibilidad con tu código anterior */
   z-index: 10000;
 }
 
@@ -899,13 +884,19 @@ hr.section-sep{
   top: 100%;
   margin-top: 6px;
   display: none;
-  max-height: 280px;
-  overflow: auto;
+  
+  /* Altura controlada */
+  max-height: 280px; 
+  overflow-y: auto;
+  
   border-radius: 14px;
-  background: rgba(10, 18, 35, 0.96);
+  background: rgba(10, 18, 35, 0.98); /* Fondo sólido para que no se transparente */
   border: 1px solid rgba(255,220,120,0.22);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.75);
   backdrop-filter: blur(10px);
+  
+  /* Z-index interno muy alto */
+  z-index: 20000; 
 }
 
 /* =========================================================
@@ -1556,54 +1547,191 @@ body.modal-open{
   margin: 18px auto 0;
 }
 
-/* Contenedor del icono en el modal */
+/* =========================================================
+   SHADOW FALLBACK (SVG LOCAL) — detrás del icono
+   Cuando NO existe el icon "shadow" (ej: 211_a1.png),
+   mostramos el SVG morado detrás, pero dejamos la cara base.
+========================================================= */
+
 .poke-icon-wrap{
   position: relative;
-  width: 56px;
-  height: 56px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  line-height: 0;
+
+  /* Ajustes base (los afinamos con @media en responsive.css) */
+  --shadow-aura-pad: 6px;
+  --shadow-aura-opacity: 0.95;
 }
 
-/* La imagen del pokémon */
-.poke-icon-wrap img{
+/* Asegura que la cara quede delante del SVG */
+.poke-icon-wrap > img{
   position: relative;
   z-index: 2;
-  width: 44px;
-  height: 44px;
-  object-fit: contain;
+  display: block;
 }
 
-/* Aura shadow SOLO cuando falte el icono shadow real */
+/* El SVG detrás */
 .poke-icon-wrap.shadow-fallback::before{
   content: "";
   position: absolute;
-  inset: -6px;            /* “respira” alrededor */
+  inset: calc(var(--shadow-aura-pad) * -1);
+
+  background: url("purple-flame.svg") center / contain no-repeat;
+  opacity: var(--shadow-aura-opacity);
+
+  /* glow suave */
+  filter: drop-shadow(0 0 10px rgba(150, 90, 255, 0.65));
+
+  pointer-events: none;
   z-index: 1;
-  opacity: 0.95;
-
-  /* Color del aura (puedes cambiarlo) */
-  background: #664baf;
-
-  /* La forma del flame (svg) como máscara */
-  -webkit-mask-image: url("https://db.pokemongohub.net/images/purple-flame.svg");
-  mask-image: url("https://db.pokemongohub.net/images/purple-flame.svg");
-
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-
-  -webkit-mask-position: center;
-  mask-position: center;
-
-  -webkit-mask-size: contain;
-  mask-size: contain;
-
-  /* “brillito” opcional */
-  filter: drop-shadow(0 0 8px rgba(102,75,175,0.65));
 }
 
-/* Si quieres que el flame quede un poco más grande */
-.poke-icon-wrap.shadow-fallback::before{
-  transform: scale(1.05);
+
+
+
+/* =========================================================
+   ✅ REGLAS (rulesCard + rulesToggleBtn + colapsable)
+========================================================= */
+.rules-card,
+#rulesCard{
+  width: 92%;
+  max-width: 980px;
+  margin: 18px auto 0;
+  padding: 16px 16px 10px;
+  text-align: left;
+
+  background: rgba(0,0,0,0.20);
+  border: 1px solid rgba(255,220,120,0.18);
+  border-radius: 18px;
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.05), 0 0 14px rgba(0,0,0,0.25);
+}
+
+.rules-head{ display:flex; align-items:center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.rules-title{
+  font-family: 'Lato', sans-serif;
+  font-weight: 900;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  color: #ffe6b3;
+  filter: drop-shadow(0px 2px 1px rgba(0, 0, 0, .7));
+}
+
+
+.rules-grid{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.rule-section{
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.rule-section h4{
+  margin: 0 0 8px 0;
+  font-family: 'Lato', sans-serif;
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: .4px;
+  text-transform: uppercase;
+  color: #ffe6b3;
+}
+
+/* Colores de títulos (tu JS usa estas clases) */
+.sec-title-ban{ color: #ff5d5d !important; }
+.sec-title-allow{ color: #6dffb2 !important; }
+
+/* Soporte extra si alguna vez renderizas moves en lista */
+.move-list{ display:flex; flex-direction: column; gap: 8px; }
+.move-item{ display:flex; align-items:center; justify-content: space-between; gap: 10px; }
+.move-name{ font-family: 'Lato', sans-serif; font-weight: 900; color: rgba(255,255,255,0.96); }
+
+
+.rule-section--ban{ border: 1px solid rgba(255, 93, 93, 0.20); }
+.rule-section--allow{ border: 1px solid rgba(109, 255, 178, 0.20); }
+
+.rule-chips{ display:flex; flex-wrap: wrap; gap: 8px; }
+.rule-empty{ font-weight: 900; color: rgba(255,255,255,0.85); }
+
+.rules-toggle,
+#rulesToggleBtn{
+  font-weight: 900;
+  font-size: 13px;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  border: 1px solid rgba(255,220,120,0.25);
+  background: rgba(0,0,0,0.22);
+  color: #ffe6b3;
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
+}
+
+.rules-toggle:hover,
+#rulesToggleBtn:hover{
+  background: rgba(0,0,0,0.28);
+}
+
+.rules-toggle:active,
+#rulesToggleBtn:active{
+  transform: translateY(1px);
+}
+
+
+/* clase is-collapsed (tu lista) */
+.rules-card.is-collapsed .rules-grid{
+  display:none;
+}
+
+.type-icon{
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+/* chip base (tu lista) */
+.chip{
+  display:inline-flex;
+  align-items:center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 900;
+  font-size: 13px;
+  color: #fff;
+  background: rgba(0,0,0,0.22);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+.chip-type{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* =========================================================
+   FILTROS VISUALES DE REGLAS (OCULTAR CHIPS)
+   ========================================================= */
+
+/* Ocultar "Bebé" solo en la sección de PERMITIDOS */
+.rule-section--allow .chip[data-slug="baby"],
+.rule-section--allow .chip[data-slug="bebe"] {
+    display: none !important;
+}
+
+/* Ocultar Dynamax, Gigamax y Shiny solo en la sección de PROHIBIDOS */
+.rule-section--ban .chip[data-slug="dynamax"],
+.rule-section--ban .chip[data-slug="gigamax"],
+.rule-section--ban .chip[data-slug="shiny"] {
+    display: none !important;
 }
