@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initResponsiveChecks();
     initImageLoading();
     initInteractiveElements();
+    setupNumeroContactoField_();
+
 });
 
 /**
@@ -277,6 +279,38 @@ function renderNoTournamentState_(msg){
     if(typeof restaurarScrollBody === "function") restaurarScrollBody();
   }
 }
+
+function setupNumeroContactoField_(){
+  const input = document.getElementById("campfire");
+  if(!input) return;
+
+  // Evita duplicar listeners si se llama varias veces
+  if(input.dataset.contactSetup === "1") return;
+  input.dataset.contactSetup = "1";
+
+  // Cambia el label sin tocar HTML
+  const col = input.closest(".form-column");
+  const lbl = col ? col.querySelector("label") : null;
+  if(lbl) lbl.textContent = "Número de contacto (9 dígitos):";
+
+  // Forzar: obligatorio + teclado numérico + 9 dígitos
+  input.required = true;
+  input.type = "tel";
+  input.placeholder = "Ej: 999888777";
+  input.setAttribute("maxlength", "9");
+  input.setAttribute("inputmode", "numeric");
+  input.setAttribute("pattern", "\\d{9}");
+  input.setAttribute("autocomplete", "tel");
+
+  const normalize = () => {
+    const cleaned = String(input.value || "").replace(/\D/g, "").slice(0, 9);
+    if (input.value !== cleaned) input.value = cleaned;
+  };
+
+  input.addEventListener("input", normalize);
+  input.addEventListener("blur", normalize);
+}
+
 
 // ===============================
 // ✅ PREP TIMER (fase de preparación)
@@ -839,8 +873,30 @@ function buildVariantOptionsForPokemon(p){
   const normalId = String(rec.normal || dex);
   options.push({ id: normalId, dex, label: makeLabel(name, ""), variantKey: "" });
 
-  const shadowId   = String(rec.shadow   || firstRelMatch(p, new RegExp(`^${dex}_a1\\b`)) || "");
-  const purifiedId = String(rec.purified || firstRelMatch(p, new RegExp(`^${dex}_a2\\b`)) || "");
+// En tu JSON: p.pogo.shadow indica si existe shadow en Pokémon GO.
+  const pogoHasShadow = !!(p?.pogo?.shadow);
+
+  // Si el repo no tiene icono shadow/purified, a veces rec.shadow viene igual al normal (ej: 211),
+  // y eso hace que se elimine por duplicado. Para evitarlo, creamos un ID "virtual" (211_a1 / 211_a2)
+  // y luego en la UI hacemos fallback al icono base si el PNG no existe.
+  let shadowId = String(rec.shadow || firstRelMatch(p, new RegExp(`^${dex}_a1\b`)) || "");
+  let purifiedId = String(rec.purified || firstRelMatch(p, new RegExp(`^${dex}_a2\b`)) || "");
+
+  const normLower = String(normalId).toLowerCase();
+  const shadowLower = String(shadowId).toLowerCase();
+  const purifiedLower = String(purifiedId).toLowerCase();
+
+  if(pogoHasShadow){
+    if(!shadowId || shadowId === "undefined" || shadowId === "null" || shadowLower === normLower){
+      shadowId = `${dex}_a1`; // ✅ virtual shadow id
+    }
+    if(!purifiedId || purifiedId === "undefined" || purifiedId === "null" || purifiedLower === normLower){
+      purifiedId = `${dex}_a2`; // ✅ virtual purified id
+    }
+  }else{
+    if(shadowLower === normLower) shadowId = "";
+    if(purifiedLower === normLower) purifiedId = "";
+  }
 
   if(shadowId && shadowId !== "undefined" && shadowId !== "null"){
     options.push({ id: shadowId, dex, label: makeLabel(name, variantLabel("shadow")), variantKey: "shadow" });
@@ -936,6 +992,7 @@ function buildVariantOptionsForPokemon(p){
     return true;
   });
 }
+
 
 function buildAllowedOptions(t){
   const bannedTypes = new Set(splitListLower(t.bannedTypes));
@@ -1054,6 +1111,10 @@ function hidePokeDropdown_(inputEl){
   d.style.display = "none";
   d.innerHTML = "";
   delete d.dataset.activeIndex;
+
+  // ✅ CORRECCIÓN: Quitamos la clase al padre para que baje su nivel
+  const parent = inputEl.closest('.pokePick');
+  if(parent) parent.classList.remove('is-open');
 }
 
 function hideAllPokeDropdowns_(){
@@ -1061,6 +1122,10 @@ function hideAllPokeDropdowns_(){
     d.style.display = "none";
     d.innerHTML = "";
     delete d.dataset.activeIndex;
+    
+    // ✅ CORRECCIÓN: Limpiamos la clase en todos los selectores
+    const parent = d.closest('.pokePick');
+    if(parent) parent.classList.remove('is-open');
   });
 }
 
@@ -1129,7 +1194,20 @@ function renderPokeDropdown_(inputEl){
 
   dropEl.style.display = "block";
   setActivePokeItem_(dropEl, 0);
+
+  // ✅ CORRECCIÓN: Agregamos clase al padre para ponerlo ENCIMA de los demás inputs
+  const parent = inputEl.closest('.pokePick');
+  if(parent) parent.classList.add('is-open');
 }
+
+// ✅ CORRECCIÓN FINAL: Detector de clics global
+// Esto cierra la lista si haces clic en el fondo negro, titulo o cualquier lado que no sea el buscador.
+document.addEventListener('click', function(e) {
+    // Si el clic NO fue dentro de un selector (pokePick), cerramos todo
+    if (!e.target.closest('.pokePick')) {
+        hideAllPokeDropdowns_();
+    }
+}, true); // 'true' para asegurar que capture el evento antes que otros
 
 function pickActivePokeItem_(inputEl){
   const dropEl = getDropElForInput_(inputEl);
@@ -1221,19 +1299,41 @@ function lockInputsToAllowed(allowedDexSet){
 
   const ids = ["p1","p2","p3","p4","p5","p6"];
 
-  const clearField = (id) => {
-    const el = document.getElementById(id);
-    const img = document.getElementById(id + "img");
-    if (!el) return;
-    el.value = "";
-    delete el.dataset.dex;
-    delete el.dataset.pid;
-    if (img) {
-      img.removeAttribute("src");
-      img.alt = "";
-      img.style.visibility = "hidden";
-    }
-  };
+function setShadowFallbackAura(imgEl, enabled){
+  if(!imgEl) return;
+
+  // ✅ si el HTML no tiene wrapper, lo creamos automáticamente
+  if (!imgEl.closest(".poke-icon-wrap")) {
+    const wrap = document.createElement("span");
+    wrap.className = "poke-icon-wrap";
+    imgEl.parentNode?.insertBefore(wrap, imgEl);
+    wrap.appendChild(imgEl);
+  }
+
+  const wrap = imgEl.closest(".poke-icon-wrap");
+  if(!wrap) return;
+
+  wrap.classList.toggle("shadow-fallback", !!enabled);
+}
+
+
+const clearField = (id) => {
+  const el = document.getElementById(id);
+  const img = document.getElementById(id + "img");
+  if (!el) return;
+
+  el.value = "";
+  delete el.dataset.dex;
+  delete el.dataset.pid;
+
+  if(img){
+    setShadowFallbackAura(img, false);
+    img.onerror = null;
+    img.removeAttribute("src");
+    img.alt = "";
+    img.style.visibility = "hidden";
+  }
+};
 
   const applyOption = (id, opt) => {
     const el = document.getElementById(id);
@@ -1263,15 +1363,40 @@ function lockInputsToAllowed(allowedDexSet){
     el.dataset.pid = optId;
     hideAllPokeDropdowns_();
 
-    if(img){
+   if(img){
+  const optId = String(opt.id || "");
+  const fallbackId = fallbackIconIdForMissingVariant(optId);
+
+  // ✅ Siempre apaga aura al intentar cargar un icono nuevo
+  setShadowFallbackAura(img, false);
+
+  img.onerror = () => {
+    // Si es shadow y falló el icono shadow, activamos aura
+    if(opt?.variantKey === "shadow"){
+      setShadowFallbackAura(img, true);
+    }
+
+    // ✅ 1er fallback: intenta el icono base (211 o 019_61, etc.)
+    if(fallbackId && fallbackId !== optId){
       img.onerror = () => {
         img.removeAttribute("src");
         img.style.visibility = "hidden";
       };
-      img.src = iconUrl(optId);
-      img.alt = pokeDisplayName(POKE_BY_DEX.get(dex));
-      img.style.visibility = "visible";
+      img.src = iconUrl(fallbackId);
+      return;
     }
+
+    // ✅ si no hay fallback, oculta
+    img.removeAttribute("src");
+    img.style.visibility = "hidden";
+  };
+
+  img.src = iconUrl(optId);
+  img.alt = pokeDisplayName(POKE_BY_DEX.get(dex));
+  img.style.visibility = "visible";
+}
+
+
     return true;
   };
 
@@ -1872,11 +1997,11 @@ function categoryNice(token){
   const map = {
     normal:"Normal", baby:"Bebé", legendary:"Legendario", mythical:"Mítico",
     shadow:"Shadow", purified:"Purificado", shiny:"Shiny",
-    dynamax:"Dynamax", gigamax:"Gigamax", mega:"Mega"
+    dynamax:"Dynamax", gigamax:"Gigamax", 
+    mega:"Megaevolución" // ✅ CAMBIO: Ahora dirá "Megaevolución" en lugar de "Mega"
   };
   return map[t] || (String(token||"").trim() || "-");
 }
-
 function leagueLogoText(league){
   const s = String(league||"");
   const m = s.match(/(\d{3,5})/);
@@ -1923,6 +2048,7 @@ $("openModalBtn").onclick = async () => {
   MODAL_JUST_OPENED = true;
   $("formModal").style.display = "flex";
   bloquearScrollBody();
+  setupNumeroContactoField_();
   const btnReg = $("btnRegister");
   if (btnReg) btnReg.disabled = true;
   try {
@@ -1950,6 +2076,38 @@ const ICON_BASE = "https://raw.githubusercontent.com/nileplumb/PkmnShuffleMap/ma
 function iconUrl(iconId){
   return `${ICON_BASE}${iconId}.png`;
 }
+
+
+// ✅ Si el icono de una variante NO existe (ej: 211_a1), usamos fallback al icono base (ej: 211)
+// - Para formas: 019_61_a1 -> 019_61
+function fallbackIconIdForMissingVariant(iconId){
+  const s = String(iconId||"").trim();
+  if(!s) return "";
+  const m1 = s.match(/^(.*?)(?:_a1|_a2|_s)$/i);
+  if(m1) return m1[1];
+  const m2 = s.match(/^(.*?)(?:_b1|_b2)$/i);
+  if(m2) return m2[1];
+  const m3 = s.match(/^0*(\d{1,4})/);
+  return m3 ? String(Number(m3[1])) : "";
+}
+
+
+function setShadowFallbackAura(imgEl, enabled){
+  if(!imgEl) return;
+
+  // ✅ asegura wrapper
+  let wrap = imgEl.closest?.(".poke-icon-wrap");
+  if(!wrap){
+    wrap = document.createElement("span");
+    wrap.className = "poke-icon-wrap";
+    imgEl.parentNode?.insertBefore(wrap, imgEl);
+    wrap.appendChild(imgEl);
+  }
+
+  wrap.classList.toggle("shadow-fallback", !!enabled);
+}
+
+
 
 // ===============================
 // ASSETS LOCALES (tu repo)
@@ -2520,7 +2678,7 @@ function buildBestOfExplanation(t){
       return `Al mejor de 3: gana quien consiga ${needWins} victorias. Partidas en ${liga(mains[0])}; si quedan 1-1, el desempate (Partida 3) es en ${liga(tb)}.`;
     }
     if(mains.length === 1){
-      return `Al mejor de 3: gana quien consiga ${needWins} victorias. Todas las partidas se juegan en ${liga(mains[0])}.`;
+      return `Apartir de Octavos Hasta Semifinal: gana quien consiga ${needWins} victorias. Todas las partidas se juegan en ${liga(mains[0])}.`;
     }
     return `Al mejor de 3: gana quien consiga ${needWins} victorias.`;
   }
@@ -2536,7 +2694,7 @@ function buildBestOfExplanation(t){
       return `Al mejor de 5: gana quien consiga ${needWins} victorias. Partidas en ${liga(mains[0])}; si quedan 2-2, el desempate (Partida 5) es en ${liga(tb)}.`;
     }
     if(mains.length === 1){
-      return `Al mejor de 5: gana quien consiga ${needWins} victorias. Todas las partidas se juegan en ${liga(mains[0])}.`;
+      return `Final y Difinición 3° Puesto: gana quien consiga ${needWins} victorias. Todas las partidas se juegan en ${liga(mains[0])}.`;
     }
     return `Al mejor de 5: gana quien consiga ${needWins} victorias.`;
   }
@@ -2883,13 +3041,16 @@ function renderRulesCard(t){
   const banFast      = splitTokens(src?.bannedFastMoves);
   const banCharged   = splitTokens(src?.bannedChargedMoves);
 
-  const renderCatChips = (cats) => {
+function renderCatChips(cats){
     if(!cats || !cats.length) return "<div class=\"rule-empty\">—</div>";
     const uniq = [...new Set(cats)];
     return `<div class="rule-chips">${
-      uniq.map(c => `<span class="chip">${escapeHtml(categoryNice(c))}</span>`).join("")
+      uniq.map(c => {
+        // Agregamos data-slug para poder filtrar por CSS
+        return `<span class="chip" data-slug="${escapeHtml(c)}">${escapeHtml(categoryNice(c))}</span>`;
+      }).join("")
     }</div>`;
-  };
+}
 
   const sections = [];
   if(bannedPokes.length)  sections.push(sectionHtml("Pokémon prohibidos", renderPokemonFaces(bannedPokes, "ban"), "ban"));
@@ -2898,8 +3059,8 @@ function renderRulesCard(t){
   if(banFast.length)    sections.push(sectionHtml("Ataques rápidos prohibidos", renderMoveChips(banFast), "ban"));
   if(bannedTypes.length)  sections.push(sectionHtml("Tipos prohibidos",  renderTypeChips(bannedTypes), "ban"));
   if(allowedTypes.length) sections.push(sectionHtml("Tipos permitidos",  renderTypeChips(allowedTypes), "allow"));
-  if(bannedCats.length)  sections.push(sectionHtml("Tipo de Pokemones Prohibidos", renderCatChips(bannedCats), "ban"));
-  if(allowedCats.length) sections.push(sectionHtml("Tipo de Pokemones Permitidos", renderCatChips(allowedCats), "allow"));
+  if(bannedCats.length)  sections.push(sectionHtml("Tipo de Pokemons Prohibidos", renderCatChips(bannedCats), "ban"));
+  if(allowedCats.length) sections.push(sectionHtml("Tipo de Pokemons Permitidos", renderCatChips(allowedCats), "allow"));
 
   if(!sections.length && !isMultiLeague){
     box.style.display = "none";
@@ -4112,6 +4273,11 @@ $("btnRegister").onclick = async () => {
   if (codigo.length !== 12){
     return showToast("⚠ El código entrenador debe tener 12 dígitos");
   }
+  const contacto = ($("campfire")?.value || "").trim();
+if(!/^\d{9}$/.test(contacto)){
+  return showToast("⚠ El número de contacto debe tener 9 dígitos (solo números)");
+}
+
   const tSel = TORNEOS.find(x => x.torneoId === SELECTED_ID) || TORNEOS[0];
   const rulesObj = tSel ? getPerLeagueRules_(tSel) : null;
   const rulesKeys = rulesObj ? Object.keys(rulesObj.leagues || {}) : [];
