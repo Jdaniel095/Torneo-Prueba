@@ -475,6 +475,7 @@ hr.section-sep{
   position: absolute;
   left: 50%;
   top: calc(100% + 10px);
+  top: auto;
   transform: translateX(-50%);
   display: none;
 
@@ -1107,10 +1108,14 @@ hr.section-sep{
   color: #fff;
   padding: 12px 24px;
   border-radius: 50px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.5); /* Sombra más fuerte para que resalte */
   font-weight: 600;
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  z-index: 3000;
+  
+  /* ✅ FIX: Ahora estará por encima de cualquier modal */
+  z-index: 999999; 
+  
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Borde opcional para visibilidad */
 }
 
 .toast.show { 
@@ -1549,4 +1554,56 @@ body.modal-open{
   justify-content: center;
   width: min(520px, 100%);
   margin: 18px auto 0;
+}
+
+/* Contenedor del icono en el modal */
+.poke-icon-wrap{
+  position: relative;
+  width: 56px;
+  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* La imagen del pokémon */
+.poke-icon-wrap img{
+  position: relative;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+/* Aura shadow SOLO cuando falte el icono shadow real */
+.poke-icon-wrap.shadow-fallback::before{
+  content: "";
+  position: absolute;
+  inset: -6px;            /* “respira” alrededor */
+  z-index: 1;
+  opacity: 0.95;
+
+  /* Color del aura (puedes cambiarlo) */
+  background: #664baf;
+
+  /* La forma del flame (svg) como máscara */
+  -webkit-mask-image: url("https://db.pokemongohub.net/images/purple-flame.svg");
+  mask-image: url("https://db.pokemongohub.net/images/purple-flame.svg");
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  -webkit-mask-position: center;
+  mask-position: center;
+
+  -webkit-mask-size: contain;
+  mask-size: contain;
+
+  /* “brillito” opcional */
+  filter: drop-shadow(0 0 8px rgba(102,75,175,0.65));
+}
+
+/* Si quieres que el flame quede un poco más grande */
+.poke-icon-wrap.shadow-fallback::before{
+  transform: scale(1.05);
 }
