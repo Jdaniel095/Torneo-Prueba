@@ -507,7 +507,7 @@
 @media (max-width: 767px) and (orientation: landscape){
   .titulo-principal{ margin-bottom: 12px; }
   .torneo-meta, #torneoMeta{ margin-top: 4px; gap: 8px; }
-  #boTooltip, #modeTooltip{ top: calc(100% + 6px); }
+  #boTooltip, #modeTooltip{ top: calc(100% + 8px); }
 }
 
 /* Landscape tablets */
@@ -4277,4 +4277,87 @@
     grid-column: 1 / -1;
     justify-self: center;
   }
+}
+
+@media (max-width: 767px) {
+  .toast {
+    bottom: 40px; /* Un poco más arriba en móviles */
+    width: 90%;
+    text-align: center;
+  }
+}
+
+/* =========================================================
+   ✅ FIX: AVISOS (TOAST) ENCIMA DEL MODAL
+   ========================================================= */
+
+/* 1. Elevamos el contenedor padre solo cuando el toast está activo */
+.content-area:has(.toast.show) {
+    z-index: 999999 !important;
+}
+
+/* 2. Ajuste base del Toast para que siempre gane en profundidad */
+.toast {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    z-index: 999999 !important;
+    pointer-events: none; /* Para que no bloquee clicks si está invisible */
+    transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    
+    /* Mejoras visuales para que resalte sobre el modal */
+    background: rgba(20, 20, 25, 0.95) !important;
+    border: 1px solid rgba(255, 220, 120, 0.5) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8) !important;
+    backdrop-filter: blur(10px);
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+/* ---------------------------------------------------------
+   📱 RESPONSIVE @media PARA EL TOAST
+   --------------------------------------------------------- */
+
+/* Móviles pequeños (vertical) */
+@media (max-width: 430px) {
+    .toast {
+        bottom: 80px; /* Sube más para no chocar con el botón del modal */
+        width: 85%;
+        font-size: 14px;
+        padding: 14px 20px;
+        border-radius: 15px;
+    }
+}
+
+/* Tablets y pantallas medianas */
+@media (min-width: 431px) and (max-width: 1023px) {
+    .toast {
+        bottom: 50px;
+        width: auto;
+        min-width: 300px;
+        max-width: 90%;
+    }
+}
+
+/* Escritorio (PC) */
+@media (min-width: 1024px) {
+    .toast {
+        bottom: 30px;
+        font-size: 16px;
+        padding: 16px 32px;
+        border-radius: 50px;
+    }
+}
+
+/* Móviles en Horizontal (Landscape) */
+@media (max-height: 500px) and (orientation: landscape) {
+    .toast {
+        bottom: 20px;
+        font-size: 13px;
+        padding: 8px 20px;
+        /* Evita que tape mucho contenido en pantallas bajitas */
+    }
 }
