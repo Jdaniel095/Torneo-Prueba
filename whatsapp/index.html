@@ -3,16 +3,124 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Redirigiendo a WhatsApp…</title>
+  <title>Redirigiendo a la comunidad en WhatsApp…</title>
 
-  <!-- Reemplaza por tu link de grupo -->
-  <meta http-equiv="refresh" content="0; url=https://chat.whatsapp.com/DbmJcQzCoSG7emzIvRN32W" />
+  <!-- ✅ CAMBIA ESTE LINK -->
+  <meta http-equiv="refresh" content="1; url=https://chat.whatsapp.com/DbmJcQzCoSG7emzIvRN32W" />
+
+  <style>
+    :root{
+      --bg1:#0b0b14;
+      --bg2:#121228;
+      --card:#15152a;
+      --text:#ffffff;
+      --muted:#c8c8ff;
+      --btn:#25D366; /* WhatsApp */
+      --btnText:#0b0b14;
+      --ring: rgba(255,255,255,.14);
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      color:var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(900px 420px at 20% 10%, rgba(153,102,255,.20), transparent 60%),
+        radial-gradient(900px 420px at 80% 90%, rgba(37,211,102,.18), transparent 60%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
+    }
+
+    .card{
+      width: min(520px, 100%);
+      background: rgba(21,21,42,.78);
+      border: 1px solid var(--ring);
+      border-radius: 20px;
+      padding: 22px 20px;
+      box-shadow: 0 18px 60px rgba(0,0,0,.45);
+      backdrop-filter: blur(10px);
+      text-align:center;
+    }
+
+    .title{
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+      letter-spacing:.3px;
+    }
+
+    .sub{
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: .98rem;
+      line-height: 1.35;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      background: var(--btn);
+      color: var(--btnText);
+      font-weight: 800;
+      text-decoration:none;
+      box-shadow: 0 10px 24px rgba(37,211,102,.25);
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.02); }
+    .btn:active{ transform: translateY(0px) scale(.99); }
+
+    .tiny{
+      margin: 14px 0 0;
+      font-size: .85rem;
+      color: rgba(255,255,255,.70);
+    }
+
+    .spinner{
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      border: 3px solid rgba(255,255,255,.18);
+      border-top-color: rgba(255,255,255,.85);
+      margin: 14px auto 14px;
+      animation: spin .9s linear infinite;
+    }
+    @keyframes spin{ to { transform: rotate(360deg); } }
+
+    @media (max-width: 360px){
+      .title{ font-size: 1.1rem; }
+      .sub{ font-size: .93rem; }
+      .btn{ width: 100%; }
+    }
+  </style>
 
   <script>
-    window.location.replace("hhttps://chat.whatsapp.com/DbmJcQzCoSG7emzIvRN32W");
+    
+    const url = "https://chat.whatsapp.com/DbmJcQzCoSG7emzIvRN32W";
+    window.location.replace(url);
   </script>
 </head>
+
 <body>
-  <p>Redirigiendo… Si no pasa, <a href="https://chat.whatsapp.com/DbmJcQzCoSG7emzIvRN32W">toca aquí</a>.</p>
+  <main class="card">
+    <h1 class="title">Redirigiendo al grupo de WhatsApp…</h1>
+    <div class="spinner" aria-hidden="true"></div>
+    <p class="sub">
+      Si tu navegador no te redirige automáticamente, toca el botón:
+    </p>
+
+
+    <a class="btn" href="https://chat.whatsapp.com/DbmJcQzCoSG7emzIvRN32W" rel="noopener">
+      Abrir WhatsApp
+    </a>
+
+    <p class="tiny">pokecomas.com/whatsapp</p>
+  </main>
 </body>
 </html>
