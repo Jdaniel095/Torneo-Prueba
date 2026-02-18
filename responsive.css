@@ -4361,3 +4361,63 @@
         /* Evita que tape mucho contenido en pantallas bajitas */
     }
 }
+
+/* =========================================================
+   FIX FINAL DROPDOWN - LISTA RESPONSIVE
+   ========================================================= */
+
+/* Móviles Verticales */
+@media (max-width: 767px) {
+    .poke-dropdown {
+        /* Reducimos altura para que no tape el teclado en celular */
+        max-height: 200px !important; 
+    }
+    
+    .poke-item {
+        padding: 12px 14px; 
+    }
+    
+    .poke-name { font-size: 15px; }
+}
+
+/* Móviles en Horizontal (Landscape) - CRÍTICO para que no se corte */
+@media (max-width: 900px) and (orientation: landscape) {
+    .poke-dropdown {
+        /* En horizontal hay muy poco espacio, la hacemos bajita con scroll */
+        max-height: 140px !important; 
+    }
+}
+
+/* ================================
+   SHADOW AURA — Responsive tweaks
+================================ */
+
+/* 320px a 374px */
+@media (max-width: 374px){
+  .poke-icon-wrap{ --shadow-aura-pad: 4px; --shadow-aura-opacity: 0.92; }
+}
+
+/* 375px a 389px */
+@media (min-width: 375px) and (max-width: 389px){
+  .poke-icon-wrap{ --shadow-aura-pad: 5px; }
+}
+
+/* 390px a 430px */
+@media (min-width: 390px) and (max-width: 430px){
+  .poke-icon-wrap{ --shadow-aura-pad: 6px; }
+}
+
+/* 431px a 540px */
+@media (min-width: 431px) and (max-width: 540px){
+  .poke-icon-wrap{ --shadow-aura-pad: 6px; }
+}
+
+/* 541px a 767px */
+@media (min-width: 541px) and (max-width: 767px){
+  .poke-icon-wrap{ --shadow-aura-pad: 7px; }
+}
+
+/* 768px+ */
+@media (min-width: 768px){
+  .poke-icon-wrap{ --shadow-aura-pad: 8px; }
+}
