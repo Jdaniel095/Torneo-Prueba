@@ -749,6 +749,100 @@ hr.section-sep{
 }
 
 /* =========================================================
+   ✅ LOADING: "Cargando torneo…"
+   ========================================================= */
+
+#torneoInfo{
+  /* Estilo base (para mensajes tipo "No hay torneos" / error) */
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  letter-spacing: .4px;
+  color: rgba(255,255,255,0.95);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.35);
+  text-align: center;
+
+  margin: 18px auto 0;
+  max-width: calc(100% - 24px);
+}
+
+/* Solo anima cuando está en estado loading */
+#torneoInfo[data-state="loading"]{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  width: fit-content;
+  padding: 14px 18px;
+  border-radius: 999px;
+
+  background: linear-gradient(135deg, rgba(0,0,0,0.26), rgba(12,50,100,0.18));
+  border: 1px solid rgba(255,220,120,0.26);
+  backdrop-filter: blur(10px);
+
+  box-shadow:
+    inset 0 0 12px rgba(255,255,255,0.06),
+    0 14px 32px rgba(0,0,0,0.35);
+
+  animation: torneoLoadingPulse 1.8s ease-in-out infinite;
+}
+
+/* Spinner */
+#torneoInfo[data-state="loading"]::before{
+  content:"";
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+
+  border: 3px solid rgba(255,220,120,0.25);
+  border-top-color: rgba(118,232,255,0.95);
+  border-right-color: rgba(118,232,255,0.55);
+
+  animation: torneoSpin .85s linear infinite;
+  filter: drop-shadow(0 0 10px rgba(118,232,255,0.35));
+}
+
+/* Puntitos */
+#torneoInfo[data-state="loading"]::after{
+  content:"";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,220,120,0.95);
+
+  box-shadow:
+    12px 0 0 rgba(255,220,120,0.55),
+    24px 0 0 rgba(255,220,120,0.25);
+
+  animation: torneoDots 1.1s ease-in-out infinite;
+  margin-left: 2px;
+}
+
+@keyframes torneoSpin { to { transform: rotate(360deg);} }
+
+@keyframes torneoDots {
+  0%   { opacity: .25; transform: translateX(0); }
+  35%  { opacity: 1;   transform: translateX(0); }
+  70%  { opacity: .25; transform: translateX(10px); }
+  100% { opacity: .25; transform: translateX(0); }
+}
+
+@keyframes torneoLoadingPulse{
+  0%,100% { transform: translateY(0); filter: brightness(1); }
+  50%     { transform: translateY(-1px); filter: brightness(1.08); }
+}
+
+/* Accesibilidad: reduce animaciones si el usuario lo pide */
+@media (prefers-reduced-motion: reduce){
+  #torneoInfo[data-state="loading"],
+  #torneoInfo[data-state="loading"]::before,
+  #torneoInfo[data-state="loading"]::after{
+    animation: none !important;
+  }
+}
+
+
+/* =========================================================
    MODALES (ESTRUCTURA GENERAL)
    ========================================================= */
 .modal-overlay,
@@ -1734,4 +1828,493 @@ body.modal-open{
 .rule-section--ban .chip[data-slug="gigamax"],
 .rule-section--ban .chip[data-slug="shiny"] {
     display: none !important;
+}
+
+/* ===== Shadow aura dentro de cajas pequeñas (prep/battle) ===== */
+.prep-poke .poke-icon-wrap,
+.battle-mon .poke-icon-wrap{
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+/* Para que no se corte tanto el flame dentro de cajitas */
+.prep-poke .poke-icon-wrap.shadow-fallback::before{ inset: -4px; }
+.battle-mon .poke-icon-wrap.shadow-fallback::before{ inset: -2px; }
+
+
+/* =========================================================
+   ✅ BRACKET (MODAL + LAYOUT)
+========================================================= */
+
+.bracket-section{
+  width: 100%;
+}
+
+.bracket-head-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.bracket-hint{
+  margin-top: 10px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+  color: rgba(255,255,255,0.85);
+}
+
+/* Botón "Ver Bracket" */
+.bracket-open-btn{
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+
+  padding: 12px 18px;
+  border-radius: 14px;
+
+  font-weight: 900;
+  letter-spacing: 0.3px;
+
+  color: #1a0f06;
+  background: linear-gradient(180deg, rgba(255,220,120,0.98), rgba(255,170,70,0.98));
+  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+}
+
+.bracket-open-btn:hover{
+  filter: brightness(1.03);
+  transform: translateY(-1px);
+}
+
+.bracket-open-btn:active{
+  transform: translateY(0);
+}
+
+/* Modal full screen */
+.bracket-modal-overlay{
+  padding: 10px; /* aire mínimo */
+}
+
+.bracket-modal{
+  width: min(1400px, calc(100vw - 20px));
+  height: min(860px, calc(100vh - 20px));
+
+  border-radius: 22px;
+  border: 2px solid rgba(255,220,120,0.35);
+  background: linear-gradient(135deg, rgba(20,55,110,0.65), rgba(140,20,80,0.55));
+  box-shadow: 0 0 22px rgba(255, 232, 150, 0.22), 0 0 45px rgba(0, 80, 150, 0.22);
+
+  overflow: hidden;
+  display:flex;
+  flex-direction: column;
+}
+
+
+/* Header del modal */
+.bracket-modal-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+}
+
+.bracket-modal-title{
+  font-weight: 900;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.95);
+}
+
+/* OJO: .close-modal por defecto es absolute (para formModal). Aquí lo neutralizamos */
+.bracket-modal-header .close-modal{
+  position: static;
+  top: auto;
+  right: auto;
+
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size: 32px;
+  line-height: 1;
+
+  background: rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.18);
+}
+/* ====== BRACKET MODAL: el body debe ESTIRAR y permitir overflow interno ====== */
+.bracket-modal-body{
+  flex: 1;
+  min-height: 0;          /* CLAVE para que overflow funcione en flex */
+  display: flex;
+  align-items: stretch;   /* no center */
+  justify-content: stretch;
+  padding: 10px;
+}
+
+/* el wrapper debe ocupar el espacio y NO crecer por contenido */
+.bracket-wrap{
+  flex: 1 1 auto;
+  min-width: 0;           /* CLAVE: permite scroll horizontal en flex */
+  min-height: 0;          /* CLAVE: permite scroll vertical en flex */
+  width: 100%;
+  height: 100%;
+}
+
+/* tu scroll area está bien, pero agrega min-height:0 + touch/pan */
+.bracket-scroll{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+
+  border-radius: 18px;
+  border: 1px solid rgba(255,220,120,0.22);
+  background: rgba(10, 5, 30, 0.22);
+  -webkit-overflow-scrolling: touch;
+
+  overscroll-behavior: contain;
+  touch-action: pan-x pan-y;
+}
+
+
+/* SVG líneas */
+.bracket-lines{
+  position:absolute;
+  inset:0;
+  z-index: 1;
+  pointer-events: none;
+
+  /* ✅ IMPORTANTÍSIMO: que el SVG se escale igual que el layout */
+  transform: scale(var(--bracketScale, 1));
+  transform-origin: top left;
+}
+
+
+/* Layout (se escala con --bracketScale desde JS) */
+.bracket-layout{
+  position: relative;
+  z-index: 2;
+
+  display:flex;
+  align-items:flex-start;
+  gap: 24px;
+
+  width: max-content;
+  padding: 16px;
+
+  transform: scale(var(--bracketScale, 1));
+  transform-origin: top left;
+}
+
+/* Lados */
+.bracket-side{
+  display:flex;
+  align-items:flex-start;
+  gap: 18px;
+}
+
+/* ✅ clave: el lado derecho va “espejado” para que avance hacia el centro */
+.bracket-side.right{
+  flex-direction: row-reverse;
+}
+
+/* Columnas por ronda */
+.round-col{
+  min-width: 260px;
+  display:flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.round-col.is-hidden{
+  display:none;
+}
+
+.round-title{
+  text-align:center;
+  font-weight: 900;
+  letter-spacing: 0.4px;
+  padding: 8px 10px;
+  border-radius: 12px;
+
+  color: rgba(255,255,255,0.95);
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* Match card */
+.match-node{
+  width: 260px;
+  border-radius: 16px;
+  overflow:hidden;
+
+  background: rgba(0,0,0,0.22);
+  border: 1px solid rgba(255,220,120,0.18);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+}
+
+.match-node.is-current{
+  border-color: rgba(255,220,120,0.55);
+  box-shadow: 0 0 0 2px rgba(255,220,120,0.22), 0 12px 28px rgba(0,0,0,0.28);
+}
+
+.player-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+  padding: 9px 10px;
+}
+
+.player-row + .player-row{
+  border-top: 1px solid rgba(255,255,255,0.10);
+}
+
+.player-name{
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.92);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-badge{
+  min-width: 34px;
+  text-align:center;
+
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 10px;
+
+  color: rgba(255,255,255,0.95);
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.player-row.win{
+  background: rgba(70, 210, 120, 0.16);
+}
+
+.player-row.lose{
+  opacity: 0.68;
+}
+
+/* Centro */
+.bracket-center{
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  gap: 12px;
+  min-width: 300px;
+}
+
+.center-title{
+  font-weight: 1000;
+  letter-spacing: 0.8px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  color: rgba(255,255,255,0.95);
+  background: rgba(0,0,0,0.30);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* Evita transiciones durante fit */
+.bracket-scroll.no-anim *{
+  transition: none !important;
+}
+
+/* Estilo para la etiqueta de Ronda y BO */
+.battle-meta-text {
+    color: #76e8ff; /* Color cian neón para resaltar el BO */
+    font-weight: 1000;
+    text-transform: uppercase;
+    background: rgba(118, 232, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(118, 232, 255, 0.2);
+}
+
+/* Separador visual */
+.battle-meta-text::before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background: #ffdcb5;
+    border-radius: 50%;
+    margin: 0 8px;
+    vertical-align: middle;
+}
+
+/* --- BOTÓN BASES NEON (Centrado) --- */
+.btn-bases-neon {
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #00f3ff;
+    color: #00f3ff;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+    
+    /* ESTO ES LO QUE LO CENTRA: */
+    display: block;       /* Comportamiento de bloque */
+    margin: 20px auto;    /* Auto a los lados lo centra */
+    max-width: 350px;     /* Ancho máximo para que no se estire */
+    width: 100%;
+}
+
+.btn-bases-neon:hover {
+    background: #00f3ff;
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.6);
+    transform: scale(1.05);
+}
+
+/* --- ESTILOS DEL MODAL --- */
+.modal-backdrop {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* Fondo oscuro */
+    backdrop-filter: blur(5px);
+    z-index: 10000;
+}
+
+.modal-window {
+    background: #111827; /* Fondo azul oscuro casi negro */
+    width: 90%;
+    max-width: 700px;
+    margin: 4vh auto;
+    border-radius: 12px;
+    border: 1px solid #374151;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh; /* Altura máxima */
+    animation: slideIn 0.3s ease-out;
+    position: relative;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #374151;
+    background: #1f2937;
+    border-radius: 12px 12px 0 0;
+    text-align: center;
+}
+.modal-header h2 { margin: 0; color: #fbbf24; font-size: 1.5rem; }
+
+.modal-close {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 2rem;
+    color: #9ca3af;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.modal-close:hover { color: #fff; }
+
+.modal-scroll-content {
+    padding: 20px;
+    overflow-y: auto; /* Scroll interno */
+    text-align: left;
+    color: #e5e7eb;
+    line-height: 1.6;
+}
+
+.rule-section { margin-bottom: 25px; }
+.rule-section h3 { color: #60a5fa; border-left: 4px solid #60a5fa; padding-left: 10px; margin-bottom: 10px; }
+.rule-section ul { padding-left: 20px; list-style-type: none; }
+.rule-section li { margin-bottom: 8px; position: relative; padding-left: 15px; }
+.rule-section li::before { content: "•"; color: #fbbf24; position: absolute; left: 0; font-weight: bold; }
+
+/* Estilo de Premios */
+.premios-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px; }
+.premio-card { padding: 15px; border-radius: 8px; text-align: center; display: flex; flex-direction: column; border: 1px solid #4b5563; background: #1f2937; }
+.premio-card.gold { border-color: #fbbf24; color: #fbbf24; }
+.premio-card.silver { border-color: #9ca3af; color: #e5e7eb; }
+.premio-card.bronze { border-color: #d97706; color: #d97706; }
+.puesto { font-size: 0.9rem; text-transform: uppercase; font-weight: bold; }
+.monto { font-size: 1.4rem; font-weight: 800; margin: 5px 0; color: #fff; }
+
+.modal-footer { padding: 15px; border-top: 1px solid #374151; text-align: center; background: #1f2937; border-radius: 0 0 12px 12px; }
+.btn-confirm { background: #2563eb; color: white; border: none; padding: 10px 30px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+.btn-confirm:hover { background: #1d4ed8; }
+
+
+/* --- FILA DE BOTONES EXTRA --- */
+.hero-buttons-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Separación entre botones */
+    margin: 25px auto 25px auto;
+    flex-wrap: wrap; /* Se adaptan si la pantalla es muy chica */
+}
+
+/* Estilo Base para botones pequeños */
+.btn-mini {
+    padding: 8px 16px;       /* Más pequeños */
+    font-size: 0.85rem;      /* Letra más fina */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 50px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    border: 1px solid;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Variación Naranja (Bases) */
+.btn-orange {
+    color: #ff9d00;
+    border-color: #ff9d00;
+    box-shadow: 0 0 5px rgba(255, 157, 0, 0.2);
+}
+.btn-orange:hover {
+    background: #ff9d00;
+    color: #000;
+    box-shadow: 0 0 15px rgba(255, 157, 0, 0.6);
+    transform: translateY(-2px);
+}
+
+/* Variación Verde (WhatsApp) */
+.btn-whatsapp {
+    color: #25D366;
+    border-color: #25D366;
+    box-shadow: 0 0 5px rgba(37, 211, 102, 0.2);
+}
+.btn-whatsapp:hover {
+    background: #25D366;
+    color: #000;
+    box-shadow: 0 0 15px rgba(37, 211, 102, 0.6);
+    transform: translateY(-2px);
 }
