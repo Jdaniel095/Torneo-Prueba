@@ -278,6 +278,8 @@ function renderNoTournamentState_(msg){
     modal.style.display = "none";
     if(typeof restaurarScrollBody === "function") restaurarScrollBody();
   }
+  
+  
 }
 
 function setupNumeroContactoField_(){
@@ -530,24 +532,55 @@ function normalizeIconId_(token){
   return m ? m[1] : s;
 }
 
+function isShadowIconId_(id){
+  return /_a1$/i.test(String(id || "").trim());
+}
+
+function baseIconIdForDisplay_(id){
+  var s = String(id || "").trim();
+  if(!s) return "";
+  // Shadow: usamos la cara normal (sin _a1) como imagen
+  if(isShadowIconId_(s)) return s.replace(/_a1$/i, "");
+  return s;
+}
+
+
 function monImgUrl_(token){
-  const id = normalizeIconId_(token);
+  var id = normalizeIconId_(token);
   if(/^\d{1,4}(?:_[a-z0-9]+)?$/i.test(id)){
-    return iconUrl(id);
+    var displayId = baseIconIdForDisplay_(id);
+    return iconUrl(displayId);
   }
   return spriteUrl(token);
 }
 
+
 function renderBattleTeam_(team){
-  const arr = Array.isArray(team) ? team.slice(0,6) : [];
-  const filled = (arr.length ? arr : new Array(6).fill(""));
-  return filled.map(tok => {
-    const safeTitle = iconLabelFor(tok) || String(tok||"").trim() || "?";
-    const url = monImgUrl_(tok);
+  if(!Array.isArray(team) || team.length === 0) return "";
+
+  return team.map(tok => {
+    const rawId = normalizeIconId_(tok);
+    if(!rawId) return `<span class="battle-mon">?</span>`;
+
+    const title = smartIconTitle_(rawId);
+    const isShadow = isShadowIconId_(rawId);
+
+    const firstUrl = /^\d/.test(rawId) ? iconUrl(rawId) : monImgUrl_(rawId);
+    const fallbackId = /^\d/.test(rawId) ? (fallbackIconIdForMissingVariant(rawId) || "") : "";
+
     return `
-      <div class="battle-mon" title="${escapeHtml(safeTitle)}">
-        <img src="${escapeHtml(url)}" alt="${escapeHtml(safeTitle)}"
-             onerror="this.style.display='none'; this.parentElement.innerHTML='<span>?</span>'">
+      <div class="battle-mon" title="${escapeHtml(title)}">
+        <span class="poke-icon-wrap" data-tip="${escapeHtml(title)}" title="${escapeHtml(title)}">
+          <img class="battle-mon-img"
+               src="${firstUrl}"
+               alt="${escapeHtml(title)}"
+               loading="lazy"
+               data-optid="${escapeHtml(rawId)}"
+               data-fallbackid="${escapeHtml(fallbackId)}"
+               data-shadow="${isShadow ? "1" : "0"}"
+               onload="onPokeIconLoad_(this)"
+               onerror="onPokeIconError_(this)">
+        </span>
       </div>
     `;
   }).join("");
@@ -2072,6 +2105,96 @@ window.addEventListener("click", (e) => {
   }
 });
 
+
+window.__BRACKET_FIT = true;        // true = ajusta (escala), false = scroll libre
+window.__BRACKET_SHOW_ALL = false;  // true = muestra rondas antiguas
+
+
+/* ===============================
+   ✅ BRACKET MODAL (pantalla completa)
+   =============================== */
+function isBracketModalOpen_(){
+  const m = $("bracketModal");
+  return !!m && m.style.display && m.style.display !== "none";
+}
+
+function openBracketModal_(){
+  const modal = $("bracketModal");
+  if(!modal) return;
+
+  modal.style.display = "flex";
+  bloquearScrollBody();
+
+  const wrap = $("bracket");
+  const t = window.__BRACKET_LATEST_T || (TORNEOS.find(x => x.torneoId === SELECTED_ID) || TORNEOS[0]);
+
+  if(!wrap){
+    return;
+  }
+  if(!t){
+    wrap.innerHTML = `<div class="rule-empty" style="padding:14px; text-align:center;">Bracket no disponible.</div>`;
+    return;
+  }
+
+  // ✅ Render cuando YA está visible (si no, las líneas salen en 0px)
+  requestAnimationFrame(() => {
+    renderBracket(t);
+
+    // segundo “redraw” por si termina de acomodar tamaños
+    setTimeout(() => {
+      try{
+       setTimeout(() => {
+  fitBracketToScreen();
+  if(window.__BRACKET_DRAW_FN) window.__BRACKET_DRAW_FN();
+}, 180);
+
+
+      }catch(_){}
+    }, 180);
+  });
+}
+
+function closeBracketModal_(){
+  const modal = $("bracketModal");
+  if(modal) modal.style.display = "none";
+
+  // limpia para forzar rebuild al abrir (evita líneas desfasadas)
+  const wrap = $("bracket");
+  if(wrap) wrap.innerHTML = "";
+
+  restaurarScrollBody();
+}
+
+function wireBracketModalOnce_(){
+  const btn = $("openBracketBtn");
+  const modal = $("bracketModal");
+  const close = $("closeBracketBtn");
+  if(!btn || !modal || !close) return;
+  if(btn.dataset.bound === "1") return;
+  btn.dataset.bound = "1";
+
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    openBracketModal_();
+  });
+
+  close.addEventListener("click", (e) => {
+    e.preventDefault();
+    closeBracketModal_();
+  });
+
+  window.addEventListener("click", (e) => {
+    if(e.target === modal) closeBracketModal_();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if(e.key === "Escape" && isBracketModalOpen_()) closeBracketModal_();
+  });
+}
+
+wireBracketModalOnce_();
+
+
 const ICON_BASE = "https://raw.githubusercontent.com/nileplumb/PkmnShuffleMap/master/UICONS/pokemon/";
 function iconUrl(iconId){
   return `${ICON_BASE}${iconId}.png`;
@@ -2089,6 +2212,72 @@ function fallbackIconIdForMissingVariant(iconId){
   if(m2) return m2[1];
   const m3 = s.match(/^0*(\d{1,4})/);
   return m3 ? String(Number(m3[1])) : "";
+}
+
+
+function smartIconTitle_(iconId){
+  const raw = normalizeIconId_(iconId);
+  if(!raw) return "";
+
+  // Si existe meta, úsalo. Si no, intenta con el base.
+  let label = iconLabelFor(raw);
+  const fb = fallbackIconIdForMissingVariant(raw);
+
+  if((!label || label === raw) && fb){
+    const baseLabel = iconLabelFor(fb);
+    if(baseLabel && baseLabel !== fb) label = baseLabel;
+  }
+
+  // Solo agrega “- Shadow” cuando corresponde
+  if(isShadowIconId_(raw) && label && !/shadow/i.test(label)){
+    label = `${label} - Shadow`;
+  }
+
+  return label || raw;
+}
+
+function onPokeIconLoad_(img){
+  // Si NO hubo fallback, nos aseguramos que no se muestre el svg
+  const wrap = img?.closest?.(".poke-icon-wrap");
+  if(!wrap) return;
+
+  const isShadow = img.dataset.shadow === "1";
+  const didFallback = img.dataset.didFallback === "1";
+
+  if(isShadow && !didFallback){
+    wrap.classList.remove("shadow-fallback");
+  }
+}
+
+function onPokeIconError_(img){
+  const wrap = img?.closest?.(".poke-icon-wrap");
+  const optId = img?.dataset?.optid || "";
+  const fb = img?.dataset?.fallbackid || "";
+  const isShadow = img?.dataset?.shadow === "1";
+
+  // Evita loops
+  if(img.dataset.didFallback === "1"){
+    img.removeAttribute("src");
+    img.style.visibility = "hidden";
+    return;
+  }
+
+  // Si hay fallback, lo usamos
+  if(fb && fb !== optId){
+    img.dataset.didFallback = "1";
+
+    // ✅ SOLO si es shadow y el icono shadow falló, recién activamos el svg
+    if(isShadow && wrap){
+      wrap.classList.add("shadow-fallback");
+    }
+
+    img.src = iconUrl(fb);
+    return;
+  }
+
+  // Si no hay fallback, ocultamos
+  img.removeAttribute("src");
+  img.style.visibility = "hidden";
 }
 
 
@@ -2231,16 +2420,101 @@ function bracketComputeCurrent_(t, matches){
   return pending[0] || null;
 }
 
+function bracketRealSlotsCount_(m){
+  const aId = getMatchPlayerId_(m,"A");
+  const bId = getMatchPlayerId_(m,"B");
+  const aName = getMatchPlayerName_(m,"A");
+  const bName = getMatchPlayerName_(m,"B");
+
+  const isReal = (id, name) => {
+    if(String(id||"").trim()) return true;
+    const n = String(name||"").trim();
+    if(!n) return false;
+    return n.toUpperCase() !== "TBD";
+  };
+
+  return (isReal(aId, aName) ? 1 : 0) + (isReal(bId, bName) ? 1 : 0);
+}
+
+function bracketScoreSplit_(left, right){
+  const rl = left.reduce((s,m)=>s + bracketRealSlotsCount_(m), 0);
+  const rr = right.reduce((s,m)=>s + bracketRealSlotsCount_(m), 0);
+
+  const lenPenalty  = Math.abs(left.length - right.length) * 2;
+  const realPenalty = Math.abs(rl - rr) * 6;
+
+  // castiga lado vacío
+  const emptyPenalty = (right.length === 0 || left.length === 0) ? 999 : 0;
+
+  return (rl + rr) - lenPenalty - realPenalty - emptyPenalty;
+}
+
+function bracketSplitRoundToSides_(list){
+  const L = Array.isArray(list) ? list : [];
+  if(L.length <= 1) return { left: L.slice(), right: [] };
+
+  // A) mitad/mitad (actual)
+  const half = Math.ceil(L.length / 2);
+  const splitA = { left: L.slice(0, half), right: L.slice(half) };
+
+  // B) intercalado por índice (ideal si viene izq/der/izq/der...)
+  const splitB = {
+    left: L.filter((_,i)=> i % 2 === 0),
+    right: L.filter((_,i)=> i % 2 === 1),
+  };
+
+  // C) por paridad de Slot (si existe)
+  const slots = L.map(m => Number(m?.Slot ?? m?.slot)).filter(Number.isFinite);
+  let splitC = null;
+  if(slots.length === L.length){
+    splitC = {
+      left: L.filter(m => (Number(m?.Slot ?? m?.slot) % 2) === 1),
+      right: L.filter(m => (Number(m?.Slot ?? m?.slot) % 2) === 0),
+    };
+    if(splitC.left.length === 0 || splitC.right.length === 0) splitC = null;
+  }
+
+  const cand = [splitA, splitB, ...(splitC ? [splitC] : [])];
+  let best = cand[0];
+  let bestScore = bracketScoreSplit_(best.left, best.right);
+
+  for(const s of cand.slice(1)){
+    const sc = bracketScoreSplit_(s.left, s.right);
+    if(sc > bestScore){
+      best = s;
+      bestScore = sc;
+    }
+  }
+  return best;
+}
+
+
 function bracketComputeVisibility_(t, matches, maxRound){
   const current = bracketComputeCurrent_(t, matches);
   const activeRound = current ? Number(current?.Round ?? current?.round ?? 1) : maxRound;
-  const minRoundToShow = Math.max(1, activeRound - 1);
+
+  // ✅ "Cuartos" = maxRound - 2 (porque: Final=maxRound, Semi=maxRound-1, Cuartos=maxRound-2)
+  const quartersRound = Math.max(1, (Number(maxRound) || 1) - 2);
+
+  // ✅ Regla:
+  // - Antes de cuartos: ocultar todo lo que ya pasó => minRoundToShow = activeRound
+  // - Desde cuartos en adelante: congelar en cuartos => minRoundToShow = quartersRound
+  let minRoundToShow = (activeRound >= quartersRound)
+  ? quartersRound
+  : Math.max(1, activeRound);
+
+// ✅ override manual para ver todo
+if(window.__BRACKET_SHOW_ALL) minRoundToShow = 1;
+
+
   const visibleSideRounds = [];
   for(let r=1; r<maxRound; r++){
     if(r >= minRoundToShow) visibleSideRounds.push(r);
   }
+
   return { activeRound, minRoundToShow, visibleSideRounds, current };
 }
+
 
 function bracketApplyVisibilityToDom_(minRoundToShow, maxRound){
   const scroll = document.getElementById("bracketScroll");
@@ -2254,6 +2528,8 @@ function bracketApplyVisibilityToDom_(minRoundToShow, maxRound){
     if(r >= minRoundToShow) visibleSideRounds.push(r);
   }
   scroll.dataset.visibleRounds = JSON.stringify(visibleSideRounds);
+  if(window.__BRACKET_DRAW_FN) window.__BRACKET_DRAW_FN();
+
 }
 
 function bracketPatchNodes_(t, matches, currentMatch){
@@ -2342,19 +2618,31 @@ function drawBracketLinesStatic_(){
       y: ((r.top - rootTop) / scale) + sy + ((r.height / 2) / scale)
     };
   };
-  const path = (p1, p2) => {
-    const dx = Math.max(40, Math.abs(p2.x - p1.x) * 0.45);
-    const c1 = { x: p1.x + (p2.x > p1.x ? dx : -dx), y: p1.y };
-    const c2 = { x: p2.x - (p2.x > p1.x ? dx : -dx), y: p2.y };
-    return `M ${p1.x} ${p1.y} C ${c1.x} ${c1.y}, ${c2.x} ${c2.y}, ${p2.x} ${p2.y}`;
-  };
+const path = (p1, p2) => {
+  const dx = (p2.x - p1.x);
+  const dist = Math.abs(dx);
+
+  if(dist < 8){
+    return `M ${p1.x} ${p1.y} L ${p2.x} ${p2.y}`;
+  }
+
+  const midX = p1.x + dx * 0.5;
+
+  // ✅ horizontal -> vertical -> horizontal
+  return `M ${p1.x} ${p1.y}
+          L ${midX} ${p1.y}
+          L ${midX} ${p2.y}
+          L ${p2.x} ${p2.y}`;
+};
+
+
   const add = (d) => {
     const p = document.createElementNS("http://www.w3.org/2000/svg","path");
     p.setAttribute("d", d);
     p.setAttribute("fill","none");
     p.setAttribute("stroke","rgba(255,220,140,0.45)");
     p.setAttribute("stroke-width","2");
-    p.setAttribute("stroke-linecap","round");
+    p.setAttribute("stroke-linecap","round","stroke-linejoin");
     svg.appendChild(p);
   };
   let visibleRounds = [];
@@ -2511,7 +2799,7 @@ async function _loadAllInner() {
         t.hasMainStage ?? t.HasMainStage ?? t.mainStage ?? t.MainStage ?? ""
       ),
       leagueRulesJson: c.leagueRulesJson || t.leagueRulesJson || "",
-      bestOf: c.bestOf || "",
+      bestOf: c.boPhasesJson || c.bestOf || t.boPhasesJson || t.bestOf || "",
       prizesJson: c.prizesJson || c.prizes || t.prizesJson || t.prizes || "",
       open: isTrue(c.inscriptionsOpen ?? t.inscriptionsOpen),
       generated: isTrue(c.generated ?? t.generated),
@@ -2642,6 +2930,128 @@ function parseJsonArray_(raw){
     return [];
   }
 }
+
+function parseBestOfPlan_(raw){
+  const empty = { groups: 0, bracket: 0, final: 0 };
+
+  if (raw == null) return { ...empty };
+
+  if (typeof raw === "number") {
+    const n = Number(raw) || 0;
+    return { ...empty, bracket: n };
+  }
+
+  if (typeof raw === "object") {
+    const o = raw || {};
+    return {
+      groups: Number(o.groups || 0) || 0,
+      bracket: Number(o.bracket ?? o.bestOf ?? 0) || 0,
+      final: Number(o.final || 0) || 0
+    };
+  }
+
+  const s = String(raw).trim();
+  if (!s) return { ...empty };
+
+  // "3"
+  if (/^\d+$/.test(s)) return { ...empty, bracket: Number(s) || 0 };
+
+  // '{"version":1,"groups":1,"bracket":3,"final":5}'
+  try {
+    const v = JSON.parse(s);
+    if (typeof v === "number") return { ...empty, bracket: Number(v) || 0 };
+    if (v && typeof v === "object") {
+      return {
+        groups: Number(v.groups || 0) || 0,
+        bracket: Number(v.bracket ?? v.bestOf ?? 0) || 0,
+        final: Number(v.final || 0) || 0
+      };
+    }
+  } catch (_) {}
+
+  return { ...empty };
+}
+
+function buildBestOfPlanExplanation_(t, plan){
+  // fallback normal
+  if (!plan || (!plan.bracket && !plan.final)) return buildBestOfExplanation(t);
+
+  const parts = [];
+
+  if (plan.bracket) {
+    const d = buildBestOfExplanation({ ...t, bestOf: plan.bracket });
+    if (d) parts.push(plan.final ? `BO${plan.bracket} (Bracket): ${d}` : d);
+  }
+
+  if (plan.final && plan.final !== plan.bracket) {
+    const d = buildBestOfExplanation({ ...t, bestOf: plan.final });
+    if (d) parts.push(`BO${plan.final} (Final / 3er puesto): ${d}`);
+  }
+
+  return parts.join("\n\n");
+}
+
+
+function parseBestOfPlan_(raw){
+  const empty = { groups: 0, bracket: 0, final: 0 };
+
+  if (raw == null) return { ...empty };
+
+  if (typeof raw === "number") {
+    const n = Number(raw) || 0;
+    return { ...empty, bracket: n };
+  }
+
+  if (typeof raw === "object") {
+    const o = raw || {};
+    return {
+      groups: Number(o.groups || 0) || 0,
+      bracket: Number(o.bracket ?? o.bestOf ?? 0) || 0,
+      final: Number(o.final || 0) || 0
+    };
+  }
+
+  const s = String(raw).trim();
+  if (!s) return { ...empty };
+
+  // "3"
+  if (/^\d+$/.test(s)) return { ...empty, bracket: Number(s) || 0 };
+
+  // '{"version":1,"groups":1,"bracket":3,"final":5}'
+  try {
+    const v = JSON.parse(s);
+    if (typeof v === "number") return { ...empty, bracket: Number(v) || 0 };
+    if (v && typeof v === "object") {
+      return {
+        groups: Number(v.groups || 0) || 0,
+        bracket: Number(v.bracket ?? v.bestOf ?? 0) || 0,
+        final: Number(v.final || 0) || 0
+      };
+    }
+  } catch (_) {}
+
+  return { ...empty };
+}
+
+function buildBestOfPlanExplanation_(t, plan){
+  // fallback normal
+  if (!plan || (!plan.bracket && !plan.final)) return buildBestOfExplanation(t);
+
+  const parts = [];
+
+  if (plan.bracket) {
+    const d = buildBestOfExplanation({ ...t, bestOf: plan.bracket });
+    if (d) parts.push(plan.final ? `BO${plan.bracket} (Bracket): ${d}` : d);
+  }
+
+  if (plan.final && plan.final !== plan.bracket) {
+    const d = buildBestOfExplanation({ ...t, bestOf: plan.final });
+    if (d) parts.push(`BO${plan.final} (Final / 3er puesto): ${d}`);
+  }
+
+  return parts.join("\n\n");
+}
+
 
 function modeNice_(raw){
   const s = String(raw || "").trim();
@@ -2799,25 +3209,36 @@ function setTournamentHeaderUI(t){
     }
   }
 
-  const fmtNice = formatNice(t?.format);
-  const boNum = Number(t?.bestOf || 0);
-  const boLabel = boNum ? `BO${boNum}` : "-";
-  const boDesc = buildBestOfExplanation(t);
-  const fmtEl = $("torneoFormatText");
-  if(fmtEl) fmtEl.textContent = fmtNice || "-";
-  const boEl = $("torneoBoText");
-  if(boEl) boEl.textContent = boLabel;
-  const wrap = document.getElementById("boHelpWrap");
-  const tip  = document.getElementById("boTooltip");
-  if(wrap && tip){
-    if(boDesc){
-      wrap.style.display = "inline-flex";
-      tip.textContent = boDesc;
-    }else{
-      wrap.style.display = "none";
-      tip.textContent = "";
-    }
+const fmtNice = formatNice(t?.format);
+
+// 🟣 NEW: soporta bestOf = 3  y  bestOf = {"bracket":3,"final":5}
+const planBO = parseBestOfPlan_(t?.bestOf);
+
+const labels = [];
+if (planBO.bracket) labels.push(`BO${planBO.bracket}`);
+if (planBO.final && planBO.final !== planBO.bracket) labels.push(`BO${planBO.final}`);
+
+const boLabel = labels.length ? labels.join(" — ") : "-";
+const boDesc  = buildBestOfPlanExplanation_(t, planBO);
+
+
+const fmtEl = $("torneoFormatText");
+if(fmtEl) fmtEl.textContent = fmtNice || "-";
+
+const boEl = $("torneoBoText");
+if(boEl) boEl.textContent = boLabel;
+
+const wrap = document.getElementById("boHelpWrap");
+const tip  = document.getElementById("boTooltip");
+if(wrap && tip){
+  if(boDesc){
+    wrap.style.display = "inline-flex";
+    tip.textContent = boDesc;
+  }else{
+    wrap.style.display = "none";
+    tip.textContent = "";
   }
+}
 
   const modeRow = $("metaModeRow");
   const modeTextEl = $("torneoModeText");
@@ -3059,8 +3480,8 @@ function renderCatChips(cats){
   if(banFast.length)    sections.push(sectionHtml("Ataques rápidos prohibidos", renderMoveChips(banFast), "ban"));
   if(bannedTypes.length)  sections.push(sectionHtml("Tipos prohibidos",  renderTypeChips(bannedTypes), "ban"));
   if(allowedTypes.length) sections.push(sectionHtml("Tipos permitidos",  renderTypeChips(allowedTypes), "allow"));
-  if(bannedCats.length)  sections.push(sectionHtml("Tipo de Pokemons Prohibidos", renderCatChips(bannedCats), "ban"));
-  if(allowedCats.length) sections.push(sectionHtml("Tipo de Pokemons Permitidos", renderCatChips(allowedCats), "allow"));
+  if(bannedCats.length)  sections.push(sectionHtml("Tipo de Pokemon Prohibidos", renderCatChips(bannedCats), "ban"));
+  if(allowedCats.length) sections.push(sectionHtml("Tipo de Pokemon Permitidos", renderCatChips(allowedCats), "allow"));
 
   if(!sections.length && !isMultiLeague){
     box.style.display = "none";
@@ -3181,63 +3602,90 @@ function renderSelected(){
   renderRulesCard(t);
   wireTypeIconFallbacks();
 
+// --- ACTIVAR FILA DE BOTONES (Bases + WhatsApp) ---
+  const row = document.getElementById("extraButtonsRow");
+  if (row) {
+      row.style.display = "flex"; // Usamos flex para que queden lado a lado
+  }
+
   const battleBox = $("battlePhase");
   if(battleBox) battleBox.style.display = "none";
+
   const groupsSection = $("groupsSection");
   const groupsGrid = $("groupsGrid");
   if(groupsSection) groupsSection.style.display = "none";
   if(groupsGrid) groupsGrid.innerHTML = "";
 
-  const estado = t.open ? "Inscripciones Abiertas" : "Inscripciones Cerradas";
   $("torneoInfo").textContent = "";
   $("torneoInfo").style.display = "none";
 
+  const bracketSection = $("bracketSection");
+
+  const hideBracket_ = () => {
+    if (bracketSection) bracketSection.style.display = "none";
+    window.__BRACKET_LATEST_T = null;
+
+    const wrap = $("bracket");
+    if(wrap) wrap.innerHTML = "";
+
+    // si el modal estaba abierto y ya no toca mostrar bracket, lo cerramos
+    if(isBracketModalOpen_()) closeBracketModal_();
+  };
+
+  const showBracket_ = () => {
+    if (bracketSection) bracketSection.style.display = "block";
+
+    // ✅ Guardamos el torneo actual para que el modal lo renderice al click
+    window.__BRACKET_LATEST_T = t;
+
+    // ✅ Si el modal está abierto, entonces sí se actualiza “en vivo”
+    if(isBracketModalOpen_()) renderBracket(t);
+  };
+
+  // Inscripciones abiertas
   if (t.open) {
-    $("openModalBtn").style.display = ""; 
+    $("openModalBtn").style.display = "";
     $("eventSummary").style.display = "none";
     $("eventSummary").innerHTML = "";
     if(battleBox) battleBox.style.display = "none";
-    const bracketSection = $("bracketSection");
-    if (bracketSection) bracketSection.style.display = "none";
-    $("bracket").innerHTML = "";
+    hideBracket_();
     return;
   }
 
   $("openModalBtn").style.display = "none";
 
+  // Preparación
   if(isPrepActive(t)){
     if(battleBox) battleBox.style.display = "none";
     $("eventSummary").style.display = "none";
     $("eventSummary").innerHTML = "";
     renderPrepParticipants(t);
-    const bracketSection = $("bracketSection");
-    if (bracketSection) bracketSection.style.display = "none";
-    $("bracket").innerHTML = "";
+    hideBracket_();
     return;
   }
 
+  // Fase de batallas
   if(isBattlePhase(t)){
     $("eventSummary").style.display = "none";
     $("eventSummary").innerHTML = "";
     renderBattlePhase(t);
+
     const isGroups = isGroupFormat_(t);
     if(isGroups){
       if(typeof renderGroupsSection === "function") renderGroupsSection(t);
-      const bracketSection = $("bracketSection");
-      if (bracketSection) bracketSection.style.display = "none";
-      $("bracket").innerHTML = "";
+      hideBracket_();
       return;
     }
-    const groupsSection = $("groupsSection");
-    const groupsGrid = $("groupsGrid");
+
     if(groupsSection) groupsSection.style.display = "none";
     if(groupsGrid) groupsGrid.innerHTML = "";
-    const bracketSection = $("bracketSection");
-    if (bracketSection) bracketSection.style.display = "block";
-    renderBracket(t);
+
+    showBracket_();
     return;
+    
   }
 
+  // Resumen (fuera de battlePhase)
   if(battleBox) battleBox.style.display = "none";
   $("eventSummary").style.display = "block";
   $("eventSummary").innerHTML = `
@@ -3248,29 +3696,31 @@ function renderSelected(){
     </div>
   `;
 
- const bracketSection = $("bracketSection");
-const _ms = sortMatches_(Array.isArray(t?.matches) ? t.matches : []);
-const _maxRound = _ms.reduce((acc, mm) => {
-  const rr = Number(mm?.Round ?? mm?.round ?? 1) || 1;
-  return Math.max(acc, rr);
-}, 1);
-const _real = _ms.filter(mm => getMatchPlayerId_(mm,"A") && getMatchPlayerId_(mm,"B"));
-const _pending = _real.filter(mm => !isMatchClosed_(t, mm));
-const _curId = String(t?.currentMatchId ?? t?.currentMatchID ?? "").trim();
-const _cur = (_curId ? _pending.find(mm => getMatchId_(mm) === _curId) : null) || _pending[0] || _real[_real.length - 1] || null;
-const _curRound = Number(_cur?.Round ?? _cur?.round ?? 1) || 1;
-const _quartersRound = Math.max(1, _maxRound - 2);
-const _hideBracket = isPresencialMode_(t) && getSimulCapacity_(t) >= 2 && (_curRound < _quartersRound);
+  // Ocultar bracket en presencial + muchas mesas hasta cuartos (tu lógica actual)
+  const _ms = sortMatches_(Array.isArray(t?.matches) ? t.matches : []);
+  const _maxRound = _ms.reduce((acc, mm) => {
+    const rr = Number(mm?.Round ?? mm?.round ?? 1) || 1;
+    return Math.max(acc, rr);
+  }, 1);
 
-if(_hideBracket){
-  if (bracketSection) bracketSection.style.display = "none";
-  $("bracket").innerHTML = "";
+  const _real = _ms.filter(mm => getMatchPlayerId_(mm,"A") && getMatchPlayerId_(mm,"B"));
+  const _pending = _real.filter(mm => !isMatchClosed_(t, mm));
+  const _curId = String(t?.currentMatchId ?? t?.currentMatchID ?? "").trim();
+  const _cur = (_curId ? _pending.find(mm => getMatchId_(mm) === _curId) : null) || _pending[0] || _real[_real.length - 1] || null;
+
+  const _curRound = Number(_cur?.Round ?? _cur?.round ?? 1) || 1;
+  const _quartersRound = Math.max(1, _maxRound - 2);
+  const _hideBracket = isPresencialMode_(t) && getSimulCapacity_(t) >= 2 && (_curRound < _quartersRound);
+
+  if(_hideBracket){
+    hideBracket_();
+    return;
+  }
+
+  showBracket_();
   return;
 }
-if (bracketSection) bracketSection.style.display = "block";
-renderBracket(t);
-return;
-}
+
 
 function renderBattlePhase(t){
   const box = $("battlePhase");
@@ -3427,7 +3877,8 @@ function renderBattleLiveTableCard_(t, m, maxRound){
   const title = getMatchLocationText_(m) || "Mesa";
   const gid = getMatchGroupId_(m);
   const chip = gid ? `<span class="battle-group-chip">GRUPO <b>${escapeHtml(gid)}</b></span>` : "";
-  const metaText = `${roundLabel(r, t?.maxRound || maxRound || r)} · ${t?.bestOf ? `BO${t.bestOf}` : "BO-"}`;
+ const smartBo = getSmartBoLabel_(t, m, maxRound);
+  const metaText = `${roundLabel(r, maxRound)} · ${smartBo}`;
   const meta = `${chip}<span class="battle-meta-text">${escapeHtml(metaText)}</span>`;
   return `
     <div class="battle-card battle-card--next battle-card--live">
@@ -3467,7 +3918,8 @@ function renderBattleQueueCard_(t, m, maxRound){
   const r = Number(m?.Round ?? m?.round ?? 1) || 1;
   const gid = getMatchGroupId_(m);
   const chip = gid ? `<span class="battle-group-chip">GRUPO <b>${escapeHtml(gid)}</b></span>` : "";
-  const metaText = `${roundLabel(r, t?.maxRound || maxRound || r)} · ${t?.bestOf ? `BO${t.bestOf}` : "BO-"}`;
+  const smartBo = getSmartBoLabel_(t, m, maxRound);
+  const metaText = `${roundLabel(r, maxRound)} · ${smartBo}`;
   const mesaChip = isPresencialMode_(t) ? renderMesaChip_(m) : "";
   const meta = `${mesaChip}${chip}<span class="battle-meta-text">${escapeHtml(metaText)}</span>`;
   return `
@@ -3519,8 +3971,9 @@ function renderBattleNowCard(t, m){
   const chip = gid
     ? `<span class="battle-group-chip">GRUPO <b>${escapeHtml(gid)}</b></span>`
     : "";
-  const metaText = `${roundLabel(r, t?.maxRound || r)} · ${t?.bestOf ? `BO${t.bestOf}` : "BO-"}`;
-  const mesaChip = isPresencialMode_(t) ? renderMesaChip_(m) : "";
+const smartBo = getSmartBoLabel_(t, m, t?.maxRound || maxRound || r);
+  const metaText = `${roundLabel(r, t?.maxRound || r)} · ${smartBo}`;
+    const mesaChip = isPresencialMode_(t) ? renderMesaChip_(m) : "";
   const meta = `${mesaChip}${chip}<span class="battle-meta-text">${escapeHtml(metaText)}</span>`;
   return `
     <div class="battle-card battle-card--now">
@@ -3567,7 +4020,8 @@ function renderBattleNextCard(t, m, idx){
   const chip = gid
     ? `<span class="battle-group-chip">GRUPO <b>${escapeHtml(gid)}</b></span>`
     : "";
-  const metaText = `${roundLabel(r, t?.maxRound || r)} · ${t?.bestOf ? `BO${t.bestOf}` : "BO-"}`;
+ const smartBo = getSmartBoLabel_(t, m, t?.maxRound || r);
+  const metaText = `${roundLabel(r, t?.maxRound || r)} · ${smartBo}`;
   const mesaChip = isPresencialMode_(t) ? renderMesaChip_(m) : "";
   const meta = `${mesaChip}${chip}<span class="battle-meta-text">${escapeHtml(metaText)}</span>`;
   return `
@@ -3918,18 +4372,38 @@ function teamTokenToIconId_(tok){
   return first.split(/\s+/)[0].trim().toLowerCase();
 }
 
-function renderPrepPokeIcon_(tok){
-  const id = teamTokenToIconId_(tok);
-  if(!id) return `<div class="prep-poke prep-poke--empty">?</div>`;
-  const title = iconLabelFor(id) || id;
-  const src = iconUrl(id);
+function renderPrepPokeIcon_(iconId) {
+  const rawId = normalizeIconId_(iconId);
+  if(!rawId) return `<div class="prep-poke"><span class="prep-poke-q">?</span></div>`;
+
+  const title = smartIconTitle_(rawId);
+  const isShadow = isShadowIconId_(rawId);
+
+  // ✅ Primero intenta el icono exacto (ej: 211_a1)
+  const firstUrl = /^\d/.test(rawId) ? iconUrl(rawId) : monImgUrl_(rawId);
+
+  // ✅ Si falla, cae al base (ej: 211 o 019_61)
+  const fallbackId = /^\d/.test(rawId) ? (fallbackIconIdForMissingVariant(rawId) || "") : "";
+
   return `
-    <div class="prep-poke" title="${escapeHtml(title)}">
-      <img src="${escapeHtml(src)}" alt="${escapeHtml(title)}"
-           onerror="this.onerror=null;this.style.display='none';this.parentElement.classList.add('prep-poke--empty');this.parentElement.innerHTML='?';">
+    <div class="prep-poke">
+      <span class="poke-icon-wrap" data-tip="${escapeHtml(title)}" title="${escapeHtml(title)}">
+        <img
+          class="prep-poke-img"
+          src="${firstUrl}"
+          alt="${escapeHtml(title)}"
+          loading="lazy"
+          data-optid="${escapeHtml(rawId)}"
+          data-fallbackid="${escapeHtml(fallbackId)}"
+          data-shadow="${isShadow ? "1" : "0"}"
+          onload="onPokeIconLoad_(this)"
+          onerror="onPokeIconError_(this)"
+        />
+      </span>
     </div>
   `;
 }
+
 
 function renderPrepParticipantCard(p, oppName, showVs, groupId){
   const name = p.NombrePokemonGO || p.Nick || p.Nombre || "Jugador";
@@ -4141,12 +4615,13 @@ function renderBracket(t){
     const sideRounds = rounds.filter(r => r < maxRound);
     const leftCols = [];
     const rightCols = [];
-    sideRounds.forEach(r=>{
-      const list = sortMatches_(byRound[r] || []);
-      const half = Math.ceil(list.length / 2);
-      leftCols.push({ r, list: list.slice(0, half) });
-      rightCols.push({ r, list: list.slice(half) });
-    });
+ sideRounds.forEach(r=>{
+  const list = sortMatches_(byRound[r] || []);
+  const sp = bracketSplitRoundToSides_(list);
+  leftCols.push({ r, list: sp.left });
+  rightCols.push({ r, list: sp.right });
+});
+
     const finalMatch = (byRound[maxRound] || [])[0] || null;
     const matchHTML = (m, side, r, i) => {
       const aId = getMatchPlayerId_(m, "A");
@@ -4414,34 +4889,82 @@ function fitBracketToScreen(){
   if(!scroll) return;
   const layout = scroll.querySelector(".bracket-layout");
   if(!layout) return;
+
   if(lastScrollEl !== scroll){
     lastScrollEl = scroll;
     lastKnownScale = -1;
   }
   if(document.hidden) return;
-  const available = scroll.clientWidth;
-  const full = layout.scrollWidth || 1;
-  if(available <= 0 || full <= 0) return;
+
+  const containerW = scroll.parentElement ? scroll.parentElement.clientWidth : scroll.clientWidth;
+  const availableW = containerW;
+  const fullW = layout.scrollWidth || 1;
+  if(availableW <= 0 || fullW <= 0) return;
+
   const MIN_SCALE = 0.55;
   const MAX_SCALE = 1;
-  const base = available / full;
-  const scale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, base));
+
+  const fit = (window.__BRACKET_FIT !== false);
+
+  // ✅ si FIT está activo -> escala para que quepa
+  // ✅ si FIT está apagado -> scale=1 y habrá scroll horizontal real si es ancho
+  let scale = 1;
+  if(fit){
+    const base = availableW / fullW;
+    scale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, base));
+  }else{
+    scale = 1;
+  }
+
   const currentCss = parseFloat(getComputedStyle(scroll).getPropertyValue("--bracketScale")) || 1;
   if(Math.abs(scale - currentCss) >= 0.005 || Math.abs(scale - lastKnownScale) >= 0.005){
     scroll.style.setProperty("--bracketScale", scale.toFixed(4));
     lastKnownScale = scale;
   }
+
   const rawH = layout.scrollHeight || layout.offsetHeight || 1;
-  scroll.style.height = Math.ceil(rawH * scale) + "px";
-  const scaledWidth = full * scale;
-  if(scaledWidth > available + 1){
-    scroll.style.overflowX = "auto";
-    layout.style.marginLeft = "0";
+  const desiredH = Math.ceil(rawH * scale);
+
+  const parent = scroll.parentElement;
+  const parentH = parent ? (parent.clientHeight || 0) : 0;
+  const maxH = parentH > 0 ? parentH : Math.floor(window.innerHeight * 0.78);
+  const finalH = Math.max(220, Math.min(desiredH, maxH));
+
+  scroll.style.height = finalH + "px";
+  scroll.style.overflowY = (desiredH > finalH + 2) ? "auto" : "hidden";
+
+  scroll.style.width = "100%";
+  scroll.style.margin = "0";
+  scroll.style.overflowX = "auto";
+
+  const scaledW = fullW * scale;
+
+  // Si cabe, centramos con padding (bonito). Si no, padding 0 para scroll real.
+  if(scaledW <= availableW - 2){
+    const pad = Math.max(0, Math.floor((availableW - scaledW) / 2));
+    scroll.style.paddingLeft = pad + "px";
+    scroll.style.paddingRight = pad + "px";
   }else{
-    scroll.style.overflowX = "hidden";
-    layout.style.marginLeft = ((available - scaledWidth) / 2) + "px";
+    scroll.style.paddingLeft = "0px";
+    scroll.style.paddingRight = "0px";
   }
 }
+
+
+// --- Función de ayuda para BO Inteligente ---
+function getSmartBoLabel_(t, m, maxRound) {
+  const plan = parseBestOfPlan_(m?.bestOf ?? m?.BestOf ?? t?.bestOf);
+  const r = Number(m?.Round ?? m?.round ?? 1);
+  
+  if (r === maxRound) {
+    return plan.final ? `BO${plan.final}` : (plan.bracket ? `BO${plan.bracket}` : "BO1");
+  }
+  if (r === 1 && plan.groups) {
+    return `BO${plan.groups}`;
+  }
+  return plan.bracket ? `BO${plan.bracket}` : "BO1";
+}
+
 
 function fitBracketToScreenDebounced(){
   clearTimeout(fitBracketTimer);
@@ -4457,4 +4980,40 @@ document.addEventListener("visibilitychange", () => {
       fitBracketToScreen();
     }, 200);
   }
+});
+
+/* --- FUNCIONALIDAD DEL MODAL DE BASES --- */
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById("modalBases");
+    const btnOpen = document.getElementById("btnBases");
+    const spanClose = document.querySelector(".modal-close");
+    const btnEntendido = document.getElementById("btnEntendido");
+
+    // Verificar que los elementos existen
+    if (modal && btnOpen) {
+        
+        // Abrir Modal
+        btnOpen.addEventListener('click', function(e) {
+            e.preventDefault(); // Evita saltos raros
+            modal.style.display = "block";
+            document.body.style.overflow = "hidden"; // Bloquea scroll de la web
+        });
+
+        // Función cerrar
+        function cerrarModal() {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto"; // Reactiva scroll
+        }
+
+        // Eventos para cerrar
+        if(spanClose) spanClose.addEventListener('click', cerrarModal);
+        if(btnEntendido) btnEntendido.addEventListener('click', cerrarModal);
+        
+        // Cerrar al dar clic fuera del cuadro
+        window.addEventListener('click', function(e) {
+            if (e.target == modal) {
+                cerrarModal();
+            }
+        });
+    }
 });
