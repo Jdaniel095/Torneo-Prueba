@@ -21,11 +21,11 @@
         <img src="contenedor.png" alt="Contenedor" class="contenedor-bg">
 
         <div class="contenedor-stack">
-          <img src="contenedor-top.png" alt="Top" class="contenedor-top">
+          <img src="contenedor-top.webp" alt="Top" class="contenedor-top">
 
           <main class="content-area" id="contenido">
             <div class="content-after-logo-spacer" aria-hidden="true"></div>
- <h1 class="titulo-principal" id="torneoTitle">TORNEO</h1>
+ <h1 class="titulo-principal" id="torneoTitle">Bienvenido a Pokecomas Go</h1>
 
                 <!-- Metadatos del torneo (liga, formato, fecha) -->
                 <div id="torneoMeta" class="torneo-meta" style="display:none;">
@@ -92,6 +92,17 @@
 
                 </div>
 
+
+<div id="extraButtonsRow" class="hero-buttons-row" style="display: none;">
+    <button id="btnBases" class="btn-mini btn-orange">
+        📜 Ver Bases
+    </button>
+
+    <a href="https://chat.whatsapp.com/DbmJcQzCoSG7emzIvRN32W" target="_blank" class="btn-mini btn-whatsapp">
+        <i class="fab fa-whatsapp"></i> Comunidad
+    </a>
+</div>
+
                 <!-- Botón de registro (si está abierto) -->
                 <button id="openModalBtn" class="open-modal-btn" style="display:none;">Registrarme al torneo</button>
 
@@ -111,7 +122,8 @@
 
 
                 <!-- Información del torneo -->
-                <p class="sub2" id="torneoInfo">Cargando torneo…</p>
+               <p class="sub2" id="torneoInfo" data-state="loading">Cargando torneo…</p>
+
 
                 <!-- Selector multi torneo -->
                 <div id="eventTabs" class="event-tabs" style="display:none;"></div>
@@ -182,11 +194,20 @@
                 <div id="eventSummary" class="event-summary"></div>
 
                 <!-- Bracket -->
-                <div id="bracketSection" style="margin-top:32px; display:none;">
-                    <h2 class="titulo-principal">BRACKET</h2>
-                    <!-- wrapper del bracket -->
-                    <div id="bracket" class="bracket-wrap"></div>
-                </div>
+                <div id="bracketSection" class="bracket-section" style="margin-top:32px; display:none;">
+  <div class="bracket-head-row">
+    <h2 class="titulo-principal" style="margin:0;">BRACKET</h2>
+
+    <button id="openBracketBtn" class="bracket-open-btn" type="button">
+      Ver Bracket
+    </button>
+  </div>
+
+  <div class="bracket-hint">
+    Se actualiza automáticamente mientras avanza el torneo.
+  </div>
+</div>
+
 
             </div>
           </main>
@@ -195,10 +216,10 @@
     </div>
 
     <footer class="page-footer">
-      <img src="contenedor-bottom.png" alt="Bottom" class="contenedor-bottom">
+      <img src="contenedor-bottom.webp" alt="Bottom" class="contenedor-bottom">
       
       <div class="footer-overlay">
-        <div class="social-icons">
+       <!--- <div class="social-icons">
           <a href="#" class="social-link" aria-label="Facebook">
             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
           </a>
@@ -216,10 +237,10 @@
           <a href="#">Privacidad</a>
           <span class="separator">•</span>
           <a href="#">Contacto</a>
-        </div>
+        </div> -->
 
         <p class="copyright">© 2026 PokeComas.com | Todos los derechos reservados</p>
-      </div>
+      </div>  
     </footer>
   </div>
 
@@ -329,6 +350,105 @@
                         <button id="btnRegister" class="send-all-btn">Enviar registro</button>
                     </div>
                 </div>
+
+                <!-- Modal Bracket (pantalla completa) -->
+<div id="bracketModal" class="modal-overlay bracket-modal-overlay" style="display:none;">
+  <div class="bracket-modal" role="dialog" aria-modal="true" aria-labelledby="bracketModalTitle">
+    <div class="bracket-modal-header">
+      <div id="bracketModalTitle" class="bracket-modal-title">BRACKET</div>
+
+      <button id="closeBracketBtn" class="close-modal close-bracket-btn" type="button" aria-label="Cerrar">
+        &times;
+      </button>
+    </div>
+
+    <div class="bracket-modal-body">
+      <!-- AQUÍ vive el bracket real -->
+      <div id="bracket" class="bracket-wrap"></div>
+    </div>
+  </div>
+</div>
+
+<div id="modalBases" class="modal-backdrop">
+    <div class="modal-window">
+        <span class="modal-close">&times;</span>
+        
+        <div class="modal-header">
+            <h2>📜 Bases Torneo Pokémon Go Comas</h2>
+        </div>
+
+        <div class="modal-scroll-content">
+            <div class="rule-section">
+                <h3>A. Formato de Batalla</h3>
+                <ul>
+                    <li><strong>Liga:</strong> Super Ball (Máximo 1,500 PC por Pokémon).</li>
+                    <li><strong>Estilo:</strong> 6 traídos, 3 elegidos. Cada jugador registra 6 Pokémon en su ficha de inscripción. Antes de cada batalla, los jugadores se muestran sus equipos de 6 y eligen solo 3 para combatir.</li>
+                    <li><strong>Estructura:</strong> Eliminación directa hasta llegar a octavos de final. A partir de octavos hasta semifinal al mejor de 3 combates (BO3). La gran final y el duelo para elegir al tercer puesto será al mejor de 5 (BO5).</li>
+                </ul>
+            </div>
+
+            <div class="rule-section">
+                <h3>B. Restricciones de Equipo</h3>
+                <ul>
+                    <li><strong>Especies únicas:</strong> No se puede repetir el mismo número de Pokédex en el equipo de 6 (ejemplo: no puedes llevar dos Stunfisk, aunque uno sea de Galar y el otro no).</li>
+                    <li><strong>Pokémon prohibidos:</strong> Los Pokémon de tipo "Mega".</li>
+                </ul>
+            </div>
+
+            <div class="rule-section">
+                <h3>C. Protocolo de Combate</h3>
+                <ul>
+                    <li><strong>Código de Amistad:</strong> Los jugadores deben agregarse mediante código QR antes de iniciar para poder desafiarse.</li>
+                    <li><strong>Inicio de la batalla:</strong> Se debe verificar que ambos jugadores están listos antes de dar la señal de "GO".</li>
+                    <li><strong>Pausa por error de red:</strong> Si un jugador sufre una caída de internet evidente al inicio (primeros 10 segundos o antes de usar un ataque cargado), se repite el combate con los mismos leads (Pokémon iniciales). Si es después, el juez decidirá según el estado de la partida.</li>
+                </ul>
+            </div>
+
+            <div class="rule-section">
+                <h3>D. Conducta</h3>
+                <ul>
+                    <li>🛑 Está prohibido ver la pantalla del oponente durante el combate.</li>
+                    <li>🛑 El uso de "autoclickers" o software externo conlleva la descalificación inmediata.</li>
+                    <li>🛑 <strong>Juego Limpio:</strong> Cualquier jugador que muestre señales evidentes de dejarse perder o no jugar con seriedad competitiva será descalificado.</li>
+                </ul>
+            </div>
+
+            <div class="rule-section">
+                <h3>E. Inscripción</h3>
+                <ul>
+                    <li><strong>Fase Digital (Pre-inscripción):</strong> Formulario presentado en la página <em>pokecomas.com/torneo</em>. Límite de participantes: 64 jugadores.</li>
+                    <li><strong>Fase de Confirmación (Check-in presencial):</strong> El día del evento: Si un jugador no hace el Check-in 30 minutos antes de empezar, su cupo se entrega a alguien de la "Lista de Espera" que esté presente.</li>
+                </ul>
+            </div>
+
+            <div class="rule-section premios-section">
+                <h3>F. Premios (Monedas) 🏆</h3>
+                <div class="premios-grid">
+                    <div class="premio-card gold">
+                        <span class="puesto">1er Puesto</span>
+                        <span class="monto">31,000</span>
+                        <span class="moneda">Monedas</span>
+                    </div>
+                    <div class="premio-card silver">
+                        <span class="puesto">2do Puesto</span>
+                        <span class="monto">21,100</span>
+                        <span class="moneda">Monedas</span>
+                    </div>
+                    <div class="premio-card bronze">
+                        <span class="puesto">3er Puesto</span>
+                        <span class="monto">15,500</span>
+                        <span class="moneda">Monedas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button id="btnEntendido" class="btn-confirm">Entendido, estoy listo</button>
+        </div>
+    </div>
+</div>
+
                  <!-- Toast de notificaciones -->
                 <div id="toast" class="toast"></div>
   <script src="torneo.js"></script>
