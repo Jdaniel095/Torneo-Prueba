@@ -4421,3 +4421,59 @@
 @media (min-width: 768px){
   .poke-icon-wrap{ --shadow-aura-pad: 8px; }
 }
+@media (max-width: 520px){
+  #torneoInfo{ font-size: 15px; }
+  #torneoInfo[data-state="loading"]{ padding: 12px 14px; gap: 10px; }
+  #torneoInfo[data-state="loading"]::before{ width: 16px; height: 16px; }
+}
+
+@media (max-height: 420px) and (orientation: landscape){
+  #torneoInfo{ margin-top: 10px; }
+}
+
+/* =========================================================
+   ✅ BRACKET - RESPONSIVE
+========================================================= */
+
+@media (max-width: 520px){
+  .bracket-modal-overlay{ padding: 8px; }
+  .bracket-modal{ border-radius: 18px; }
+  .bracket-modal-body{ padding: 8px; }
+
+  /* botón ocupa ancho completo */
+  #openBracketBtn{
+    width: 100%;
+  }
+
+  .round-col{ min-width: 220px; }
+  .match-node{ width: 220px; }
+  .bracket-center{ min-width: 240px; }
+
+  .bracket-layout{ padding: 12px; gap: 18px; }
+  .bracket-side{ gap: 14px; }
+}
+
+@media (max-width: 374px){
+  .round-col{ min-width: 200px; }
+  .match-node{ width: 200px; }
+  .player-name{ font-size: 0.88rem; }
+}
+
+/* iPhone SE / móviles horizontales (poco alto) */
+@media (max-height: 430px) and (orientation: landscape){
+  .bracket-modal-overlay{ padding: 6px; }
+  .bracket-modal-header{ padding: 8px 10px; }
+  .bracket-modal-body{ padding: 6px; }
+  .bracket-modal-header .close-modal{ width: 40px; height: 40px; border-radius: 12px; }
+}
+
+@media (max-width: 520px){
+  .bracket-modal{
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+  }
+  .bracket-modal-body{
+    padding: 8px;
+  }
+}
