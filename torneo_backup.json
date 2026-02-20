@@ -1,0 +1,587 @@
+{
+  "ok": true,
+  "exportVersion": 2,
+  "version": 8,
+  "generatedAt": "2026-02-20T18:58:44.409Z",
+  "torneo": {
+    "torneoId": "T20260219-173906",
+    "title": "Ya no se llama torneo pokemon 1500",
+    "format": "single",
+    "leaguePlan": "super1500",
+    "mode": "presencial",
+    "dateTime": "Mon Feb 09 2026 17:38:00 GMT-0500 (hora estándar de Perú)",
+    "bestOf": "3",
+    "boPhasesJson": "{\"version\":1,\"groups\":1,\"bracket\":3,\"final\":5}",
+    "suggestedSize": 16,
+    "rules": {
+      "bannedTypes": "",
+      "bannedCategories": "",
+      "bannedPokemon": "",
+      "allowedPokemon": "",
+      "bannedFastMoves": "",
+      "bannedChargedMoves": "",
+      "allowedTypes": "",
+      "allowedCategories": "",
+      "leagueRulesJson": ""
+    },
+    "inscriptionsOpen": false,
+    "generated": false,
+    "championId": "",
+    "runnerUpId": "",
+    "champion": null,
+    "runnerUp": null,
+    "league": "super1500",
+    "prepEndsAt": ""
+  },
+  "players": [
+    {
+      "numero": 1,
+      "playerId": "P-7cbaed17",
+      "nombre": "BRAYANRF16",
+      "nick": "BRAYANRF16",
+      "codigo": "495652857427",
+      "campfire": "456489789",
+      "team": [
+        "105",
+        "157",
+        "40",
+        "949",
+        "160",
+        "9"
+      ]
+    },
+    {
+      "numero": 2,
+      "playerId": "D-f1bbadd9",
+      "nombre": "Dummy 2",
+      "nick": "Dummy2",
+      "codigo": "999900000002",
+      "campfire": "",
+      "team": [
+        "105_a1",
+        "2",
+        "823",
+        "452_a1",
+        "160_a1",
+        "752"
+      ]
+    },
+    {
+      "numero": 3,
+      "playerId": "D-a9495845",
+      "nombre": "Dummy 3",
+      "nick": "Dummy3",
+      "codigo": "999900000003",
+      "campfire": "",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "numero": 4,
+      "playerId": "D-0f9e57f4",
+      "nombre": "Dummy 4",
+      "nick": "Dummy4",
+      "codigo": "999900000004",
+      "campfire": "",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "numero": 5,
+      "playerId": "D-f6668da5",
+      "nombre": "Dummy 5",
+      "nick": "Dummy5",
+      "codigo": "999900000005",
+      "campfire": "",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "numero": 6,
+      "playerId": "D-f1bcdbc7",
+      "nombre": "Dummy 6",
+      "nick": "Dummy6",
+      "codigo": "999900000006",
+      "campfire": "",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "numero": 7,
+      "playerId": "D-1080d2bd",
+      "nombre": "Dummy 7",
+      "nick": "Dummy7",
+      "codigo": "999900000007",
+      "campfire": "",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "numero": 8,
+      "playerId": "D-1a7385e4",
+      "nombre": "Dummy 8",
+      "nick": "Dummy8",
+      "codigo": "999900000008",
+      "campfire": "",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "numero": 9,
+      "playerId": "D-c31754ea",
+      "nombre": "Dummy 9",
+      "nick": "Dummy9",
+      "codigo": "999900000009",
+      "campfire": "",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "numero": 10,
+      "playerId": "D-fe68822d",
+      "nombre": "Dummy 10",
+      "nick": "Dummy10",
+      "codigo": "999900000010",
+      "campfire": "",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "numero": 11,
+      "playerId": "D-9cd289db",
+      "nombre": "Dummy 11",
+      "nick": "Dummy11",
+      "codigo": "999900000011",
+      "campfire": "",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "numero": 12,
+      "playerId": "D-8dfbe140",
+      "nombre": "Dummy 12",
+      "nick": "Dummy12",
+      "codigo": "999900000012",
+      "campfire": "",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "numero": 13,
+      "playerId": "D-18d1140f",
+      "nombre": "Dummy 13",
+      "nick": "Dummy13",
+      "codigo": "999900000013",
+      "campfire": "",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "numero": 14,
+      "playerId": "D-6d1b4d22",
+      "nombre": "Dummy 14",
+      "nick": "Dummy14",
+      "codigo": "999900000014",
+      "campfire": "",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "numero": 15,
+      "playerId": "D-3e0c2205",
+      "nombre": "Dummy 15",
+      "nick": "Dummy15",
+      "codigo": "999900000015",
+      "campfire": "",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    {
+      "numero": 16,
+      "playerId": "D-de0bd4c3",
+      "nombre": "Dummy 16",
+      "nick": "Dummy16",
+      "codigo": "999900000016",
+      "campfire": "",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    }
+  ],
+  "matches": [],
+  "groups": [],
+  "playoffs": [],
+  "standings": [
+    {
+      "rank": 0,
+      "playerId": "P-7cbaed17",
+      "name": "BRAYANRF16",
+      "team": [
+        "105",
+        "157",
+        "40",
+        "949",
+        "160",
+        "9"
+      ],
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "buchholz": 0
+    },
+    {
+      "rank": 0,
+      "playerId": "D-f1bbadd9",
+      "name": "Dummy2",
+      "team": [
+        "105_a1",
+        "2",
+        "823",
+        "452_a1",
+        "160_a1",
+        "752"
+      ],
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "buchholz": 0
+    },
+    {
+      "rank": 0,
+      "playerId": "D-a9495845",
+      "name": "Dummy3",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "buchholz": 0
+    },
+    {
+      "rank": 0,
+      "playerId": "D-0f9e57f4",
+      "name": "Dummy4",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "buchholz": 0
+    },
+    {
+      "rank": 0,
+      "playerId": "D-f6668da5",
+      "name": "Dummy5",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "buchholz": 0
+    },
+    {
+      "rank": 0,
+      "playerId": "D-f1bcdbc7",
+      "name": "Dummy6",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "buchholz": 0
+    },
+    {
+      "rank": 0,
+      "playerId": "D-1080d2bd",
+      "name": "Dummy7",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "buchholz": 0
+    },
+    {
+      "rank": 0,
+      "playerId": "D-1a7385e4",
+      "name": "Dummy8",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "buchholz": 0
+    },
+    {
+      "rank": 0,
+      "playerId": "D-c31754ea",
+      "name": "Dummy9",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "buchholz": 0
+    },
+    {
+      "rank": 0,
+      "playerId": "D-fe68822d",
+      "name": "Dummy10",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "buchholz": 0
+    },
+    {
+      "rank": 0,
+      "playerId": "D-9cd289db",
+      "name": "Dummy11",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "buchholz": 0
+    },
+    {
+      "rank": 0,
+      "playerId": "D-8dfbe140",
+      "name": "Dummy12",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "buchholz": 0
+    },
+    {
+      "rank": 0,
+      "playerId": "D-18d1140f",
+      "name": "Dummy13",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "buchholz": 0
+    },
+    {
+      "rank": 0,
+      "playerId": "D-6d1b4d22",
+      "name": "Dummy14",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "buchholz": 0
+    },
+    {
+      "rank": 0,
+      "playerId": "D-3e0c2205",
+      "name": "Dummy15",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "buchholz": 0
+    },
+    {
+      "rank": 0,
+      "playerId": "D-de0bd4c3",
+      "name": "Dummy16",
+      "team": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
+      "points": 0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 0,
+      "buchholz": 0
+    }
+  ]
+}
