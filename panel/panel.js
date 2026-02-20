@@ -1,4 +1,4 @@
-const API = "https://script.google.com/macros/s/AKfycbzEpIAkxL3tWHsl80XUp6DfHp3n8pspK7mG_JZtI5snfM8yU5wKkBVnBTTbe1BxNZXwJQ/exec";
+const API = "https://script.google.com/macros/s/AKfycbyCKV9peBewnrgGZDFnZWt6k3oUlRQ4TdHtHHquNHlj4QZ57V4vdwC8e3DhRenZQYB6zg/exec";
 const $ = (id) => document.getElementById(id);
 
 
@@ -9,6 +9,153 @@ let ADMIN_USER = "";   // ✅ compat por si quedó código viejo usando ADMIN_US
 let ADMIN_PIN = "";
 let SELECTED_TORNEO_ID = ""; // ✅ multi-eventos
 let SELECTED_TORNEO_OPEN = null; // ✅ guarda si el torneo seleccionado está abierto/cerrado
+
+// ======================================================
+// 🔎 MODLOG (DEBUG de modales / scroll lock)
+//  - Apagar: MODLOG.enabled = false
+// ======================================================
+window.MODLOG = window.MODLOG || (() => {
+  const api = {
+    enabled: true,
+    max: 250,
+    lines: [],
+    ui: null,
+    showUI: true, // pon false si solo quieres consola
+  };
+
+  const pad2 = (n) => String(n).padStart(2, "0");
+  const ts = () => {
+    const d = new Date();
+    return `${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())}.${String(d.getMilliseconds()).padStart(3,"0")}`;
+  };
+
+  function safeStr(v){
+    try{ return JSON.stringify(v); }catch{ return String(v); }
+  }
+
+  function getBodyState(){
+    const b = document.body;
+    const cs = b ? getComputedStyle(b) : null;
+    return {
+      className: b ? b.className : "",
+      overflow: cs ? cs.overflow : "",
+      scrollY: window.scrollY
+    };
+  }
+
+  function getOpenModals(){
+    const modals = Array.from(document.querySelectorAll(".modal"));
+    const out = modals.map((m, i) => {
+      const cs = getComputedStyle(m);
+      return {
+        id: m.id || `(modal_${i})`,
+        display: cs.display,
+        zIndex: cs.zIndex,
+        opacity: cs.opacity,
+        pointerEvents: cs.pointerEvents
+      };
+    });
+    return out.filter(x => x.display !== "none");
+  }
+
+  api.snap = () => ({ body: getBodyState(), openModals: getOpenModals() });
+
+  api._push = (kind, msg, data) => {
+    if(!api.enabled) return;
+    const lineObj = { t: ts(), kind, msg, data: data || null };
+    api.lines.push(lineObj);
+    if(api.lines.length > api.max) api.lines.shift();
+
+    try{
+      console.log(`%c[MODLOG ${lineObj.t}] ${kind}: ${msg}`, "color:#ffe27a;font-weight:700", data || "");
+    }catch{
+      console.log(`[MODLOG ${lineObj.t}] ${kind}: ${msg}`);
+    }
+
+    if(api.showUI) api._renderUI();
+  };
+
+  api.log = (msg, data) => api._push("LOG", msg, data);
+  api.call = (fnName, args, extra) => {
+    const stack = (new Error()).stack || "";
+    api._push("CALL", `${fnName}(${(args||[]).map(a => safeStr(a)).join(", ")})`, {
+      ...api.snap(),
+      ...(extra || {}),
+      stack: stack.split("\n").slice(0,6).join("\n")
+    });
+  };
+
+  api.clear = () => { api.lines = []; api._renderUI(true); };
+  api.export = () => api.lines
+    .map(x => `[${x.t}] ${x.kind}: ${x.msg} ${x.data ? safeStr(x.data) : ""}`)
+    .join("\n");
+
+  api._renderUI = () => {
+    if(!api.showUI) return;
+    if(!document.body) return;
+
+    if(!api.ui){
+      const box = document.createElement("div");
+      box.id = "modlog-ui";
+      box.style.cssText =
+        "position:fixed;left:12px;bottom:12px;width:min(520px,calc(100vw - 24px));max-height:40vh;z-index:999999;" +
+        "background:rgba(0,0,0,.72);border:1px solid rgba(255,255,255,.18);border-radius:12px;" +
+        "padding:10px;font:12px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;color:#fff;overflow:auto;";
+
+      const head = document.createElement("div");
+      head.style.cssText = "display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap;";
+
+      const title = document.createElement("div");
+      title.textContent = "MODLOG (modales)";
+      title.style.cssText = "font-weight:800;color:#ffe27a;margin-right:auto;";
+
+      const btnCss = "padding:6px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;";
+
+      const btnCopy = document.createElement("button");
+      btnCopy.type = "button";
+      btnCopy.textContent = "Copiar";
+      btnCopy.style.cssText = btnCss;
+      btnCopy.onclick = async () => {
+        const txt = api.export();
+        try{ await navigator.clipboard.writeText(txt); api.log("📋 Logs copiados"); }catch{ api.log("⚠ No se pudo copiar"); }
+      };
+
+      const btnClear = document.createElement("button");
+      btnClear.type = "button";
+      btnClear.textContent = "Limpiar";
+      btnClear.style.cssText = btnCss;
+      btnClear.onclick = () => api.clear();
+
+      const btnHide = document.createElement("button");
+      btnHide.type = "button";
+      btnHide.textContent = "Ocultar";
+      btnHide.style.cssText = btnCss;
+      btnHide.onclick = () => { box.style.display = "none"; api.log("UI oculta"); };
+
+      head.appendChild(title);
+      head.appendChild(btnCopy);
+      head.appendChild(btnClear);
+      head.appendChild(btnHide);
+
+      const pre = document.createElement("pre");
+      pre.id = "modlog-pre";
+      pre.style.cssText = "margin:0;white-space:pre-wrap;word-break:break-word;";
+
+      box.appendChild(head);
+      box.appendChild(pre);
+
+      document.body.appendChild(box);
+      api.ui = box;
+    }
+
+    const pre = api.ui.querySelector("#modlog-pre");
+    if(pre){
+      pre.textContent = api.lines.map(x => `[${x.t}] ${x.kind}: ${x.msg}`).join("\n");
+    }
+  };
+
+  return api;
+})();
 
 
 
@@ -1182,9 +1329,53 @@ async function torneoActualizar(){
   LAST_TORNEO_CFG = c;
 LAST_TORNEO_ID  = tid;
 
-  const open = isTrue(c.inscriptionsOpen);
-  updateToggleInscripcionesButton(open);
+const open = isTrue(c.inscriptionsOpen);
   const gen  = isTrue(c.generated);
+  const prep = String(c.prepEndsAt || "").trim();
+
+  // Mantiene el color/texto del botón original
+  updateToggleInscripcionesButton(open);
+
+  // === LÓGICA DE VISIBILIDAD DE BOTONES ===
+  const bToggle = document.getElementById("btnTorneoToggleInscripciones");
+  const bCerrarM = document.getElementById("btnCerrarManual");
+  const bInic30 = document.getElementById("btnIniciar30m");
+  const bForce = document.getElementById("btnForceStart");
+  const bGen = document.getElementById("btnTorneoGenerarSingle");
+
+  // Verificar si el tiempo de preparación sigue activo (Manual o Cronómetro corriendo)
+  let isPrepRunning = false;
+  if (prep === "MANUAL") {
+    isPrepRunning = true;
+  } else if (prep) {
+    const endMs = new Date(prep.replace(" ", "T")).getTime();
+    if (Date.now() < endMs) isPrepRunning = true;
+  }
+
+  if (open) {
+    // ABIERTO: Mostrar Cerrar Manual y ocultar el resto
+    if(bToggle) bToggle.style.display = "none"; 
+    if(bCerrarM) bCerrarM.style.display = "inline-block";
+    if(bInic30) bInic30.style.display = "none";
+    if(bForce) bForce.style.display = "none";
+    if(bGen) bGen.style.display = "none";
+  } else if (!gen) {
+    // CERRADO PERO SIN GENERAR: Mostrar opciones de prep y Generar Bracket
+    if(bToggle) bToggle.style.display = "inline-block"; 
+    if(bCerrarM) bCerrarM.style.display = "none";
+    if(bInic30) bInic30.style.display = (prep === "MANUAL") ? "inline-block" : "none";
+    if(bForce) bForce.style.display = "inline-block";
+    if(bGen) bGen.style.display = "inline-block";
+  } else {
+    // GENERADO (En curso)
+    if(bToggle) bToggle.style.display = "none";
+    if(bCerrarM) bCerrarM.style.display = "none";
+    // Si ya se generó pero el cronómetro o espera manual siguen activos, mantén el botón rojo
+    if(bForce) bForce.style.display = isPrepRunning ? "inline-block" : "none";
+    // Puedes iniciar los 30 min incluso con el bracket ya generado
+    if(bInic30) bInic30.style.display = (isPrepRunning && prep === "MANUAL") ? "inline-block" : "none";
+    if(bGen) bGen.style.display = "none";
+  }
 
   const title = safe(c.title) || "(sin título)";
   const format = safe(c.format) || "-";
@@ -1374,10 +1565,10 @@ function dexListToNames(raw){
 
 
 
-
-  // inscritos
+// inscritos
   const ins = await torneoGET("torneo_list_inscritos", { torneoId: tid });
-  const inscritos = (ins.inscritos || []);
+  window.PARTICIPANTES_CACHE = (ins.inscritos || []); // <--- ESTA LÍNEA NUEVA
+  const inscritos = window.PARTICIPANTES_CACHE;
   const count = inscritos.length;
 
   if(infoEl){
@@ -1785,7 +1976,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnForceStart = document.getElementById("btnTorneoForceStart");
 const btnSeed40     = document.getElementById("btnTorneoSeed40");
   const btnRefList = document.getElementById("btnTorneoRefrescarLista");
-  const btnUltimo  = document.getElementById("btnTorneoSetUltimo");
+  
   const btnSaveRules = document.getElementById("btnTorneoGuardarReglas");
 const btnDelete = document.getElementById("btnTorneoEliminar");
 const btnSave = document.getElementById("btnTorneoGuardarCambios");
@@ -2046,17 +2237,6 @@ if(btnDelete) btnDelete.onclick = async () => {
 };
 
 
-if(btnRefList) btnRefList.onclick = async () => {
-  if(btnUltimo) btnUltimo.onclick = () => openParticipantsModalFromSelect_();
-
-  await runWithBtn(btnRefList, "Cargando…", async () => {
-    await torneoCargarLista({keepSelection:true});
-  });
-  toast("📋 Lista actualizada");
-};
-
-
-  if(btnUltimo) btnUltimo.onclick = () => torneoIrUltimo();
 
   // anti-spam
 let creandoTorneo = false;
@@ -2239,57 +2419,80 @@ await torneoPOST(payload2);
 };
 
 
-if(btnCerrar) btnCerrar.onclick = async () => {
+// === EVENTOS DE BOTONES (Espera Libre / 30 Min / Generar) ===
+const bToggleInsc = document.getElementById("btnTorneoToggleInscripciones");
+const bCerrarMan = document.getElementById("btnCerrarManual");
+const bIniciar30 = document.getElementById("btnIniciar30m");
+const bForzarIni = document.getElementById("btnForceStart");
+const bGenerarBr = document.getElementById("btnTorneoGenerarSingle");
+
+if (bToggleInsc) bToggleInsc.onclick = async () => {
   const torneoId = getSelectedTorneoId();
   if(!torneoId) return toast("⚠ Selecciona un torneo", "error");
-
-  // si todavía no sabemos (por ejemplo, no cargó config), forzamos update primero
-  if(SELECTED_TORNEO_OPEN === null){
-    await torneoActualizar();
-  }
-
-  const willOpen = (SELECTED_TORNEO_OPEN === false); // si está cerrado -> vamos a abrir
-  const accion = willOpen ? "torneo_open" : "torneo_close";
-
-  await runWithBtn(btnCerrar, willOpen ? "Abriendo…" : "Cerrando…", async () => {
-    const r = await torneoPOST({
-      accion,
-      user: CURRENT_USER,
-      pin: ADMIN_PIN,
-      torneoId
-    });
-
+  // En la nueva lógica, este botón solo sirve para ABRIR
+  await runWithBtn(bToggleInsc, "Abriendo…", async () => {
+    const r = await torneoPOST({ accion: "torneo_open", user: CURRENT_USER, pin: ADMIN_PIN, torneoId });
     if(!r.ok) return toast("⚠ " + (r.error || "Error"), "error");
-
-    toast(willOpen ? "🟢 Inscripciones abiertas" : "🔒 Inscripciones cerradas");
-
-    // refresca UI + lista
+    toast("🟢 Inscripciones abiertas");
     await torneoCargarLista({keepSelection:true});
     await torneoActualizar();
   });
 };
 
-
-
-if(btnGen) btnGen.onclick = async () => {
+if (bCerrarMan) bCerrarMan.onclick = async () => {
   const torneoId = getSelectedTorneoId();
   if(!torneoId) return toast("⚠ Selecciona un torneo", "error");
+  if(!confirm("¿Cerrar inscripciones y dejar el torneo en ESPERA LIBRE?")) return;
+  
+  await runWithBtn(bCerrarMan, "Cerrando…", async () => {
+    const r = await torneoPOST({ accion: "torneo_close", user: CURRENT_USER, pin: ADMIN_PIN, torneoId });
+    if(!r.ok) return toast("⚠ " + (r.error || "Error"), "error");
+    toast("✅ Inscripciones cerradas en modo manual");
+    await torneoCargarLista({keepSelection:true});
+    await torneoActualizar();
+  });
+};
 
-  await runWithBtn(btnGen, "Generando…", async () => {
-    const r = await torneoPOST({
-      accion:"torneo_generate",
-      user: CURRENT_USER,
-      pin: ADMIN_PIN,
-      torneoId
-    });
+if (bIniciar30) bIniciar30.onclick = async () => {
+  const torneoId = getSelectedTorneoId();
+  if(!torneoId) return toast("⚠ Selecciona un torneo", "error");
+  if(!confirm("¿Iniciar el cronómetro de 30 minutos para los jugadores?")) return;
+  
+  await runWithBtn(bIniciar30, "Iniciando…", async () => {
+    const r = await torneoPOST({ accion: "torneo_start_prep", user: CURRENT_USER, pin: ADMIN_PIN, torneoId });
+    if(!r.ok) return toast("⚠ " + (r.error || "Error"), "error");
+    toast("⏳ Cronómetro de 30 minutos iniciado");
+    await torneoActualizar();
+  });
+};
 
+if (bForzarIni) bForzarIni.onclick = async () => {
+  const torneoId = getSelectedTorneoId();
+  if(!torneoId) return toast("⚠ Selecciona un torneo", "error");
+  const ok = confirm("⚡ ¿Forzar INICIO AHORA?\n\nEsto pondrá la preparación en 0.\nÚsalo solo por fuerza mayor.");
+  if(!ok) return;
+  
+  await runWithBtn(bForzarIni, "Forzando…", async () => {
+    const r = await torneoPOST({ accion: "torneo_force_start", user: CURRENT_USER, pin: ADMIN_PIN, torneoId });
+    if(!r.ok) return toast("⚠ " + (r.error || "Error"), "error");
+    toast("✅ Preparación finalizada (inicio forzado)");
+    await torneoCargarLista({keepSelection:true});
+    await torneoActualizar();
+  });
+};
+
+if (bGenerarBr) bGenerarBr.onclick = async () => {
+  const torneoId = getSelectedTorneoId();
+  if(!torneoId) return toast("⚠ Selecciona un torneo", "error");
+  
+  await runWithBtn(bGenerarBr, "Generando…", async () => {
+    const r = await torneoPOST({ accion: "torneo_generate", user: CURRENT_USER, pin: ADMIN_PIN, torneoId });
     if(!r.ok) return toast("⚠ " + (r.error || "Error"), "error");
     toast(`🏆 Bracket generado (BYE: ${r.byes ?? "-"})`);
     await torneoCargarLista({keepSelection:true});
     await torneoActualizar();
   });
 };
-
 
   // Tabs
   const tabBtns = document.querySelectorAll(".tab-btn");
@@ -2398,7 +2601,7 @@ function buildVariantEntries(p){
 
 async function loadPokemonJson(){
   try{
-    const r = await fetch("pokemon.json", { cache: "no-store" });
+    const r = await fetch(`pokemon.json?v=${Date.now()}`, { cache: "no-store" });
     if(!r.ok) throw new Error("No se pudo cargar pokemon.json");
     const data = await r.json();
 
@@ -3739,15 +3942,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const bCreate = document.getElementById("btnOpenCreateModal");
   const bEdit = document.getElementById("btnOpenEditModal");
 
-  if(bCreate) bCreate.onclick = () => {
-  clearTorneoForm();      // ✅ LIMPIA TODO
-  modalOpen("create");    // ✅ ABRE MODAL
+if(bCreate) bCreate.onclick = () => {
+
+  clearTorneoForm();
+  modalOpen("create");
 };
 
 
  let openingEdit = false;
 
 if(bEdit) bEdit.onclick = async () => {
+
   if(openingEdit) return;
   openingEdit = true;
 
@@ -3759,7 +3964,8 @@ if(bEdit) bEdit.onclick = async () => {
 
   // ✅ abre al instante
   modalOpen("edit");
-  setModalLoading(true);
+// ¡Carga al instante desde la memoria RAM!
+  const lista = window.PARTICIPANTES_CACHE || [];
 
   try{
     // ✅ 1) usa cache si ya se cargó antes
@@ -3899,35 +4105,644 @@ if(typeof setLeaguePlanFromValue === "function"){
 
 document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("btnExportJson");
-  if (!btn) return; // por si en alguna vista no existe
+  if (!btn) return; 
 
   btn.addEventListener("click", async () => {
-    const torneoId = getSelectedTorneoId();
+    // 1. Obtener ID seleccionado
+    // Nota: Si getSelectedTorneoId no existe en tu contexto global, usa la variable que tengas.
+    // Si usas un selector <select id="torneoSelector">, sería document.getElementById('torneoSelector').value
+    const torneoId = (typeof getSelectedTorneoId === 'function') 
+                     ? getSelectedTorneoId() 
+                     : document.querySelector('#torneoSelector')?.value;
+
     if (!torneoId) return toast("⚠ Selecciona un torneo", "error");
 
     await runWithBtn(btn, "Descargando…", async () => {
+      // 2. Pedir los datos al servidor (Google Sheets)
       const data = await torneoGET("torneo_export_json", { torneoId });
-      if (!data.ok) return toast("⚠ " + (data.error || "Error"), "error");
+      
+      if (!data || !data.ok) return toast("⚠ " + (data?.error || "Error al obtener datos"), "error");
 
+      // =====================================================
+      // 🔧 PARCHE: AGREGAR LO QUE FALTA PARA LA WEB
+      // =====================================================
+      
+      // A. Asegurar Tabla de Posiciones (Standings)
+      // Si el servidor no mandó standings (o es fase inscripción), los creamos aquí con 0 puntos.
+      if (!data.standings || data.standings.length === 0) {
+         const playersList = data.players || [];
+         data.standings = playersList.map(p => ({
+            rank: 0,
+            playerId: p.playerId || p.id,
+            name: p.nick || p.nombre || "Jugador",
+            team: p.team || [],
+            points: 0, wins: 0, losses: 0, ties: 0, buchholz: 0
+         }));
+      }
+
+      // B. Corregir nombres para que el JS de la web no falle
+      if (data.torneo) {
+         // La web espera "league", pero el sheet suele tener "leaguePlan"
+         data.torneo.league = data.torneo.leaguePlan || data.torneo.league || "great1500";
+         // Aseguramos que existan fechas para detección de fase
+         if (!data.torneo.prepEndsAt) data.torneo.prepEndsAt = "";
+      }
+
+      // =====================================================
+      // FIN DEL PARCHE
+      // =====================================================
+
+      // 3. Generar y descargar el archivo
       const pretty = JSON.stringify(data, null, 2);
       const blob = new Blob([pretty], { type: "application/json" });
       const url = URL.createObjectURL(blob);
 
       const a = document.createElement("a");
       a.href = url;
+      // Usamos el ID del torneo como nombre de archivo
       a.download = `${torneoId}.json`;
       document.body.appendChild(a);
       a.click();
       a.remove();
 
       URL.revokeObjectURL(url);
-      toast("✅ JSON descargado");
+      
+      if(typeof toast === 'function') toast("✅ JSON descargado y optimizado");
     });
   });
 });
 
 
+// ===============================
+// ✅ PARTICIPANTES (MODAL ADMIN)
+// ===============================
+let P_ROWS = [];
+let P_TORNEO_ID = "";
+let P_GENERATED = false;
 
+function _isOpenModal_(){
+  return Array.from(document.querySelectorAll(".modal"))
+    .some(m => (m.style.display || "") === "block");
+}
+function _syncBodyModalLock_(){
+  if(_isOpenModal_()) document.body.classList.add("modal-open");
+  else document.body.classList.remove("modal-open");
+}
+
+function pModalOpen_(){
+  const m = document.getElementById("participantsModal");
+  if(!m) return;
+  m.style.display = "block";
+  _syncBodyModalLock_();
+}
+function pModalClose_(){
+  const m = document.getElementById("participantsModal");
+  if(m) m.style.display = "none";
+  _syncBodyModalLock_();
+}
+
+function peModalOpen_(){
+  const m = document.getElementById("participantEditModal");
+  if(!m) return;
+  m.style.display = "block";
+  _syncBodyModalLock_();
+}
+function peModalClose_(){
+  const m = document.getElementById("participantEditModal");
+  if(m) m.style.display = "none";
+  _syncBodyModalLock_();
+}
+
+document.addEventListener("click", (e) => {
+  const t = e.target;
+  if(!t || !t.getAttribute) return;
+
+  if(t.getAttribute("data-pclose") === "1") pModalClose_();
+  if(t.getAttribute("data-peclose") === "1") peModalClose_();
+});
+
+function _pNorm_(s){ return pNormalizeText(String(s||"")); }
+
+function _partyFromRow_(r){
+  const out = [];
+  for(let i=1;i<=6;i++){
+    const v = String(r["P"+i] || "").trim();
+    out.push(v);
+  }
+  return out;
+}
+
+function _iconTitle_(iconId){
+  const e = POKEMON_VARIANT_BY_ID.get(String(iconId||""));
+  return e ? e.text : String(iconId||"");
+}
+
+function _isBaja_(row){
+  const st = String(row.Estado || "").toLowerCase();
+  return st.includes("baja") || st.includes("rechaz");
+}
+
+function _isAsistencia_(row){
+  const v = String(row.Asistencia ?? "").trim().toLowerCase();
+  return v === "1" || v === "true" || v === "si" || v === "sí" || v === "ok" || v === "x";
+}
+
+function _setStats_(counts){
+  const cT = document.getElementById("pCountTotal");
+  const cA = document.getElementById("pCountActivos");
+  const cB = document.getElementById("pCountBaja");
+  if(cT) cT.textContent = String(counts?.total ?? 0);
+  if(cA) cA.textContent = String(counts?.active ?? 0);
+  if(cB) cB.textContent = String(counts?.baja ?? 0);
+}
+
+function _renderHelp_(){
+  const box = document.getElementById("pHelpBox");
+  if(!box) return;
+
+  if(P_GENERATED){
+    box.innerHTML = `🏆 <b>Bracket ya generado</b>: no se recomienda borrar. Usa <b>Reemplazar</b> para mantener PlayerId y no romper llaves.`;
+  }else{
+    box.innerHTML = `🧩 <b>Bracket aún NO generado</b>: puedes <b>Eliminar</b> filas sin problemas.`;
+  }
+}
+function _renderParticipants_(rows, counts) {
+  const tbody = document.getElementById("pTbody");
+  if (!tbody) return;
+
+  _setStats_(counts || {});
+  _renderHelp_();
+
+  tbody.innerHTML = "";
+
+  rows.forEach(row => {
+    const playerId = String(row.PlayerId || "").trim();
+    const nombre   = String(row.NombrePokemonGO || row.Nombre || "").trim();
+    const nick     = String(row.Nick || "").trim();
+    const codigo   = String(row.Codigo || "").trim();
+    const campfire = String(row.Campfire || "").trim();
+    const estado   = String(row.Estado || "").trim();
+
+    const party = _partyFromRow_(row);
+    const partyHtml = `
+      <div class="p-party">
+        ${party.map(id => id
+          ? `<img src="${iconUrl(id)}" title="${escapeHtml(_iconTitle_(id))}" alt="${escapeHtml(_iconTitle_(id))}">`
+          : `<span class="tiny muted">—</span>`
+        ).join("")}
+      </div>
+    `;
+
+    const baja = _isBaja_(row);
+    const asis = _isAsistencia_(row);
+
+    const tr = document.createElement("tr");
+    
+    // ✅ CORRECCIÓN: Aplicar clase si hay asistencia usando 'asis' (que ya lo calculaste arriba)
+    if (asis || estado === "Presente") {
+      tr.classList.add("tr-asistencia-marcada");
+    }
+
+    tr.innerHTML = `
+      <td>
+        <input type="checkbox"
+               data-pasist="1"
+               data-pid="${escapeHtml(playerId)}"
+               ${asis ? "checked" : ""}/>
+      </td>
+      <td><span class="tiny">${escapeHtml(playerId)}</span></td>
+      <td>${escapeHtml(nombre)}</td>
+      <td>${escapeHtml(nick)}</td>
+      <td>${escapeHtml(codigo)}</td>
+      <td>${escapeHtml(campfire)}</td>
+      <td>${partyHtml}</td>
+      <td>${escapeHtml(estado)}</td>
+      <td>
+        <div class="p-actions">
+          <button class="btn-mini" data-pact="edit" data-pid="${escapeHtml(playerId)}">✏️ Editar</button>
+          ${P_GENERATED
+            ? `<button class="btn-mini good" data-pact="replace" data-pid="${escapeHtml(playerId)}">🔁 Reemplazar</button>`
+            : `<button class="btn-mini danger" data-pact="delete" data-pid="${escapeHtml(playerId)}">🗑️ Eliminar</button>`
+          }
+        </div>
+      </td>
+    `;
+
+    if (baja) tr.style.opacity = "0.55";
+    tbody.appendChild(tr);
+  });
+}
+function _applyParticipantsFilter_(){
+  const q = _pNorm_(document.getElementById("pSearch")?.value || "");
+  const f = String(document.getElementById("pFilter")?.value || "activos");
+
+  let rows = Array.isArray(P_ROWS) ? P_ROWS.slice() : [];
+
+  if(f === "activos"){
+    rows = rows.filter(r => !_isBaja_(r));
+  }else if(f === "baja"){
+    rows = rows.filter(r => _isBaja_(r));
+  }
+
+  if(q){
+    rows = rows.filter(r => {
+      const s = _pNorm_(
+        `${r.PlayerId||""} ${r.NombrePokemonGO||r.Nombre||""} ${r.Nick||""} ${r.Codigo||""} ${r.Campfire||""} ${r.Estado||""}`
+      );
+      return s.includes(q);
+    });
+  }
+
+  _renderParticipants_(rows, {
+    total: P_ROWS.length,
+    active: P_ROWS.filter(r => !_isBaja_(r)).length,
+    baja: P_ROWS.filter(r => _isBaja_(r)).length
+  });
+}
+
+async function _loadParticipants_(torneoId){
+  P_TORNEO_ID = String(torneoId||"").trim();
+  if(!P_TORNEO_ID) return;
+
+  // refresca config (para saber si ya generó bracket)
+  try{
+    const rc = await torneoGET("torneo_config", { torneoId: P_TORNEO_ID });
+    const cfg = rc?.config || rc?.torneo || rc?.data || rc?.result || rc?.cfg || rc?.t || rc;
+    P_GENERATED = isTrue(cfg?.generated);
+  }catch(_){
+    P_GENERATED = false;
+  }
+
+  const sub = document.getElementById("pModalSub");
+  if(sub) sub.textContent = `Torneo ${P_TORNEO_ID} · Cargando…`;
+
+  const r = await torneoGET("torneo_admin_list_inscritos", {
+    user: CURRENT_USER,
+    pin: ADMIN_PIN,
+    torneoId: P_TORNEO_ID
+  });
+
+  if(!r?.ok){
+    toast("⚠ " + (r?.error || "Error cargando participantes"), "error");
+    P_ROWS = [];
+    _renderParticipants_([], {total:0, active:0, baja:0});
+    if(sub) sub.textContent = `Torneo ${P_TORNEO_ID} · Error`;
+    return;
+  }
+
+  P_ROWS = Array.isArray(r.inscritos) ? r.inscritos : [];
+  if(sub) sub.textContent = `Torneo ${P_TORNEO_ID} · ${P_GENERATED ? "Bracket generado" : "Bracket NO generado"}`;
+
+  _applyParticipantsFilter_();
+}
+
+async function openParticipantsModal_(){
+  const tid = getSelectedTorneoId();
+  if(!tid) return toast("Selecciona un torneo", "error");
+
+  pModalOpen_();
+  
+  // ¡Carga al instante desde la memoria RAM!
+  const lista = window.PARTICIPANTES_CACHE || [];
+  
+  P_TORNEO_ID = tid;
+  P_ROWS = lista;
+  
+  if(typeof LAST_TORNEO_CFG !== "undefined" && LAST_TORNEO_CFG) {
+    P_GENERATED = isTrue(LAST_TORNEO_CFG.generated);
+  }
+
+  // ✅ CORRECCIÓN: Calcular contadores para que no salga 0
+  const counts = {
+    total: P_ROWS.length,
+    active: P_ROWS.filter(r => !_isBaja_(r)).length,
+    baja: P_ROWS.filter(r => _isBaja_(r)).length
+  };
+
+  // Pasamos los datos y los contadores
+  _renderParticipants_(P_ROWS, counts);
+}
+function _findRowByPlayerId_(playerId){
+  return (P_ROWS || []).find(r => String(r.PlayerId||"").trim() === String(playerId||"").trim()) || null;
+}
+
+// ---------- Picker single (para P1..P6) ----------
+function bindPokemonSingleAutocomplete_(inputId, dropId){
+  const input = document.getElementById(inputId);
+  const drop  = document.getElementById(dropId);
+  if(!input || !drop) return;
+
+  const render = (items) => {
+    drop.innerHTML = "";
+    items.forEach(e => {
+      const div = document.createElement("div");
+      div.className = "poke-option";
+      
+      // ✅ CORRECCIÓN 2: Se quitó la etiqueta <img> para que solo salga texto
+      div.innerHTML = `
+        <div class="poke-opt-txt">
+          <div class="poke-opt-title">${escapeHtml(e.text)}</div>
+          <div class="poke-opt-sub tiny muted">${escapeHtml(e.id)}</div>
+        </div>
+      `;
+      div.onclick = () => {
+        input.value = e.text;
+        input.dataset.iconId = e.id;
+        drop.style.display = "none";
+      };
+      drop.appendChild(div);
+    });
+    drop.style.display = items.length ? "block" : "none";
+  };
+
+  input.addEventListener("input", () => {
+    const q = _pNorm_(input.value);
+    if(!q){
+      drop.style.display = "none";
+      delete input.dataset.iconId;
+      return;
+    }
+
+    // ✅ CORRECCIÓN 3: Obtener baneos explícitos del torneo actual
+    let bannedIds = [];
+    if (typeof LAST_TORNEO_CFG !== "undefined" && LAST_TORNEO_CFG) {
+      bannedIds = String(LAST_TORNEO_CFG.bannedPokemon || "").split(",").map(id => id.trim());
+    }
+
+    const items = (POKEMON_VARIANT_LIST || [])
+      .filter(x => {
+         // Filtro de búsqueda por texto
+         if (!x.search.includes(q)) return false;
+         
+         // Filtro de Reglas: Si el ID está en la lista de baneados, lo ocultamos
+         if (bannedIds.includes(String(x.id))) return false;
+         
+         return true;
+      })
+      .slice(0, 14);
+
+    render(items);
+  });
+
+  document.addEventListener("click", (e) => {
+    if(!drop.contains(e.target) && e.target !== input) drop.style.display = "none";
+  });
+}
+
+function _setPokemonInput_(inputId, iconId){
+  const input = document.getElementById(inputId);
+  if(!input) return;
+
+  const id = String(iconId||"").trim();
+  if(!id){
+    input.value = "";
+    delete input.dataset.iconId;
+    return;
+  }
+
+  const e = POKEMON_VARIANT_BY_ID.get(id);
+  input.value = e ? e.text : id;
+  input.dataset.iconId = id;
+}
+
+function _getPokemonInputIconId_(inputId){
+  const input = document.getElementById(inputId);
+  if(!input) return "";
+
+  const ds = String(input.dataset.iconId || "").trim();
+  if(ds) return ds;
+
+  // si pegó el id directo
+  const v = String(input.value || "").trim();
+  if(POKEMON_VARIANT_BY_ID.has(v)) return v;
+
+  // intentar match exacto por texto
+  const norm = _pNorm_(v);
+  const hit = (POKEMON_VARIANT_LIST || []).find(x => x.search === norm || _pNorm_(x.text) === norm);
+  return hit ? hit.id : "";
+}
+
+function openParticipantEditor_(mode, playerId){
+  const m = document.getElementById("participantEditModal");
+  if(!m) return;
+
+  const row = _findRowByPlayerId_(playerId);
+  if(!row) return toast("⚠ Participante no encontrado", "error");
+
+  const titulo = document.getElementById("peTitle");
+  const sub = document.getElementById("peSub");
+  const warn = document.getElementById("peWarn");
+  if(warn){ warn.style.display="none"; warn.textContent=""; }
+
+  m.dataset.mode = String(mode||"edit");
+  m.dataset.torneoId = P_TORNEO_ID;
+  m.dataset.playerId = String(playerId||"").trim();
+
+  const isReplace = (m.dataset.mode === "replace");
+
+  if(titulo) titulo.textContent = isReplace ? "Reemplazar participante (mantiene PlayerId)" : "Editar participante";
+  if(sub) sub.textContent = `Torneo ${P_TORNEO_ID} · PlayerId ${playerId}`;
+
+  const pidInfo = document.getElementById("pePlayerIdInfo");
+  if(pidInfo) pidInfo.textContent = `PlayerId: ${playerId}`;
+
+  // Prefill
+  if(isReplace){
+    document.getElementById("peNombre").value = "";
+    document.getElementById("peNick").value = "";
+    document.getElementById("peCodigo").value = "";
+    document.getElementById("peCampfire").value = "";
+    for(let i=1;i<=6;i++) _setPokemonInput_("peP"+i, "");
+  }else{
+    document.getElementById("peNombre").value = String(row.NombrePokemonGO || row.Nombre || "").trim();
+    document.getElementById("peNick").value = String(row.Nick || "").trim();
+    document.getElementById("peCodigo").value = String(row.Codigo || "").trim();
+    document.getElementById("peCampfire").value = String(row.Campfire || "").trim();
+    for(let i=1;i<=6;i++) _setPokemonInput_("peP"+i, String(row["P"+i]||"").trim());
+  }
+
+  document.getElementById("peResetAsistencia").checked = isReplace; // por defecto en reemplazo, resetea
+
+  peModalOpen_();
+}
+
+async function _saveParticipant_(){
+  const m = document.getElementById("participantEditModal");
+  if(!m) return;
+
+  const torneoId = String(m.dataset.torneoId||"").trim();
+  const playerId = String(m.dataset.playerId||"").trim();
+  const mode = String(m.dataset.mode||"edit");
+  const isReplace = (mode === "replace");
+
+  const nombre = String(document.getElementById("peNombre").value||"").trim();
+  const nick   = String(document.getElementById("peNick").value||"").trim();
+  const codigo = String(document.getElementById("peCodigo").value||"").trim();
+  const campfire = String(document.getElementById("peCampfire").value||"").trim();
+
+  const warn = document.getElementById("peWarn");
+  const setWarn = (msg) => {
+    if(!warn) return;
+    warn.textContent = msg;
+    warn.style.display = msg ? "block" : "none";
+  };
+
+  if(!torneoId || !playerId) return toast("⚠ Falta torneoId / playerId", "error");
+  if(!nombre || !nick || !codigo) return setWarn("Nombre, Nick y Código son obligatorios.");
+
+  const party = [];
+  for(let i=1;i<=6;i++){
+    const id = _getPokemonInputIconId_("peP"+i);
+    party.push(id);
+  }
+
+  if(party.some(x => !x)) return setWarn("Debes seleccionar los 6 Pokémon.");
+  const dup = party.filter((x,i,a)=> a.indexOf(x)!==i);
+  if(dup.length) return setWarn("No puedes repetir Pokémon (detecté duplicados).");
+
+  setWarn("");
+
+  const resetAsis = document.getElementById("peResetAsistencia").checked;
+
+  const payload = {
+    accion: "torneo_admin_update_inscrito",
+    user: CURRENT_USER,
+    pin: ADMIN_PIN,
+    torneoId,
+    playerId,
+    nombre, nick, codigo, campfire,
+    party,
+    // 🔁 en reemplazo forzamos estado "Inscrito"
+    ...(isReplace ? { estado:"Inscrito" } : {}),
+    ...(resetAsis ? { resetAsistencia:true } : {})
+  };
+
+  const btn = document.getElementById("btnPeSave");
+  setBtnLoading(btn, true, "Guardando…");
+
+  try{
+    const r = await torneoPOST(payload);
+    if(!r?.ok){
+      setBtnLoading(btn, false);
+      return toast("⚠ " + (r?.error || "Error guardando"), "error");
+    }
+
+    toast("✅ Participante actualizado");
+    peModalClose_();
+
+    await _loadParticipants_(torneoId);
+    await torneoActualizar(); // para refrescar status/matches si lo usas
+  }catch(e){
+    console.error(e);
+    toast("⚠ Error guardando", "error");
+  }finally{
+    setBtnLoading(btn, false);
+  }
+}
+
+async function _deleteParticipant_(playerId){
+  if(P_GENERATED){
+    return toast("⚠ Bracket ya generado: usa Reemplazar", "error");
+  }
+
+  const torneoId = getSelectedTorneoId();
+  if(!torneoId) return toast("⚠ Selecciona un torneo", "error");
+
+  const row = _findRowByPlayerId_(playerId);
+  const name = row ? (row.NombrePokemonGO || row.Nombre || row.Nick || playerId) : playerId;
+
+  if(!confirm(`¿Eliminar a ${name}?\n\nEsto BORRA la fila (solo si el bracket NO está generado).`)) return;
+
+  const r = await torneoPOST({
+    accion: "torneo_admin_delete_inscrito",
+    user: CURRENT_USER,
+    pin: ADMIN_PIN,
+    torneoId,
+    playerId
+  });
+
+  if(!r?.ok) return toast("⚠ " + (r?.error || "Error eliminando"), "error");
+
+  toast("🗑️ Eliminado");
+  await _loadParticipants_(torneoId);
+  await torneoActualizar();
+}
+
+// Delegación eventos: acciones + asistencia
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("btnTorneoParticipantes");
+  if(btn) btn.onclick = () => openParticipantsModal_();
+
+  const btnRef = document.getElementById("pBtnRefresh");
+  if(btnRef) btnRef.onclick = async () => {
+    if(!P_TORNEO_ID) return;
+    await _loadParticipants_(P_TORNEO_ID);
+  };
+
+  const s = document.getElementById("pSearch");
+  if(s) s.addEventListener("input", _applyParticipantsFilter_);
+
+  const f = document.getElementById("pFilter");
+  if(f) f.addEventListener("change", _applyParticipantsFilter_);
+
+  const tbody = document.getElementById("pTbody");
+  if(tbody){
+    tbody.addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-pact]");
+      if(!b) return;
+
+      const act = b.getAttribute("data-pact");
+      const pid = b.getAttribute("data-pid");
+
+      if(act === "edit") return openParticipantEditor_("edit", pid);
+      if(act === "replace") return openParticipantEditor_("replace", pid);
+      if(act === "delete") return _deleteParticipant_(pid);
+    });
+
+    tbody.addEventListener("change", async (e) => {
+      const cb = e.target.closest("input[data-pasist]");
+      if(!cb) return;
+
+      const pid = cb.getAttribute("data-pid");
+      const torneoId = getSelectedTorneoId();
+      if(!torneoId) return;
+
+      const r = await torneoPOST({
+        accion: "torneo_admin_set_asistencia",
+        user: CURRENT_USER,
+        pin: ADMIN_PIN,
+        torneoId,
+        playerId: pid,
+        asistencia: cb.checked
+      });
+
+      if(!r?.ok){
+        cb.checked = !cb.checked; // revertir
+        return toast("⚠ " + (r?.error || "Error asistencia"), "error");
+      }
+
+      // refresca cache local
+      const row = _findRowByPlayerId_(pid);
+      if(row) row.Asistencia = cb.checked ? "SI" : "";
+      toast(cb.checked ? "✅ Asistencia marcada" : "↩ Asistencia quitada");
+      // 👇 AÑADE ESTAS LÍNEAS PARA PINTARLO DE VERDE 👇
+    const tr = btn.closest("tr"); // Busca la fila de la tabla
+    if (tr) {
+      tr.classList.add("tr-asistencia-marcada"); // Pinta el fondo verde
+    }
+    btn.classList.add("btn-asistencia-ok"); // Pinta el botón de verde
+    btn.textContent = "✔ Presente";
+    });
+  }
+
+  const btnSave = document.getElementById("btnPeSave");
+  if(btnSave) btnSave.onclick = _saveParticipant_;
+
+  // binders P1..P6
+  for(let i=1;i<=6;i++){
+    bindPokemonSingleAutocomplete_("peP"+i, "peP"+i+"Drop");
+  }
+});
 
 
 /* ✅ inicia todo al cargar la página */
@@ -3954,380 +4769,174 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
-// ======================================================
-// 👥 PARTICIPANTES (ADMIN) — Modal + Reemplazo
-// ======================================================
-const P_BASE_URL_KEY = "pokecomas_torneo_base_url";
-let P_MODAL_TORNEO_ID = "";
-let P_MODAL_CACHE = [];
-let P_MODAL_TIMER = null;
-let P_REPLACE_CTX = null;
-let P_MODAL_WIRED = false;
 
-function getTournamentBaseUrl_(){
-  try{
-    const v = String(localStorage.getItem(P_BASE_URL_KEY) || "").trim();
-    return v || "https://pokecomas.com/Torneo/";
-  }catch(_){
-    return "https://pokecomas.com/Torneo/";
-  }
-}
-function setTournamentBaseUrl_(v){
-  try{ localStorage.setItem(P_BASE_URL_KEY, String(v||"").trim()); }catch(_){}
-}
+async function descargarBracketExcel() {
+  const torneoId = SELECTED_TORNEO_ID;
+  if (!torneoId) return toast("Selecciona un torneo primero", "error");
 
-function openParticipantsModalFromSelect_(){
-  const sel = $("tSelect");
-  const torneoId = sel && sel.value ? String(sel.value).trim() : "";
-  if(!torneoId) return toast("⚠ Selecciona un torneo primero.", "error");
-  openParticipantsModal_(torneoId);
-}
+  toast("⏳ Conectando y analizando datos...");
 
-function openParticipantsModal_(torneoId){
-  const modal = $("participantsModal");
-  if(!modal) return toast("⚠ No existe el modal de participantes en el HTML.", "error");
+  try {
+    // 1. Obtener datos
+    const r = await torneoGET("torneo_export_json", { torneoId });
+    if (!r || !r.ok) throw new Error("Error de conexión o datos vacíos.");
 
-  P_MODAL_TORNEO_ID = String(torneoId);
-  if($("pTorneoId")) $("pTorneoId").textContent = P_MODAL_TORNEO_ID;
+    // 2. Localizar Matches y Players
+    const matches = r.matches || r.playoffs || r.torneo?.matches || [];
+    const participants = r.players || r.participants || r.torneo?.participants || [];
 
-  modal.style.display = "block";
-  document.body.classList.add("modal-open");
+    if (matches.length === 0) return toast("⚠ No hay enfrentamientos generados.", "warn");
 
-  wireParticipantsModalOnce_();
-  pRefresh_();
-
-  const auto = $("pAutoRefresh");
-  pSetAuto_(!!(auto && auto.checked));
-}
-
-function closeParticipantsModal_(){
-  const modal = $("participantsModal");
-  if(modal) modal.style.display = "none";
-  document.body.classList.remove("modal-open");
-
-  P_MODAL_TORNEO_ID = "";
-  P_MODAL_CACHE = [];
-  pSetAuto_(false);
-}
-
-function wireParticipantsModalOnce_(){
-  if(P_MODAL_WIRED) return;
-  P_MODAL_WIRED = true;
-
-  // cerrar modales por data-*
-  document.addEventListener("click", (ev)=>{
-    const t = ev.target;
-    if(t && t.getAttribute && t.getAttribute("data-pclose") === "1") closeParticipantsModal_();
-    if(t && t.getAttribute && t.getAttribute("data-replace-close") === "1") closeReplaceModal_();
-  });
-
-  const btnR = $("pBtnRefresh");
-  if(btnR) btnR.onclick = pRefresh_;
-
-  const search = $("pSearch");
-  if(search) search.oninput = () => pRender_();
-
-  const auto = $("pAutoRefresh");
-  if(auto) auto.onchange = () => pSetAuto_(auto.checked);
-
-  const btnUrl = $("pBtnUrl");
-  if(btnUrl) btnUrl.onclick = ()=>{
-    const cur = getTournamentBaseUrl_();
-    const v = prompt("URL base de la web del torneo (para links de reemplazo):", cur);
-    if(v === null) return;
-    setTournamentBaseUrl_(v);
-    toast("✅ URL guardada");
-  };
-
-  const list = $("pList");
-  if(list){
-    list.addEventListener("click", async (ev)=>{
-      const btn = ev.target.closest && ev.target.closest("[data-act]");
-      if(!btn) return;
-
-      const act = btn.getAttribute("data-act");
-      const card = btn.closest(".p-card");
-      if(!card) return;
-
-      const playerId = String(card.getAttribute("data-playerid") || "").trim();
-      const nombre = card.getAttribute("data-nombre") || "";
-      const nick = card.getAttribute("data-nick") || "";
-
-      if(act === "toggle"){
-        card.classList.toggle("open");
-        return;
-      }
-
-      if(act === "copy"){
-        await copyText_(`${nombre} | ${nick} | playerId=${playerId}`);
-        toast("📋 Copiado");
-        return;
-      }
-
-      if(act === "replace"){
-        openReplaceModal_({ playerId, nombre, nick });
-        return;
-      }
-
-      if(act === "delete"){
-        // ✅ WO automático en matches pendientes
-        // ✅ Si quieres reemplazar, usa "Reemplazar" (NO genera WO)
-        const ok = confirm(
-          `¿Retirar a ${nombre} (@${nick})?\n\n` +
-          `- Si el torneo ya está generado: queda en BAJA.\n` +
-          `- Si aún no está generado: se borra la fila.\n\n` +
-          `⚠ Además: se dará WO automático en matches pendientes.`
-        );
-        if(!ok) return;
-
-        const r = await torneoPOST({
-          accion: "torneo_admin_delete_inscrito",
-          user: CURRENT_USER,
-          pin: ADMIN_PIN,
-          torneoId: P_MODAL_TORNEO_ID,
-          playerId,
-          clearParty: true,
-          cascadeWO: true
-        });
-
-        if(!r.ok) return toast("⚠ " + (r.error || "No se pudo retirar"), "error");
-
-        toast(`✅ Retirado${r.matchesClosed ? ` (WO: ${r.matchesClosed})` : ""}`);
-        pRefresh_();
-        return;
-      }
+    console.log("🔍 DEBUG DATA:", { 
+      matches: matches.length, 
+      matchExample: matches[0], 
+      playerExample: participants[0] 
     });
+
+    // 3. HERRAMIENTA INTELIGENTE: Busca el valor sin importar mayúsculas/minúsculas
+    const getVal = (obj, ...keys) => {
+      if (!obj) return "";
+      // Busca la primera llave que exista
+      for (const k of keys) {
+        if (obj[k] !== undefined && obj[k] !== "") return obj[k];
+      }
+      // Si no encuentra, busca insensible a mayúsculas (más lento pero seguro)
+      const objKeys = Object.keys(obj);
+      for (const k of keys) {
+        const foundKey = objKeys.find(ok => ok.toLowerCase() === k.toLowerCase());
+        if (foundKey && obj[foundKey] !== undefined) return obj[foundKey];
+      }
+      return "";
+    };
+
+    // 4. Mapa de Jugadores (Indexamos para búsqueda rápida y limpia)
+    const playerMap = new Map();
+    participants.forEach(p => {
+      // Buscamos ID y Nombre con todas las variantes posibles
+      const pid = String(getVal(p, "PlayerId", "id", "playerId", "ID")).trim();
+      const pnick = getVal(p, "Nick", "NombrePokemonGO", "nick", "name", "Nombre") || "Sin Nombre";
+      if (pid) playerMap.set(pid, pnick);
+    });
+
+    // 5. Generar CSV
+    const SEP = ";";
+    let csv = "sep=;\n";
+    // Encabezados
+    csv += ["Ronda", "MatchId", "ID J1", "Jugador 1", "Score J1", "Score J2", "Jugador 2", "ID J2", "Ganador", "Estado"].join(SEP) + "\n";
+
+    matches.forEach(m => {
+      // Obtener IDs de los enfrentamientos (limpiando espacios)
+      const idA = String(getVal(m, "PlayerAId", "playerAId", "player1Id", "p1")).trim();
+      const idB = String(getVal(m, "PlayerBId", "playerBId", "player2Id", "p2")).trim();
+      const idWin = String(getVal(m, "WinnerId", "winnerId", "winner")).trim();
+
+      // Obtener Datos (Ronda puede estar en Round o SwissRound)
+      const ronda = getVal(m, "Round", "round", "SwissRound", "swissRound") || 0;
+      const mid = getVal(m, "MatchId", "matchId", "id");
+      const scoreA = getVal(m, "ScoreA", "scoreA", "score1") || 0;
+      const scoreB = getVal(m, "ScoreB", "scoreB", "score2") || 0;
+      const status = getVal(m, "Status", "status", "state") || "scheduled";
+
+      // Buscar nombres en el mapa
+      const nickA = playerMap.get(idA) || (idA === "BYE" ? "— LIBRE —" : "Desconocido");
+      const nickB = playerMap.get(idB) || (idB === "BYE" ? "— LIBRE —" : "Desconocido");
+      const nickWin = playerMap.get(idWin) || (idWin ? "Desconocido" : "Pendiente");
+
+      const fila = [
+        ronda,
+        mid,
+        idA,
+        nickA,
+        scoreA,
+        scoreB,
+        nickB,
+        idB,
+        nickWin,
+        status
+      ];
+      
+      csv += fila.map(v => String(v).replace(/;/g, ',')).join(SEP) + "\n";
+    });
+
+    // 6. Descargar
+    const blob = new Blob(["\ufeff" + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `Bracket_Torneo_${torneoId}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast("✅ Reporte generado correctamente");
+
+  } catch (err) {
+    console.error("ERROR:", err);
+    alert("Error: " + err.message);
   }
+}
 
-  // submodal replace
-  const repGen = $("repBtnGenLink");
-  if(repGen) repGen.onclick = repGenerateLink_;
+// Dentro de document.addEventListener("DOMContentLoaded", ...
+const btnExportarExcel = document.getElementById("btnTorneoExportarExcel"); // Asegúrate que el ID coincida con tu HTML
 
-  const repCopy = $("repBtnCopy");
-  if(repCopy) repCopy.onclick = async ()=>{
-    const link = $("repLink") ? $("repLink").value : "";
-    if(!link) return;
-    await copyText_(link);
-    toast("📋 Link copiado");
+// ✅ BOTÓN EXPORTAR EXCEL (CON TRADUCCIÓN DE NOMBRES Y COLUMNA PARTICIPANTE)
+if ($("btnTorneoExportarExcel")) {
+  $("btnTorneoExportarExcel").onclick = async () => {
+    const torneoId = getSelectedTorneoId();
+    if (!torneoId) return toast("⚠ Selecciona un torneo", "error");
+
+    const btn = $("btnTorneoExportarExcel");
+    // Cambiamos el mensaje a "Preparando nombres..." para que el admin sepa que se está procesando el JSON
+    await runWithBtn(btn, "Preparando nombres...", async () => {
+      
+      let dict = {};
+      try {
+        // Intentamos cargar pokemon.json de tu servidor para traducir
+        const response = await fetch('pokemon.json'); 
+        const pokes = await response.json();
+        pokes.forEach(p => {
+          if (p.dex && p.name) {
+            // Guardamos la referencia para el servidor
+            dict[String(p.dex)] = p.name.es_419 || p.name.en;
+          }
+        });
+      } catch (e) {
+        console.error("Error cargando diccionario para el Excel", e);
+      }
+
+      const r = await torneoPOST({
+        accion: "torneo_admin_export_participantes_csv",
+        user: CURRENT_USER,
+        pin: ADMIN_PIN,
+        torneoId,
+        pokeMap: dict // Enviamos el mapa al servidor
+      });
+
+      if (!r.ok) return toast("⚠ " + (r.error || "Error al exportar"), "error");
+
+      // ✅ BOM para que Excel lea bien las tildes (Esencial para nombres en español)
+      const BOM = "\uFEFF"; 
+      const blob = new Blob([BOM + r.csv], { type: 'text/csv;charset=utf-8;' });
+      
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.href = url;
+      
+      // Usamos el nombre de archivo que viene del servidor o uno por defecto
+      link.download = r.fileName || `Participantes_${torneoId}.csv`;
+      
+      document.body.appendChild(link);
+      link.click();
+      
+      // Limpieza del DOM
+      setTimeout(() => {
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }, 0);
+      
+      toast("✅ Excel generado como 'Participante'");
+    });
   };
-
-  const repShowManual = $("repBtnManualShow");
-  if(repShowManual) repShowManual.onclick = ()=>{
-    show_($("repManualBox"), true);
-    show_($("repLinkBox"), false);
-  };
-
-  const repSave = $("repBtnManualSave");
-  if(repSave) repSave.onclick = repManualSave_;
-}
-
-function pSetAuto_(on){
-  if(P_MODAL_TIMER){
-    clearInterval(P_MODAL_TIMER);
-    P_MODAL_TIMER = null;
-  }
-  if(on){
-    P_MODAL_TIMER = setInterval(pRefresh_, 4000);
-  }
-}
-
-async function pRefresh_(){
-  if(!P_MODAL_TORNEO_ID) return;
-
-  const r = await torneoGET("torneo_admin_list_inscritos", {
-    user: CURRENT_USER, pin: ADMIN_PIN,
-    torneoId: P_MODAL_TORNEO_ID
-  });
-
-  if(!r.ok) return toast("⚠ " + (r.error || "No se pudo cargar participantes"), "error");
-
-  P_MODAL_CACHE = Array.isArray(r.inscritos) ? r.inscritos : [];
-
-  const c = r.counts || {};
-  if($("pCountTotal")) $("pCountTotal").textContent = (c.total ?? P_MODAL_CACHE.length);
-  if($("pCountActivos")) $("pCountActivos").textContent = (c.activos ?? "-");
-  if($("pCountReplace")) $("pCountReplace").textContent = (c.replacePending ?? "-");
-
-  pRender_();
-}
-
-function pRender_(){
-  const list = $("pList");
-  if(!list) return;
-
-  const q = String($("pSearch")?.value || "").toLowerCase().trim();
-
-  const items = (P_MODAL_CACHE || []).filter(x=>{
-    if(!q) return true;
-    const hay = [
-      x.Nombre, x.NombreReal, x.Nick, x.NombrePokemonGO,
-      x.Codigo, x.PlayerId, x.Campfire, x.Estado, x.ReplaceStatus
-    ].map(v=>String(v||"").toLowerCase());
-    return hay.some(s => s.includes(q));
-  });
-
-  if(!items.length){
-    list.innerHTML = `<div class="tiny muted" style="padding:10px;">Sin resultados.</div>`;
-    return;
-  }
-
-  list.innerHTML = items.map(pRenderCard_).join("");
-}
-
-function pRenderCard_(p){
-  const playerId = escapeHtml(String(p.PlayerId || ""));
-  const nombre = escapeHtml(String(p.NombreReal || p.Nombre || ""));
-  const nick = escapeHtml(String(p.NombrePokemonGO || p.Nick || ""));
-  const codigo = escapeHtml(String(p.Codigo || ""));
-  const estado = String(p.Estado || "");
-  const rep = String(p.ReplaceStatus || "").toLowerCase();
-
-  const estadoBadge = (() => {
-    const st = estado.toLowerCase();
-    if(st.includes("baja") || st.includes("rechaz") || st.includes("elimin"))
-      return `<span class="p-badge bad">${escapeHtml(estado||"—")}</span>`;
-    return `<span class="p-badge ok">${escapeHtml(estado||"Activo")}</span>`;
-  })();
-
-  const repBadge = (rep === "pending") ? `<span class="p-badge rep">Reemplazo pendiente</span>` : "";
-
-  const party = [];
-  for(let i=1;i<=6;i++){
-    const k = "P"+i;
-    if(p[k]) party.push(String(p[k]));
-  }
-  const partyHtml = party.length ? party.map(pPokeChip_).join("") : `<span class="tiny muted">Sin Pokémon</span>`;
-
-  return `
-    <div class="p-card" data-playerid="${playerId}" data-nombre="${nombre}" data-nick="${nick}">
-      <div class="p-top">
-        <div class="p-names">
-          <div class="p-real">${nombre || "—"}</div>
-          <div class="p-go">@${nick || "—"}</div>
-          <div class="p-code">Código: ${codigo || "—"} · playerId=${playerId || "—"}</div>
-        </div>
-
-        <div class="p-badges">
-          ${estadoBadge}
-          ${repBadge}
-        </div>
-
-        <div class="p-actions">
-          <button class="btn-mini" type="button" data-act="toggle">👁 Ver</button>
-          <button class="btn-mini" type="button" data-act="copy">📋 Copiar</button>
-          <button class="btn-mini warn" type="button" data-act="replace">🔁 Reemplazar</button>
-          <button class="btn-mini danger" type="button" data-act="delete">🗑 Retirar (WO)</button>
-        </div>
-      </div>
-
-      <div class="p-party">
-        ${partyHtml}
-      </div>
-    </div>
-  `;
-}
-
-function pPokeChip_(iconId){
-  const id = String(iconId||"");
-  const info = (typeof POKEMON_VARIANT_BY_ID !== "undefined" && POKEMON_VARIANT_BY_ID)
-    ? POKEMON_VARIANT_BY_ID.get(id) : null;
-
-  const name = info?.name ? info.name : ("#" + id);
-  const url = iconUrl(id);
-
-  return `
-    <div class="poke-chip" title="${escapeHtml(name)}">
-      <img src="${url}" alt="">
-      <div class="poke-chip-name">${escapeHtml(name)}</div>
-    </div>
-  `;
-}
-
-// ---------- Reemplazo submodal ----------
-function openReplaceModal_(ctx){
-  P_REPLACE_CTX = ctx;
-  const m = $("replaceModal");
-  if(!m) return toast("⚠ No existe replaceModal en HTML", "error");
-
-  $("repWho").textContent = `${ctx.nombre} (@${ctx.nick})`;
-  $("repPlayerId").textContent = ctx.playerId;
-
-  show_($("repLinkBox"), false);
-  show_($("repManualBox"), false);
-
-  if($("repLink")) $("repLink").value = "";
-  if($("repToken")) $("repToken").textContent = "—";
-
-  if($("repNombre")) $("repNombre").value = "";
-  if($("repNick")) $("repNick").value = "";
-  if($("repCodigo")) $("repCodigo").value = "";
-  if($("repCampfire")) $("repCampfire").value = "";
-
-  m.style.display = "block";
-}
-
-function closeReplaceModal_(){
-  const m = $("replaceModal");
-  if(m) m.style.display = "none";
-  P_REPLACE_CTX = null;
-}
-
-async function repGenerateLink_(){
-  if(!P_REPLACE_CTX) return;
-
-  const clearParty = $("repClearParty") ? $("repClearParty").checked : true;
-
-  const r = await torneoPOST({
-    accion: "torneo_admin_start_replace",
-    user: CURRENT_USER, pin: ADMIN_PIN,
-    torneoId: P_MODAL_TORNEO_ID,
-    playerId: P_REPLACE_CTX.playerId,
-    clearParty: clearParty ? "true" : "false",
-    expiresHours: 48
-  });
-
-  if(!r.ok) return toast("⚠ " + (r.error || "No se pudo generar link"), "error");
-
-  const token = r.token;
-  const base = getTournamentBaseUrl_();
-  const sep = base.includes("?") ? "&" : "?";
-  const link = `${base}${sep}torneoId=${encodeURIComponent(P_MODAL_TORNEO_ID)}&replace=${encodeURIComponent(token)}`;
-
-  if($("repToken")) $("repToken").textContent = token;
-  if($("repLink")) $("repLink").value = link;
-
-  show_($("repLinkBox"), true);
-  show_($("repManualBox"), false);
-
-  toast("✅ Link generado");
-  pRefresh_();
-}
-
-async function repManualSave_(){
-  if(!P_REPLACE_CTX) return;
-
-  const nombre = String($("repNombre")?.value || "").trim();
-  const nick = String($("repNick")?.value || "").trim();
-  const codigo = String($("repCodigo")?.value || "").trim();
-  const campfire = String($("repCampfire")?.value || "").trim();
-  const clearParty = $("repClearParty") ? $("repClearParty").checked : true;
-
-  if(!nombre || !nick || !codigo) return toast("⚠ Nombre, Nick y Código son obligatorios", "error");
-
-  const r = await torneoPOST({
-    accion: "torneo_admin_replace_manual",
-    user: CURRENT_USER, pin: ADMIN_PIN,
-    torneoId: P_MODAL_TORNEO_ID,
-    playerId: P_REPLACE_CTX.playerId,
-    nombre, nick, codigo, campfire,
-    clearParty: clearParty ? "true" : "false"
-  });
-
-  if(!r.ok) return toast("⚠ " + (r.error || "No se pudo reemplazar"), "error");
-
-  toast("✅ Reemplazo guardado");
-  closeReplaceModal_();
-  pRefresh_();
 }
 
 // ---------- Utils ----------
@@ -4350,3 +4959,89 @@ async function copyText_(txt){
     document.body.removeChild(ta);
   }
 }
+
+// ======================================================
+// 🔎 MODLOG WATCHERS (DEBUG)
+// ======================================================
+(function(){
+  const L = window.MODLOG;
+  if(!L) return;
+
+  const wrap = (name) => {
+    const fn = window[name];
+    if(typeof fn !== "function") return;
+    if(fn.__modlogWrapped) return;
+
+    function wrapped(...args){
+      L.call(name, args);
+      return fn.apply(this, args);
+    }
+    wrapped.__modlogWrapped = true;
+    window[name] = wrapped;
+  };
+
+  // 1) Envuelve opens/closes importantes
+  [
+    "modalOpen",
+    "modalClose",
+    "pModalOpen_",
+    "pModalClose_",
+    "peModalOpen_",
+    "peModalClose_",
+    "_syncBodyModalLock_",
+    "openParticipantsModal_"
+  ].forEach(wrap);
+
+  // 2) Log de clicks relevantes (CAPTURE)
+  document.addEventListener("click", (ev) => {
+    if(!L.enabled) return;
+    const t = ev.target;
+
+    const which =
+      t?.closest?.("#btnOpenCreateModal") ? "CLICK #btnOpenCreateModal" :
+      t?.closest?.("#btnTorneoParticipantes") ? "CLICK #btnTorneoParticipantes" :
+      t?.closest?.("[data-close='1']") ? "CLICK [data-close=1]" :
+      t?.closest?.("[data-pclose='1']") ? "CLICK [data-pclose=1]" :
+      t?.closest?.("[data-peclose='1']") ? "CLICK [data-peclose=1]" :
+      "";
+
+    if(which) L.log(which, L.snap());
+  }, true);
+
+  // 3) Observa cambios en body.class (scroll lock)
+  if(document.body){
+    const ob = new MutationObserver((muts) => {
+      for(const m of muts){
+        if(m.attributeName === "class"){
+          L.log("BODY class mutation", L.snap());
+          break;
+        }
+      }
+    });
+    ob.observe(document.body, { attributes:true, attributeFilter:["class"] });
+  }
+
+  // 4) Observa cambios en los modales (display/z-index)
+  const mods = Array.from(document.querySelectorAll(".modal"));
+  const om = new MutationObserver((muts) => {
+    muts.forEach(m => {
+      const el = m.target;
+      if(!(el instanceof HTMLElement)) return;
+      if(!el.classList.contains("modal")) return;
+
+      const cs = getComputedStyle(el);
+      L.log(`MODAL ${el.id || "(sin id)"} style/class mutation`, {
+        display: cs.display,
+        zIndex: cs.zIndex,
+        opacity: cs.opacity,
+        pointerEvents: cs.pointerEvents,
+        snap: L.snap()
+      });
+    });
+  });
+
+  mods.forEach(el => om.observe(el, { attributes:true, attributeFilter:["style","class"] }));
+
+  // init
+  L.log("✅ MODLOG listo", L.snap());
+})();
