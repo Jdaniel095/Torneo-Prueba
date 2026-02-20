@@ -10,7 +10,7 @@
 
   <!-- ===== LOGIN ===== -->
   <div id="login" class="login-box">
-    <h2>Acceso Pokecomas</h2>
+    <h2>Acceso Pokecomas prueba</h2>
 
     <form id="loginForm">
       <input id="user" placeholder="Usuario" required />
@@ -56,15 +56,30 @@
 
           <!-- ✅ BOTONES HORIZONTALES (debajo del título visualmente, pero aquí van a la derecha en desktop) -->
           <div class="row-actions" style="justify-content:flex-end;">
+            <button class="btn-gold" id="btnTorneoParticipantes" type="button" style="margin-top:10px;">
+  👥 Participantes
+</button>
+
             <button class="btn-gold" id="btnOpenEditModal" type="button">✏️ Editar</button>
             <button class="btn-gold" id="btnTorneoRefrescarLista" type="button">📋 Recargar lista</button>
-            <button class="btn-gold" id="btnTorneoSetUltimo" type="button"> Participantes</button>
+          <button class="btn-gold" id="btnTorneoAsignarNumeros" type="button" style="background:#8b5cf6;">
+  🔢 Numerar Participantes
+</button>
             <button class="btn-gold" id="btnTorneoToggleInscripciones" type="button">Cargando</button>
-            <button class="btn-gold" id="btnTorneoForceStart" type="button">⚡ Iniciar ahora</button>
+           
+<button id="btnDownloadBracket" class="btn-mini" style="margin-top:10px; background: #2e7d32;">
+  🏆 Descargar VS y Bracket
+</button>
+            <button id="btnCerrarManual" class="btn-gold" style="background:#2563eb; border-color:#1d4ed8;">Fase de preparacion</button>
+      <button id="btnIniciar30m" class="btn-gold" style="display:none;">Iniciar 30 Minutos</button>
+      <button id="btnForceStart" class="btn-red" style="display:none;">Terminar Prep Ya</button>
+
 <button class="btn-gold" id="btnTorneoSeed40" type="button">🧪 Poblar 40</button>
 
             <button class="btn-gold" id="btnTorneoGenerarSingle" type="button">🏆 Generar</button>
-            <button id="btnExportJson">⬇ Descargar JSON</button>
+            <button class="btn-gold" id="btnTorneoExportarExcel" type="button" style="background:#27ae60;">
+  📊 Descargar Excel
+</button>
             <button class="btn-danger" id="btnTorneoEliminar" type="button">🗑️ Borrar</button>
           </div>
         </div>
@@ -460,27 +475,20 @@
     <small class="poke-muted">Ej: shiny, mega, purified…</small>
   </div>
 
-  <div>
-    <label>Categorías prohibidas (elige)</label>
-    <div id="tBanCategoriesChips" class="mini-chips mini-chips-ban"></div>
-    <input type="hidden" id="tBanCategories" value="" />
-    <small class="poke-muted">Ej: legendary, mythical, baby…</small>
-  </div>
-</div>
-
-
-      <div class="modal-foot">
+<div>
+        <label>Categorías prohibidas (elige)</label>
+        <div id="tBanCategoriesChips" class="mini-chips mini-chips-ban"></div>
+        <input type="hidden" id="tBanCategories" value="" />
+        <small class="poke-muted">Ej: legendary, mythical, baby…</small>
+      </div>
+    </div> </div> </div> <div class="modal-foot">
         <button class="btn-danger" id="btnModalCancel" type="button" data-close="1">Cancelar</button>
-
-        <!-- Crear -->
         <button class="btn-gold" id="btnTorneoCrear" type="button">➕ Crear torneo</button>
-
-        <!-- Editar -->
         <button class="btn-gold" id="btnTorneoGuardarCambios" type="button" style="display:none;">💾 Guardar cambios</button>
       </div>
-    </div>
-  </div>
+    </div> </div> 
 
+   
   <!-- =====================================================
        SUBMODAL: BO CONFIGURACIÓN AVANZADA
   ====================================================== -->
@@ -544,144 +552,184 @@
   </div>
 
 
-
-<!-- ===========================
-     👥 PARTICIPANTES (ADMIN)
-     =========================== -->
+  <!-- =====================================================
+     MODAL: PARTICIPANTES INSCRITOS (ADMIN)
+====================================================== -->
 <div id="participantsModal" class="modal" style="display:none;">
   <div class="modal-backdrop" data-pclose="1"></div>
 
-  <div class="modal-card modal-wide">
+  <div class="modal-card modal-card--wide">
     <div class="modal-head">
       <div>
-        <div class="modal-title">Participantes</div>
-        <div class="modal-sub">
-          Torneo: <span id="pTorneoId" class="mono">—</span>
-          <span class="muted">·</span>
-          Total: <b id="pCountTotal">0</b>
-          <span class="muted">·</span>
-          Activos: <b id="pCountActivos">0</b>
-          <span class="muted">·</span>
-          Reemplazo: <b id="pCountReplace">0</b>
-        </div>
+        <div class="modal-title">Participantes inscritos</div>
+        <div class="modal-sub" id="pModalSub">—</div>
       </div>
       <button class="modal-x" type="button" data-pclose="1">✕</button>
     </div>
 
     <div class="modal-body">
-      <div class="p-toolbar">
-        <div class="p-left">
-          <button class="btn-gold" id="pBtnRefresh" type="button">🔄 Actualizar</button>
-
-          <label class="p-auto">
-            <input type="checkbox" id="pAutoRefresh" checked>
-            <span>Auto</span>
-          </label>
-
-          <button class="btn-gold" id="pBtnUrl" type="button">⚙ URL torneo</button>
+      <div class="row two" style="align-items:end;">
+        <div>
+          <label>Buscar</label>
+          <input id="pSearch" placeholder="Nombre / Nick / Código / PlayerId" />
         </div>
 
-        <div class="p-right">
-          <input id="pSearch" type="text" placeholder="Buscar: nombre, nick, código, playerId…" />
+        <div style="display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap;">
+          <div style="min-width:180px;">
+            <label>Filtro</label>
+            <select id="pFilter">
+              <option value="activos">Activos</option>
+              <option value="todos">Todos</option>
+              <option value="baja">Solo BAJA</option>
+            </select>
+          </div>
+
+          <div class="p-stats">
+            <div class="p-stat">
+              <div class="tiny muted">Total</div>
+              <div id="pCountTotal" class="p-stat-v">0</div>
+            </div>
+            <div class="p-stat">
+              <div class="tiny muted">Activos</div>
+              <div id="pCountActivos" class="p-stat-v">0</div>
+            </div>
+            <div class="p-stat">
+              <div class="tiny muted">BAJA</div>
+              <div id="pCountBaja" class="p-stat-v">0</div>
+            </div>
+          </div>
+
+          <button class="btn-gold" id="pBtnRefresh" type="button" style="height:42px;">🔄</button>
         </div>
       </div>
 
-      <div id="pList" class="p-list"></div>
+      <div class="p-help" id="pHelpBox" style="margin-top:10px;"></div>
+
+      <div class="p-table-wrap" style="margin-top:12px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Asis.</th>
+              <th>PlayerId</th>
+              <th>Nombre</th>
+              <th>Nick</th>
+              <th>Código</th>
+              <th>Campfire</th>
+              <th>Pokémon (6)</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="pTbody"></tbody>
+        </table>
+      </div>
     </div>
 
     <div class="modal-foot">
-      <div style="flex:1; opacity:.7; font-size:12px;">
-        Tip: “Reemplazar” mantiene el mismo <b>PlayerId</b> (slot) para no romper llaves / matches.
-      </div>
       <button class="btn-danger" type="button" data-pclose="1">Cerrar</button>
     </div>
   </div>
 </div>
 
-<!-- ===== Submodal: REEMPLAZO ===== -->
-<div id="replaceModal" class="submodal" style="display:none;">
-  <div class="submodal-backdrop" data-replace-close="1"></div>
+<!-- =====================================================
+     MODAL: EDITAR / REEMPLAZAR PARTICIPANTE
+====================================================== -->
+<div id="participantEditModal" class="modal" style="display:none;">
+  <div class="modal-backdrop" data-peclose="1"></div>
 
-  <div class="submodal-card" style="width:min(740px, calc(100vw - 24px));">
-    <div class="submodal-head">
+  <div class="modal-card">
+    <div class="modal-head">
       <div>
-        <div class="submodal-title">Reemplazar participante</div>
-        <div class="modal-sub">Genera link con token o reemplaza manualmente.</div>
+        <div class="modal-title" id="peTitle">Editar participante</div>
+        <div class="modal-sub" id="peSub">—</div>
       </div>
-      <button class="modal-x" type="button" data-replace-close="1">✕</button>
+      <button class="modal-x" type="button" data-peclose="1">✕</button>
     </div>
 
-    <div class="submodal-body">
+    <div class="modal-body">
       <div class="row two">
         <div>
-          <label>Participante actual</label>
-          <div id="repWho" class="pill mono">—</div>
+          <label>Nombre</label>
+          <input id="peNombre" />
         </div>
         <div>
-          <label>PlayerId (slot)</label>
-          <div id="repPlayerId" class="pill mono">—</div>
+          <label>Nick</label>
+          <input id="peNick" />
         </div>
       </div>
 
       <div class="row two">
-        <label class="p-auto" style="justify-content:flex-start;">
-          <input type="checkbox" id="repClearParty" checked>
-          <span>Limpiar sus 6 Pokémon (recomendado)</span>
-        </label>
-
-        <div style="display:flex; gap:10px; justify-content:flex-end; align-items:flex-end;">
-          <button class="btn-gold" id="repBtnGenLink" type="button">🔗 Generar link</button>
-          <button class="btn-gold" id="repBtnManualShow" type="button">✏ Reemplazar aquí</button>
+        <div>
+          <label>Código entrenador</label>
+          <input id="peCodigo" />
+        </div>
+        <div>
+          <label>Campfire / Celular</label>
+          <input id="peCampfire" />
         </div>
       </div>
 
-      <div id="repLinkBox" class="rep-box" style="display:none;">
-        <label>Link de reemplazo (pásalo al nuevo participante)</label>
-        <div class="rep-linkrow">
-          <input id="repLink" type="text" readonly value="">
-          <button class="btn-gold" id="repBtnCopy" type="button">Copiar</button>
-        </div>
-        <div class="tiny muted">Token: <span id="repToken" class="mono">—</span></div>
-      </div>
-
-      <div id="repManualBox" class="rep-box" style="display:none;">
-        <div class="row two">
-          <div>
-            <label>Nombre real</label>
-            <input id="repNombre" type="text" placeholder="Ej: Daniel Kesi">
-          </div>
-          <div>
-            <label>Nombre Pokémon GO</label>
-            <input id="repNick" type="text" placeholder="Ej: PokeKesi">
-          </div>
+      <div class="row two" style="margin-top:10px;">
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <label style="margin:0; display:flex; gap:8px; align-items:center;">
+            <input type="checkbox" id="peResetAsistencia" />
+            Resetear asistencia
+          </label>
+          <div class="tiny muted" id="pePlayerIdInfo">—</div>
         </div>
 
-        <div class="row two">
-          <div>
-            <label>Código entrenador</label>
-            <input id="repCodigo" type="text" placeholder="0000 0000 0000">
-          </div>
-          <div>
-            <label>Campfire (opcional)</label>
-            <input id="repCampfire" type="text" placeholder="@usuario">
-          </div>
-        </div>
-
-        <div class="row one">
-          <button class="btn-gold" id="repBtnManualSave" type="button">✅ Guardar reemplazo manual</button>
+        <div style="display:flex; justify-content:flex-end; align-items:center;">
+          <div class="tiny muted">Selecciona Pokémon (Normal/Oscuro/etc.)</div>
         </div>
       </div>
 
-      <div class="tiny muted" style="margin-top:6px;">
-        Nota: El link funciona incluso si ya cerraste inscripciones, mientras el token esté vigente.
+      <div class="row three">
+        <div class="poke-wrap">
+          <label>P1</label>
+          <input id="peP1" placeholder="Buscar..." />
+          <div id="peP1Drop" class="poke-dropdown" style="display:none;"></div>
+        </div>
+        <div class="poke-wrap">
+          <label>P2</label>
+          <input id="peP2" placeholder="Buscar..." />
+          <div id="peP2Drop" class="poke-dropdown" style="display:none;"></div>
+        </div>
+        <div class="poke-wrap">
+          <label>P3</label>
+          <input id="peP3" placeholder="Buscar..." />
+          <div id="peP3Drop" class="poke-dropdown" style="display:none;"></div>
+        </div>
       </div>
+
+      <div class="row three">
+        <div class="poke-wrap">
+          <label>P4</label>
+          <input id="peP4" placeholder="Buscar..." />
+          <div id="peP4Drop" class="poke-dropdown" style="display:none;"></div>
+        </div>
+        <div class="poke-wrap">
+          <label>P5</label>
+          <input id="peP5" placeholder="Buscar..." />
+          <div id="peP5Drop" class="poke-dropdown" style="display:none;"></div>
+        </div>
+        <div class="poke-wrap">
+          <label>P6</label>
+          <input id="peP6" placeholder="Buscar..." />
+          <div id="peP6Drop" class="poke-dropdown" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div class="p-edit-warn" id="peWarn" style="margin-top:10px;"></div>
     </div>
 
-    <div class="submodal-foot">
-      <button class="btn-danger" type="button" data-replace-close="1">Cerrar</button>
+    <div class="modal-foot">
+      <button class="btn-danger" type="button" data-peclose="1">Cancelar</button>
+      <button class="btn-gold" id="btnPeSave" type="button">💾 Guardar</button>
     </div>
   </div>
 </div>
+
+ 
 
   <script src="panel.js"></script>
 </body>
