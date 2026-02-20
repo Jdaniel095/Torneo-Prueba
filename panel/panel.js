@@ -4950,6 +4950,13 @@ async function descargarBracketExcel() {
   }
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  const btnDownloadBracket = document.getElementById("btnDownloadBracket");
+  if (btnDownloadBracket) {
+    btnDownloadBracket.addEventListener("click", descargarBracketExcel);
+  }
+});
+
 // Dentro de document.addEventListener("DOMContentLoaded", ...
 const btnExportarExcel = document.getElementById("btnTorneoExportarExcel"); // Asegúrate que el ID coincida con tu HTML
 
