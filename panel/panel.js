@@ -267,6 +267,13 @@ async function refrescarSoloMatches(torneoId, matchIds = []) {
   const all = Array.isArray(r.matches) ? r.matches : [];
   const byId = new Map(all.map(m => [String(m.MatchId), m]));
 
+  // 🚀 OPTIMIZACIÓN: Mapeo de nombres para quitar el "TBD"
+  const inscritos = window.PARTICIPANTES_CACHE || [];
+  const nameMap = {};
+  inscritos.forEach(p => {
+    nameMap[p.PlayerId] = p.NombrePokemonGO || p.Nombre || p.PlayerId;
+  });
+
   matchIds.forEach(id => {
     const ref = MATCH_ROW.get(id);
     const m = byId.get(id);
@@ -274,6 +281,22 @@ async function refrescarSoloMatches(torneoId, matchIds = []) {
 
     const { tr, box } = ref;
 
+    // 🚀 1. ACTUALIZAR IDs Y NOMBRES DE LA PRÓXIMA RONDA
+    const aId = String(m.PlayerAId || "");
+    const bId = String(m.PlayerBId || "");
+    box.dataset.aid = aId;
+    box.dataset.bid = bId;
+
+    const aName = aId ? (nameMap[aId] || aId) : "TBD";
+    const bName = bId ? (nameMap[bId] || bId) : "TBD";
+
+    const nameEls = tr.querySelectorAll(".m-name");
+    if(nameEls.length >= 2){
+      nameEls[0].textContent = aName;
+      nameEls[1].textContent = bName;
+    }
+
+    // 2. ACTUALIZAR DATA LOCAL
     box.dataset.scorea = String(Number(m.ScoreA ?? 0));
     box.dataset.scoreb = String(Number(m.ScoreB ?? 0));
     box.dataset.status = String(m.Status || "");
@@ -282,6 +305,7 @@ async function refrescarSoloMatches(torneoId, matchIds = []) {
     box.dataset.matchstatus = String(m.MatchStatus || "");
     box.dataset.location = String(m.Location || "");
 
+    // 3. ACTUALIZAR ESTADO DE UBICACIÓN
     const locEl = tr.querySelector('[data-mloc="1"]');
     if (locEl) locEl.value = String(m.Location || "");
 
@@ -292,14 +316,13 @@ async function refrescarSoloMatches(torneoId, matchIds = []) {
       applyOpsVisual(tr, ms);
     }
 
+    // 4. ACTUALIZAR ESTADO DEL SCORE
     const st = getOrInitMatchState(id);
     st.a = Number(m.ScoreA ?? 0);
     st.b = Number(m.ScoreB ?? 0);
 
     if (String(m.Status) === "done") {
       st.locked = true;
-      const aId = String(box.dataset.aid || "");
-      const bId = String(box.dataset.bid || "");
       const w = String(m.WinnerId || "");
       st.winnerId = (w && w === aId) ? "A" : (w && w === bId) ? "B" : "";
     } else {
@@ -307,12 +330,29 @@ async function refrescarSoloMatches(torneoId, matchIds = []) {
       st.winnerId = "";
     }
 
+    // 🚀 5. HABILITAR BOTONES SI LOS JUGADORES YA LLEGARON
+    const missingPlayers = (!aId || !bId);
+    
+    // Botones de acción (+, -, Ganador, Subir Marcador)
+    const actionBtns = tr.querySelectorAll('[data-scorebtn], [data-pushscore="1"], [data-winbtn]');
+    actionBtns.forEach(b => {
+       // Se habilitan si ya hay 2 jugadores y el match NO ha terminado
+       b.disabled = missingPlayers || st.locked;
+    });
+
+    // Botón de editar
+    const editBtn = tr.querySelector('[data-edit="1"]');
+    if(editBtn) {
+       // El botón de editar solo requiere que haya jugadores para poder alterar el resultado
+       editBtn.disabled = missingPlayers;
+    }
+
+    // 6. RENDERIZAR VISUALMENTE
     renderScore(tr, st);
     applyRowVisual(tr, st);
     applyButtonsVisual(tr, st);
   });
 }
-
 
 
 /* ================= UTIL ================= */
@@ -1317,15 +1357,15 @@ async function torneoActualizar(){
     return;
   }
 
-  const cfg = await torneoGET("torneo_config", { torneoId });
-  if(!cfg.ok){
+const dashboard = await torneoGET("torneo_dashboard", { torneoId });
+  if(!dashboard.ok){
     if (boxTitle) boxTitle.textContent = "Error cargando torneo.";
     if (boxBadges) boxBadges.innerHTML = badge("Error", "warn");
     return;
   }
 
-  const c = cfg.config || {};
-  const tid = safe(cfg.torneoId || c.torneoId || torneoId).trim();
+  const c = dashboard.config || {};
+  const tid = safe(dashboard.torneoId || c.torneoId || torneoId).trim();
   LAST_TORNEO_CFG = c;
 LAST_TORNEO_ID  = tid;
 
@@ -1565,9 +1605,8 @@ function dexListToNames(raw){
 
 
 
-// inscritos
-  const ins = await torneoGET("torneo_list_inscritos", { torneoId: tid });
-  window.PARTICIPANTES_CACHE = (ins.inscritos || []); // <--- ESTA LÍNEA NUEVA
+// inscritos (Cargados desde el dashboard en 1 sola llamada)
+  window.PARTICIPANTES_CACHE = (dashboard.inscritos || []); 
   const inscritos = window.PARTICIPANTES_CACHE;
   const count = inscritos.length;
 
@@ -1585,9 +1624,8 @@ function dexListToNames(raw){
     nameMap[p.PlayerId] = p.NombrePokemonGO || p.Nombre || p.PlayerId;
   });
 
-  // matches
-  const mat = await torneoGET("torneo_list_matches", { torneoId: tid });
-  const matches = (mat.matches || []);
+// matches (Cargados desde el dashboard en 1 sola llamada)
+  const matches = (dashboard.matches || []);
 
   if(!body) return;
 
@@ -1746,87 +1784,89 @@ renderScore(tr, st);
   renderScore(tr, st);
   applyRowVisual(tr, st);
   applyButtonsVisual(tr, st);
+// ✅ Operación (MatchStatus/Ubicación)
+  const locEl = box.querySelector('[data-mloc="1"]');
+  const msEl  = box.querySelector('[data-mstatus="1"]');
+  const tglEl = box.querySelector('[data-mtoggle="1"]');
 
-  // ✅ Operación (MatchStatus/Ubicación)
-const locEl = box.querySelector('[data-mloc="1"]');
-const msEl  = box.querySelector('[data-mstatus="1"]');
-const tglEl = box.querySelector('[data-mtoggle="1"]');
+  if(msEl){
+    msEl.value = String(box.dataset.matchstatus || normMatchStatus(box.dataset)).toLowerCase() || "scheduled";
+    applyOpsVisual(tr, msEl.value);
 
-if(msEl){
-  msEl.value = String(box.dataset.matchstatus || normMatchStatus(box.dataset)).toLowerCase() || "scheduled";
-  applyOpsVisual(tr, msEl.value);
+    msEl.addEventListener("change", () => {
+      const torneoId = getSelectedTorneoId();
+      const matchStatus = String(msEl.value || "").trim().toLowerCase();
 
-  msEl.addEventListener("change", async () => {
-    const torneoId = getSelectedTorneoId();
-    const matchStatus = String(msEl.value || "").trim().toLowerCase();
+      // 🚀 OPTIMIZACIÓN: Actualización local inmediata
+      box.dataset.matchstatus = matchStatus;
+      applyOpsVisual(tr, matchStatus);
+      toast("⏳ Guardando status...", "ok");
 
-    const r = await torneoPOST({
-      accion: "match_update_status",
-      user: CURRENT_USER, pin: ADMIN_PIN,
-      torneoId, matchId, matchStatus
+      // Llamada en segundo plano sin 'await'
+      torneoPOST({
+        accion: "match_update_status", user: CURRENT_USER, pin: ADMIN_PIN,
+        torneoId, matchId, matchStatus
+      }).then(r => {
+        if(!r.ok){
+          toast("❌ " + (r.error || "Error de status"), "error");
+          refrescarSoloMatches(torneoId, [matchId]); // Revertir visualmente
+        } else {
+          toast("✅ Status actualizado", "ok");
+        }
+      });
     });
+  }
 
-    if(!r.ok){
-      toast("❌ " + (r.error || "No se pudo actualizar status"), "error");
-      await refrescarSoloMatches(torneoId);
-      return;
-    }
+  if(locEl){
+    locEl.addEventListener("blur", () => {
+      const torneoId = getSelectedTorneoId();
+      const location = String(locEl.value || "").trim();
+      
+      if(box.dataset.location === location) return; // Evitar fetch innecesario
 
-    toast("✅ Status actualizado", "ok");
-    await refrescarSoloMatches(torneoId);
-  });
-}
+      // 🚀 OPTIMIZACIÓN: Actualización local inmediata
+      box.dataset.location = location;
 
-
-if(locEl){
-  locEl.addEventListener("blur", async () => {
-    const torneoId = getSelectedTorneoId();
-    const location = String(locEl.value || "").trim();
-
-    const r = await torneoPOST({
-      accion: "match_update_location",
-      user: CURRENT_USER, pin: ADMIN_PIN,
-      torneoId, matchId, location
+      torneoPOST({
+        accion: "match_update_location", user: CURRENT_USER, pin: ADMIN_PIN,
+        torneoId, matchId, location
+      }).then(r => {
+        if(!r.ok){
+          toast("❌ " + (r.error || "Error en ubicación"), "error");
+          refrescarSoloMatches(torneoId, [matchId]);
+        } else {
+          toast("✅ Ubicación guardada", "ok");
+        }
+      });
     });
+  }
 
-    if(!r.ok){
-      toast("❌ " + (r.error || "No se pudo actualizar ubicación"), "error");
-      await refrescarSoloMatches(torneoId);
-      return;
-    }
+  if(tglEl && msEl){
+    tglEl.addEventListener("click", () => {
+      const torneoId = getSelectedTorneoId();
+      const current = String(msEl.value || "").trim().toLowerCase();
+      const next = (current === "paused") ? "running" : "paused";
 
-    toast("✅ Ubicación actualizada", "ok");
-    await refrescarSoloMatches(torneoId);
-  });
-}
+      // 🚀 OPTIMIZACIÓN: Actualización local inmediata
+      msEl.value = next;
+      box.dataset.matchstatus = next;
+      applyOpsVisual(tr, next);
 
+      torneoPOST({
+        accion: "match_update_status", user: CURRENT_USER, pin: ADMIN_PIN,
+        torneoId, matchId, matchStatus: next
+      }).then(r => {
+        if(!r.ok){
+          toast("❌ " + (r.error || "No se pudo pausar/reanudar"), "err");
+          refrescarSoloMatches(torneoId, [matchId]);
+        } else {
+          toast(next === "paused" ? "⏸ Match pausado" : "▶ Match reanudado", "ok");
+        }
+      });
+    });
+  }
 
-if(tglEl && msEl){
-  tglEl.addEventListener("click", async () => {
-    const torneoId = getSelectedTorneoId();
-    const current = String(msEl.value || "").trim().toLowerCase();
-    const next = (current === "paused") ? "running" : "paused";
-
-   const r = await torneoPOST({
-  accion: "match_update_status",
-  user: CURRENT_USER, pin: ADMIN_PIN,
-  torneoId, matchId, matchStatus: next
-});
-
-
-    if(!r.ok){
-      toast("❌ " + (r.error || "No se pudo pausar/reanudar"), "err");
-      await refrescarSoloMatches(torneoId);
-      return;
-    }
-
-    toast(next === "paused" ? "⏸ Match pausado" : "▶ Match reanudado", "ok");
-    await refrescarSoloMatches(torneoId);
-  });
-}
-
-
-  // + / - marcador
+  // + / - marcador (100% local, no requiere servidor hasta presionar subir/guardar)
   box.querySelectorAll("[data-scorebtn]").forEach(btn => {
     btn.onclick = () => {
       if(st.locked) return;
@@ -1839,82 +1879,70 @@ if(tglEl && msEl){
 
       renderScore(tr, st);
 
-      // Si alguien llegó a needWins, sugerimos ganador pintando botones (sin guardar aún)
+      // Sugerir ganador visualmente
       if(st.a >= needWins){
         st.winnerId = "A";
         applyButtonsVisual(tr, st);
-      }else if(st.b >= needWins){
+      } else if(st.b >= needWins){
         st.winnerId = "B";
         applyButtonsVisual(tr, st);
-      }else{
+      } else {
         st.winnerId = "";
         applyButtonsVisual(tr, st);
       }
     };
   });
 
-// Editar (desbloquea para corregir marcador/ganador)
-const editBtn = tr.querySelector("[data-edit='1']");
-if(editBtn){
-  editBtn.onclick = () => {
-    // Si estaba bloqueado por "done", lo dejamos editable en UI
-    st.locked = false;
-    st.winnerId = "";
+  // Editar (desbloquea localmente)
+  const editBtn = tr.querySelector("[data-edit='1']");
+  if(editBtn){
+    editBtn.onclick = () => {
+      st.locked = false;
+      st.winnerId = "";
+      renderScore(tr, st);
+      applyRowVisual(tr, st);
+      applyButtonsVisual(tr, st);
+      box.querySelectorAll("button").forEach(b => b.disabled = false);
+    };
+  }
 
-    // (opcional) si quieres que al editar se mantenga el marcador previo, NO lo resetees.
-    // Si quieres resetear al entrar a editar, descomenta:
-    // st.a = 0; st.b = 0;
+  // 🚀 OPTIMIZACIÓN: Subir marcador al instante
+  const pushBtn = box.querySelector("[data-pushscore='1']");
+  if(pushBtn){
+    pushBtn.onclick = () => {
+      if(st.locked) return;
 
-    renderScore(tr, st);
-    applyRowVisual(tr, st);
-    applyButtonsVisual(tr, st);
+      // Actualización visual inmediata
+      box.dataset.scorea = String(st.a);
+      box.dataset.scoreb = String(st.b);
+      renderScore(tr, st);
+      toast("✅ Marcador actualizado", "ok"); // Feedback engañoso pero fluido
 
-    // habilitar botones manualmente
-    box.querySelectorAll("button").forEach(b => b.disabled = false);
-  };
-}
+      setBtnLoading(pushBtn, true, "..."); 
 
-// Subir marcado 
-
-const pushBtn = box.querySelector("[data-pushscore='1']");
-if(pushBtn){
-  pushBtn.onclick = async () => {
-    if(st.locked) return;
-
-    await runWithBtn(pushBtn, "Subiendo…", async () => {
-      const r = await torneoPOST({
-        accion: "torneo_update_score",
-        user: CURRENT_USER,
-        pin: ADMIN_PIN,
-        torneoId: tid,
-        matchId,
-        scoreA: st.a,
-        scoreB: st.b
+      // Fetch en segundo plano
+      torneoPOST({
+        accion: "torneo_update_score", user: CURRENT_USER, pin: ADMIN_PIN,
+        torneoId: tid, matchId, scoreA: st.a, scoreB: st.b
+      }).then(r => {
+        setBtnLoading(pushBtn, false);
+        if(!r.ok){
+          toast("⚠ " + (r.error || "Error de red"), "error");
+          refrescarSoloMatches(tid, [matchId]); // revierte si falla
+        }
+      }).catch(() => {
+        setBtnLoading(pushBtn, false);
+        toast("⚠ Error de conexión", "error");
       });
+    };
+  }
 
-      if(!r.ok) return toast("⚠ " + (r.error || "Error"), "error");
-      toast("✅ Marcador actualizado");
-
-// NO recargues todo. Solo actualiza el score visible (ya lo tienes en st)
-box.dataset.scorea = String(st.a);
-box.dataset.scoreb = String(st.b);
-renderScore(tr, st);
-
-    });
-  };
-}
-
-
-
-
-  // Guardar ganador (cuando tú decidas)
+  // 🚀 OPTIMIZACIÓN: Guardar Ganador al instante
   box.querySelectorAll("[data-winbtn]").forEach(btn => {
-    btn.onclick = async () => {
+    btn.onclick = () => {
       if(st.locked) return;
 
       const side = btn.getAttribute("data-winbtn"); // A o B
-
-      // Validación: que el marcador tenga sentido en BO3/BO5
       const a = st.a, b = st.b;
       const okWinner = (side === "A" && a >= needWins) || (side === "B" && b >= needWins);
 
@@ -1923,49 +1951,55 @@ renderScore(tr, st);
         return;
       }
 
-      // pinta botones y fila inmediatamente
+      // Bloqueo visual inmediato (UI optimista)
       st.locked = true;
       st.winnerId = side;
       applyRowVisual(tr, st);
       applyButtonsVisual(tr, st);
-
-      // envía al servidor
+      
       const winnerId = (side === "A") ? box.getAttribute("data-aid") : box.getAttribute("data-bid");
+      box.dataset.status = "done";
+      box.dataset.winnerid = winnerId;
 
-      await runWithBtn(btn, "Guardando…", async () => {
-        const r = await torneoPOST({
-  accion: "torneo_report_result",
-  user: CURRENT_USER,
-  pin: ADMIN_PIN,
-  torneoId: tid,
-  matchId,
-  winnerId,
-  scoreA: st.a,
-  scoreB: st.b
-});
+      toast("⏳ Guardando resultado...", "ok");
+      setBtnLoading(btn, true, "...");
 
+      // Enviamos POST sin bloquear la pantalla con await
+      torneoPOST({
+        accion: "torneo_report_result", user: CURRENT_USER, pin: ADMIN_PIN,
+        torneoId: tid, matchId, winnerId, scoreA: st.a, scoreB: st.b
+      }).then(r => {
+        setBtnLoading(btn, false);
+        
         if(!r.ok){
-          // si falla, desbloquea
+          // Si el servidor rechazó, desbloqueamos la fila (rollback)
           st.locked = false;
           st.winnerId = "";
+          box.dataset.status = "";
+          box.dataset.winnerid = "";
           applyRowVisual(tr, st);
           applyButtonsVisual(tr, st);
           return toast("⚠ " + (r.error || "Error"), "error");
         }
 
-        toast("✅ Resultado guardado");
+        toast("✅ Resultado confirmado", "ok");
 
-// refresca solo este match y el next (por si se movió el ganador)
-const nextMatchId = String(box.dataset.nextmatch || "");
-await refrescarSoloMatches(tid, [matchId, nextMatchId]);
-
-
+        // Refrescamos en segundo plano SOLO la llave siguiente para que el nombre 
+        // del ganador pase automáticamente a la siguiente ronda sin pausar la web.
+        const nextMatchId = String(box.dataset.nextmatch || "");
+        if(nextMatchId) refrescarSoloMatches(tid, [matchId, nextMatchId]);
+        
+      }).catch(() => {
+        setBtnLoading(btn, false);
+        toast("⚠ Error de conexión", "error");
       });
     };
   });
 });
 
 }
+
+/* ===== BOTONES TORNEO + TABS ===== */
 
 /* ===== BOTONES TORNEO + TABS ===== */
 document.addEventListener("DOMContentLoaded", () => {
@@ -2434,8 +2468,26 @@ if (bToggleInsc) bToggleInsc.onclick = async () => {
     const r = await torneoPOST({ accion: "torneo_open", user: CURRENT_USER, pin: ADMIN_PIN, torneoId });
     if(!r.ok) return toast("⚠ " + (r.error || "Error"), "error");
     toast("🟢 Inscripciones abiertas");
-    await torneoCargarLista({keepSelection:true});
-    await torneoActualizar();
+    
+    // OPTIMIZACIÓN: Actualización local instantánea sin recargar todo el torneo
+    updateToggleInscripcionesButton(true);
+    if (LAST_TORNEO_CFG) LAST_TORNEO_CFG.inscriptionsOpen = "TRUE";
+    
+    // Actualizar badges visualmente si existen
+    const boxBadges = document.getElementById("tStatusBadges");
+    if (boxBadges && boxBadges.innerHTML.includes("Inscripciones cerradas")) {
+       boxBadges.innerHTML = boxBadges.innerHTML.replace(
+         '<span class="badge lock">Inscripciones cerradas</span>', 
+         '<span class="badge ok">Inscripciones abiertas</span>'
+       );
+    }
+    
+    // Ajustar visibilidad de los botones de acciones rápidas
+    if(bToggleInsc) bToggleInsc.style.display = "none"; 
+    if(bCerrarMan) bCerrarMan.style.display = "inline-block";
+    if(bIniciar30) bIniciar30.style.display = "none";
+    if(bForzarIni) bForzarIni.style.display = "none";
+    if(bGenerarBr) bGenerarBr.style.display = "none";
   });
 };
 
@@ -2448,8 +2500,30 @@ if (bCerrarMan) bCerrarMan.onclick = async () => {
     const r = await torneoPOST({ accion: "torneo_close", user: CURRENT_USER, pin: ADMIN_PIN, torneoId });
     if(!r.ok) return toast("⚠ " + (r.error || "Error"), "error");
     toast("✅ Inscripciones cerradas en modo manual");
-    await torneoCargarLista({keepSelection:true});
-    await torneoActualizar();
+    
+    // OPTIMIZACIÓN: Actualización local instantánea sin recargar todo el torneo
+    updateToggleInscripcionesButton(false);
+    if (LAST_TORNEO_CFG) {
+      LAST_TORNEO_CFG.inscriptionsOpen = "FALSE";
+      LAST_TORNEO_CFG.prepEndsAt = "MANUAL";
+    }
+    
+    // Actualizar badges visualmente si existen
+    const boxBadges = document.getElementById("tStatusBadges");
+    if (boxBadges && boxBadges.innerHTML.includes("Inscripciones abiertas")) {
+       boxBadges.innerHTML = boxBadges.innerHTML.replace(
+         '<span class="badge ok">Inscripciones abiertas</span>', 
+         '<span class="badge lock">Inscripciones cerradas</span>'
+       );
+    }
+    
+    // Ajustar visibilidad de los botones de acciones rápidas
+    const gen = LAST_TORNEO_CFG ? isTrue(LAST_TORNEO_CFG.generated) : false;
+    if(bToggleInsc) bToggleInsc.style.display = gen ? "none" : "inline-block"; 
+    if(bCerrarMan) bCerrarMan.style.display = "none";
+    if(bIniciar30) bIniciar30.style.display = "inline-block";
+    if(bForzarIni) bForzarIni.style.display = "inline-block";
+    if(bGenerarBr) bGenerarBr.style.display = gen ? "none" : "inline-block";
   });
 };
 
