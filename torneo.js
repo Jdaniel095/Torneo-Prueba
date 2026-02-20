@@ -198,7 +198,7 @@ window.TorneoApp = {
 // Log de información inicial
 console.log('Información del dispositivo:', getDeviceInfo());
 
-const API = "https://script.google.com/macros/s/AKfycbzEpIAkxL3tWHsl80XUp6DfHp3n8pspK7mG_JZtI5snfM8yU5wKkBVnBTTbe1BxNZXwJQ/exec";
+const API = "https://script.google.com/macros/s/AKfycbyCKV9peBewnrgGZDFnZWt6k3oUlRQ4TdHtHHquNHlj4QZ57V4vdwC8e3DhRenZQYB6zg/exec";
 const $ = (id) => document.getElementById(id);
 
 let TORNEOS = [];
@@ -344,6 +344,10 @@ function parseGmt5StampToMs(stamp){
 
 // ✅ Fase de preparación activa
 function isPrepActive(t){
+  // 1. Si está en modo MANUAL y cerrado, sigue en espera (incluso si hay bracket generado)
+  if(t?.prepEndsAt === "MANUAL" && !t?.open) return true;
+  
+  // 2. Si no, revisa el tiempo
   const endMs = parseGmt5StampToMs(t?.prepEndsAt);
   return (!t?.open && !!endMs && Date.now() < endMs);
 }
@@ -2738,6 +2742,197 @@ function getTeamFromInscrito(ins){
   return t2.map(firstPidFromCell_);
 }
 
+// ===============================
+// ✅ CACHE (LOCAL) + EXPORT NORMALIZER
+// ===============================
+const CACHE_INDEX_KEY = "pc.torneos.index.v1";
+const CACHE_TORNEO_KEY = (id) => `pc.torneo.data.v1:${id}`;
+
+function cacheParse_(raw, fallback = null){
+  try { return JSON.parse(raw); } catch(_) { return fallback; }
+}
+
+function cacheLoadBootstrap_(){
+  const idx = cacheParse_(localStorage.getItem(CACHE_INDEX_KEY) || "", null);
+  if(!idx || !Array.isArray(idx.torneos) || !idx.torneos.length) return false;
+
+  const torneos = [];
+  for(const it of idx.torneos){
+    const id = String(it?.id || "").trim();
+    if(!id) continue;
+    const t = cacheParse_(localStorage.getItem(CACHE_TORNEO_KEY(id)) || "", null);
+    if(t && t.torneoId) torneos.push(t);
+  }
+  if(!torneos.length) return false;
+
+  TORNEOS = torneos;
+  SELECTED_ID = String(idx.selectedId || "").trim() || torneos[0].torneoId;
+
+  renderTabs();
+  renderSelected();
+  return true;
+}
+
+function cacheSaveAll_(){
+  try{
+    const idx = {
+      v: 1,
+      savedAt: Date.now(),
+      selectedId: SELECTED_ID || "",
+      torneos: (TORNEOS || []).map(t => ({
+        id: String(t.torneoId || "").trim(),
+        ver: Number(t._ver || 0) || 0
+      }))
+    };
+    localStorage.setItem(CACHE_INDEX_KEY, JSON.stringify(idx));
+    (TORNEOS || []).forEach(t => {
+      localStorage.setItem(CACHE_TORNEO_KEY(t.torneoId), JSON.stringify(t));
+    });
+  }catch(_){}
+}
+
+function exportPlayersToInscritos_(torneoId, players){
+  const out = [];
+  (players || []).forEach(p => {
+    const team = Array.isArray(p.team) ? p.team : [];
+    out.push({
+      Timestamp: p.ts || p.timestamp || "",
+      TorneoId: torneoId,
+      PlayerId: String(p.playerId || "").trim(),
+      NombrePokemonGO: String(p.nombre || "").trim(),
+      Nick: String(p.nick || "").trim(),
+      Codigo: String(p.codigo || "").trim(),
+      Campfire: String(p.campfire || "").trim(),
+      Estado: String(p.estado || p.state || "Inscrito").trim() || "Inscrito",
+      P1: String(team[0] || "").trim(),
+      P2: String(team[1] || "").trim(),
+      P3: String(team[2] || "").trim(),
+      P4: String(team[3] || "").trim(),
+      P5: String(team[4] || "").trim(),
+      P6: String(team[5] || "").trim(),
+    });
+  });
+  return out;
+}
+
+function exportMatchesToLegacy_(torneoId, matches){
+  return (matches || []).map(m => ({
+    TorneoId: torneoId,
+    MatchId: String(m.matchId ?? m.MatchId ?? "").trim(),
+    Round: Number(m.round ?? m.Round ?? 0),
+    Slot: Number(m.slot ?? m.Slot ?? 0),
+    PlayerAId: String(m.playerAId ?? m.PlayerAId ?? "").trim(),
+    PlayerBId: String(m.playerBId ?? m.PlayerBId ?? "").trim(),
+    ScoreA: (m.scoreA ?? m.ScoreA ?? ""),
+    ScoreB: (m.scoreB ?? m.ScoreB ?? ""),
+    WinnerId: String(m.winnerId ?? m.WinnerId ?? "").trim(),
+    LoserId: String(m.loserId ?? m.LoserId ?? "").trim(),
+    Status: String(m.status ?? m.Status ?? "").trim(),
+    NextMatchId: String(m.nextMatchId ?? m.NextMatchId ?? "").trim(),
+    NextSide: String(m.nextSide ?? m.NextSide ?? "").trim(),
+    MatchStatus: String(m.matchStatus ?? m.MatchStatus ?? "").trim(),
+    Location: String(m.location ?? m.Location ?? "").trim(),
+    TableNo: String(m.tableNo ?? m.TableNo ?? "").trim(),
+    Stage: String(m.stage ?? m.Stage ?? "").trim(),
+    GroupId: String(m.groupId ?? m.GroupId ?? "").trim(),
+    SwissRound: String(m.swissRound ?? m.SwissRound ?? "").trim(),
+    Bracket: String(m.bracket ?? m.Bracket ?? "").trim(),
+    MetaJson: (typeof m.metaJson === "string") ? m.metaJson : JSON.stringify(m.meta || {}),
+    HistoryJson: (typeof m.historyJson === "string") ? m.historyJson : (typeof m.HistoryJson === "string" ? m.HistoryJson : "[]"),
+  }));
+}
+
+function buildByIdFromInscritos_(inscritos){
+  const byId = {};
+  (inscritos || []).forEach(r => {
+    const id = String(r.PlayerId || "").trim();
+    if(!id) return;
+    const name = String(r.Nick || r.NombrePokemonGO || r.Codigo || id).trim();
+    byId[id] = { name, team: getTeamFromInscrito(r) };
+  });
+  return byId;
+}
+
+function buildTournamentFromExport_(meta, exp){
+  const torneoId = String(meta?.torneoId || exp?.torneo?.torneoId || "").trim();
+
+  const players = Array.isArray(exp?.players) ? exp.players : [];
+  const matchesRaw = Array.isArray(exp?.matches) ? exp.matches : [];
+
+  const inscritos = exportPlayersToInscritos_(torneoId, players);
+  const byId = buildByIdFromInscritos_(inscritos);
+  const matches = exportMatchesToLegacy_(torneoId, matchesRaw);
+
+  matches.sort((a,b) => (Number(a.Round) - Number(b.Round)) || (Number(a.Slot) - Number(b.Slot)));
+
+  let maxRound = 1;
+  matches.forEach(m => { if(Number(m.Round) > maxRound) maxRound = Number(m.Round); });
+
+  const current = matches.filter(m => {
+    const r = Number(m.Round || 0);
+    if(!r) return false;
+    const st = String(m.Status || "").toLowerCase();
+    const ms = String(m.MatchStatus || "").toLowerCase();
+    if(st === "done" || ms === "finished") return false;
+    if(ms === "cancelled") return false;
+    return true;
+  });
+
+  const next = current.slice(0, 3);
+
+  const t = {
+    torneoId,
+    title: meta.title || exp?.torneo?.title || "",
+    format: meta.format || exp?.torneo?.format || "",
+    leaguePlan: meta.leaguePlan || exp?.torneo?.leaguePlan || "",
+    league: meta.leaguePlan || exp?.torneo?.leaguePlan || "",
+    mode: meta.mode || exp?.torneo?.mode || "",
+    dateTime: meta.dateTime || exp?.torneo?.dateTime || "",
+
+    bestOf: meta.bestOf || meta.boPhasesJson || exp?.torneo?.bestOf || exp?.torneo?.boPhasesJson || "",
+    boPhasesJson: meta.boPhasesJson,
+    suggestedSize: meta.suggestedSize ?? exp?.torneo?.suggestedSize,
+
+    open: isTrue(meta.inscriptionsOpen ?? exp?.torneo?.inscriptionsOpen),
+    generated: isTrue(meta.generated ?? exp?.torneo?.generated),
+    prepEndsAt: meta.prepEndsAt || exp?.torneo?.prepEndsAt || "",
+
+    tablesCount: meta.tablesCount ?? exp?.torneo?.tablesCount,
+    hasMainStage: meta.hasMainStage ?? exp?.torneo?.hasMainStage,
+    mainStageFrom: meta.mainStageFrom ?? exp?.torneo?.mainStageFrom,
+    mainStageRandomPct: meta.mainStageRandomPct ?? exp?.torneo?.mainStageRandomPct,
+
+    createdAt: meta.createdAt || exp?.torneo?.createdAt || "",
+    createdBy: meta.createdBy || exp?.torneo?.createdBy || "",
+
+    bannedTypes: meta.bannedTypes || "",
+    bannedCategories: meta.bannedCategories || "",
+    bannedPokemon: meta.bannedPokemon || "",
+    allowedPokemon: meta.allowedPokemon || "",
+    bannedFastMoves: meta.bannedFastMoves || "",
+    bannedChargedMoves: meta.bannedChargedMoves || "",
+    allowedTypes: meta.allowedTypes || "",
+    allowedCategories: meta.allowedCategories || "",
+
+    leagueRulesJson: meta.leagueRulesJson || "",
+    prizesJson: meta.prizesJson || "[]",
+
+    status: meta.status || "",
+    finishedAt: meta.finishedAt || "",
+    runnerUp: meta.runnerUp || "",
+
+    inscritos,
+    byId,
+    matches,
+    maxRound,
+    current,
+    next,
+  };
+
+  return t;
+}
+
+
 async function loadAll(force = false) {
   if (LOADALL_PROMISE) return LOADALL_PROMISE;
   if (!force && TORNEOS.length && (Date.now() - LAST_LOADALL_TS) < LOADALL_MIN_MS) return;
@@ -2749,91 +2944,91 @@ async function loadAll(force = false) {
   return LOADALL_PROMISE;
 }
 
-async function _loadAllInner() {
+async function _loadAllInner(force){
   const list = await apiGET("torneo_list", SHOW_ALL_TOURNEOS ? {} : { onlyActive: "1" });
-  if(!list.ok) throw new Error(list.error || "No se pudo cargar lista");
-  const torneos = Array.isArray(list.torneos) ? list.torneos : [];
-  torneos.sort((a,b)=> String(a.createdAt||"").localeCompare(String(b.createdAt||"")));
+  const metaList = Array.isArray(list?.torneos) ? list.torneos : [];
 
-  if(!torneos.length){
-    renderNoTournamentState_("No hay torneos disponibles.");
+if(!metaList.length){
+    TORNEOS = [];
+    
+    // 1. Llamamos a la función correctamente (con el guion bajo)
+    renderNoTournamentState_(); 
+    
+    // 2. Destruimos manualmente el caché principal para matar al "torneo fantasma"
+    localStorage.removeItem("pc.torneos.index.v1");
+    
+    // 3. Guardamos el nuevo estado vacío
+    cacheSaveAll_();
     return;
   }
 
-  const detailed = await Promise.all(torneos.map(async t => {
-    const torneoId = String(t.torneoId||"").trim();
-    const cfg = await apiGET("torneo_config", { torneoId });
-    const c = cfg.config || {};
-    const ins = await apiGET("torneo_list_inscritos", { torneoId });
-    const inscritos = Array.isArray(ins.inscritos) ? ins.inscritos : [];
-    const mat = await apiGET("torneo_list_matches", { torneoId });
-    const matches = Array.isArray(mat.matches) ? mat.matches : [];
-    const byId = {};
-    inscritos.forEach(p => {
-      const id = String(p.PlayerId || p.playerId || "").trim();
-      if(!id) return;
-      byId[id] = {
-        name: p.NombrePokemonGO || p.Nick || p.Nombre || id,
-        team: getTeamFromInscrito(p)
-      };
-    });
-    matches.sort((a,b)=> (Number(a.Round)-Number(b.Round)) || (Number(a.Slot)-Number(b.Slot)));
-    const maxRound = matches.reduce((mx,m)=> Math.max(mx, Number(m.Round||1)), 1);
-    const pending = matches.filter(m => String(m.Status||"") !== "done" && m.PlayerAId && m.PlayerBId);
-    const current = pending[0] || null;
-    const next = pending[1] || null;
+  const prevById = new Map((TORNEOS || []).map(t => [String(t.torneoId || "").trim(), t]));
+  const out = [];
 
-    return {
-      torneoId,
-      title: c.title || t.title || "(sin título)",
-      dateTime: c.dateTime || t.dateTime || "",
-      format: c.format || t.format || "",
-      league: c.leaguePlan || c.league || t.leaguePlan || t.league || "",
-      mode: c.mode || "",
-      tablesCount: Number(
-        c.tablesCount ?? c.TablesCount ?? c.mesas ?? c.Mesas ??
-        t.tablesCount ?? t.TablesCount ?? t.mesas ?? t.Mesas ?? 0
-      ) || 0,
-      hasMainStage: isTrue(
-        c.hasMainStage ?? c.HasMainStage ?? c.mainStage ?? c.MainStage ??
-        t.hasMainStage ?? t.HasMainStage ?? t.mainStage ?? t.MainStage ?? ""
-      ),
-      leagueRulesJson: c.leagueRulesJson || t.leagueRulesJson || "",
-      bestOf: c.boPhasesJson || c.bestOf || t.boPhasesJson || t.bestOf || "",
-      prizesJson: c.prizesJson || c.prizes || t.prizesJson || t.prizes || "",
-      open: isTrue(c.inscriptionsOpen ?? t.inscriptionsOpen),
-      generated: isTrue(c.generated ?? t.generated),
-      prepEndsAt: c.prepEndsAt || "",
-      inscritos,
-      bannedTypes: c.bannedTypes || "",
-      bannedCategories: c.bannedCategories || "",
-      allowedTypes: c.allowedTypes || t.allowedTypes || "",
-      allowedCategories: c.allowedCategories || t.allowedCategories || "",
-      bannedPokemon: c.bannedPokemon || "",
-      allowedPokemon: c.allowedPokemon || "",
-      bannedFastMoves: c.bannedFastMoves || c.bannedFast || t.bannedFastMoves || t.bannedFast || "",
-      bannedChargedMoves: c.bannedChargedMoves || c.bannedCharged || t.bannedChargedMoves || t.bannedCharged || "",
-      byId,
-      matches,
-      maxRound,
-      current,
-      next
-    };
-  }));
+  for(const meta of metaList){
+    const torneoId = String(meta?.torneoId || "").trim();
+    if(!torneoId) continue;
 
-  TORNEOS = detailed;
+    // seguridad: si no mostramos todos, filtra por status active
+    if(!SHOW_ALL_TOURNEOS){
+      const st = String(meta.status || "").toLowerCase();
+      if(st && st !== "active") continue;
+    }
 
-  if (!SELECTED_ID) {
-    const abiertos = TORNEOS.filter(x => x.open);
-    SELECTED_ID = (abiertos.length ? abiertos[abiertos.length - 1] : TORNEOS[TORNEOS.length - 1]).torneoId;
+    const ver = Number(meta.version || 0) || 0;
+    const prev = prevById.get(torneoId);
+
+    // ✅ si no cambió versión y no forzamos, reusamos lo que ya tenemos (o el cache cargado)
+    if(prev && !force && Number(prev._ver || 0) === ver){
+      out.push(prev);
+      continue;
+    }
+
+    // ✅ si cambió, recién bajamos el export JSON (1 sola llamada)
+    const exp = await apiGET("torneo_export_json", { torneoId });
+
+    if(exp?.ok){
+      const t = buildTournamentFromExport_(meta, exp);
+      t._ver = ver || Number(exp.version || 0) || 0;
+      out.push(t);
+    }else if(prev){
+      // fallback: si falla red, mantenemos lo anterior
+      out.push(prev);
+    }
+  }
+
+  // si el filtro dejó vacío pero había data, intenta con el primero
+  if(!out.length && metaList.length){
+    const m0 = metaList[0];
+    const torneoId0 = String(m0?.torneoId || "").trim();
+    const exp0 = await apiGET("torneo_export_json", { torneoId: torneoId0 });
+    if(exp0?.ok){
+      const t0 = buildTournamentFromExport_(m0, exp0);
+      t0._ver = Number(m0.version || 0) || 0;
+      out.push(t0);
+    }
+  }
+
+  TORNEOS = out;
+
+  const prevSel = String(SELECTED_ID || "").trim();
+  if(prevSel && out.some(t => String(t.torneoId) === prevSel)){
+    SELECTED_ID = prevSel;
+  }else{
+    const openT = out.find(t => isTrue(t.open));
+    SELECTED_ID = (openT ? openT.torneoId : (out[0]?.torneoId || ""));
   }
 
   renderTabs();
   renderSelected();
+
   if (isModalOpen()) {
-    await setupModalPokemonFilterForSelectedTournament();
+    setupModalPokemonFilterForSelectedTournament();
   }
+
+  cacheSaveAll_();
 }
+
 
 function renderTabs(){
   const box = $("eventTabs");
@@ -2853,6 +3048,7 @@ function renderTabs(){
   box.querySelectorAll("button[data-id]").forEach(btn => {
     btn.onclick = () => {
       SELECTED_ID = btn.getAttribute("data-id");
+      cacheSaveAll_();
       renderTabs();
       renderSelected();
       setupModalPokemonFilterForSelectedTournament();
@@ -3194,10 +3390,18 @@ function setTournamentHeaderUI(t){
       setHeaderPrepMode(true);
       if(dtRow) dtRow.style.display = "none";
       if(prepBar) prepBar.style.display = "block";
-      if(prepTimeEl) prepTimeEl.textContent = "30:00"; 
       if(dateOnlyEl) dateOnlyEl.textContent = "";
-      if(timeOnlyEl) timeOnlyEl.textContent = "30:00"; 
-      startPrepTimer(t.prepEndsAt);
+      
+      // ✅ Lógica nueva: ¿Espera manual o tiempo?
+      if(t.prepEndsAt === "MANUAL"){
+        if(prepTimeEl) prepTimeEl.textContent = "ESPERANDO";
+        if(timeOnlyEl) timeOnlyEl.textContent = "ESPERANDO";
+        stopPrepTimer(); // Detenemos cualquier timer anterior
+      } else {
+        if(prepTimeEl) prepTimeEl.textContent = "30:00"; 
+        if(timeOnlyEl) timeOnlyEl.textContent = "30:00"; 
+        startPrepTimer(t.prepEndsAt);
+      }
     }else{
       setHeaderPrepMode(false);
       if(dtRow) dtRow.style.display = "flex";
@@ -3653,6 +3857,25 @@ function renderSelected(){
   }
 
   $("openModalBtn").style.display = "none";
+    // 🔧 Transición: cerrado pero aún sin prepEndsAt (debería setearse en backend)
+  if(!t.open && !t.generated && !String(t.prepEndsAt || "").trim()){
+    const es = $("eventSummary");
+    if(es){
+      es.style.display = "block";
+      es.innerHTML = `<div class="event-kicker">PREPARACIÓN</div><div style="opacity:.85">Actualizando fase…</div>`;
+    }
+    hideBracket_();
+
+    // evita spamear timeouts
+    if(!window.__PREP_SYNC_TO){
+      window.__PREP_SYNC_TO = setTimeout(() => {
+        window.__PREP_SYNC_TO = null;
+        loadAll(true).catch(()=>{});
+      }, 8000);
+    }
+    return;
+  }
+
 
   // Preparación
   if(isPrepActive(t)){
@@ -4863,22 +5086,63 @@ if(!/^\d{9}$/.test(contacto)){
   }
 };
 
+// ===============================
+// CARGA RÁPIDA (FALLBACK LOCAL)
+// ===============================
+async function loadLocalFallback_() {
+    try {
+        // Intenta cargar el archivo estático descargado
+        const res = await fetch("torneo_backup.json");
+        if (!res.ok) return false;
+        
+        const exp = await res.json();
+        
+        // Usamos exp.torneo como metadata
+        const meta = exp.torneo || {};
+        const t = buildTournamentFromExport_(meta, exp);
+        t._ver = Number(exp.version || 0) || 0;
+        
+        TORNEOS = [t];
+        SELECTED_ID = t.torneoId;
+        
+        renderTabs();
+        renderSelected();
+        console.log("Carga inicial rápida ejecutada desde torneo_backup.json");
+        return true;
+    } catch (e) {
+        console.warn("Fallo al cargar el backup local:", e);
+        return false;
+    }
+}
+
 /* Init */
 (async function init(){
   try{
-    await loadPokemonDB();
-    try{
-      await loadMovesDB();
-    }catch(e){
-      console.warn("Moves DB no cargó:", e);
+    // 1) Pinta instantáneo desde caché local (si el usuario ya visitó la web antes)
+    const hasCache = cacheLoadBootstrap_();
+
+    // 2) Si NO hay caché (primera visita), carga tu JSON estático al instante
+    if (!hasCache) {
+        await loadLocalFallback_();
     }
-    await loadAll(true);           
-    setInterval(loadAll, 12000);   
+
+    // 3) Cargar bases de datos pesadas sin bloquear la pantalla (sin await)
+    loadPokemonDB().catch(e => console.warn("Pokemon DB fail:", e));
+    loadMovesDB().catch(e => console.warn("Moves DB fail:", e));
+
+    // 4) Pide los datos frescos a Google Apps Script en segundo plano
+    // Esto sobrescribirá la vista inicial silenciosamente cuando termine
+    loadAll(true).catch(e => console.warn("Error refrescando torneo:", e));
+
+    // 5) Refresco periódico
+    setInterval(() => loadAll(false), 12000);
   }catch(e){
-    $("torneoInfo").textContent = "Error cargando torneo";
+    const info = document.getElementById("torneoInfo");
+    if(info) info.textContent = "Error cargando torneo";
     showToast("⚠ " + (e?.message || e));
   }
 })();
+
 
 let fitBracketTimer = null;
 let lastKnownScale = 1;
