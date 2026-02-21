@@ -10,153 +10,6 @@ let ADMIN_PIN = "";
 let SELECTED_TORNEO_ID = ""; // ✅ multi-eventos
 let SELECTED_TORNEO_OPEN = null; // ✅ guarda si el torneo seleccionado está abierto/cerrado
 
-// ======================================================
-// 🔎 MODLOG (DEBUG de modales / scroll lock)
-//  - Apagar: MODLOG.enabled = false
-// ======================================================
-window.MODLOG = window.MODLOG || (() => {
-  const api = {
-    enabled: true,
-    max: 250,
-    lines: [],
-    ui: null,
-    showUI: true, // pon false si solo quieres consola
-  };
-
-  const pad2 = (n) => String(n).padStart(2, "0");
-  const ts = () => {
-    const d = new Date();
-    return `${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())}.${String(d.getMilliseconds()).padStart(3,"0")}`;
-  };
-
-  function safeStr(v){
-    try{ return JSON.stringify(v); }catch{ return String(v); }
-  }
-
-  function getBodyState(){
-    const b = document.body;
-    const cs = b ? getComputedStyle(b) : null;
-    return {
-      className: b ? b.className : "",
-      overflow: cs ? cs.overflow : "",
-      scrollY: window.scrollY
-    };
-  }
-
-  function getOpenModals(){
-    const modals = Array.from(document.querySelectorAll(".modal"));
-    const out = modals.map((m, i) => {
-      const cs = getComputedStyle(m);
-      return {
-        id: m.id || `(modal_${i})`,
-        display: cs.display,
-        zIndex: cs.zIndex,
-        opacity: cs.opacity,
-        pointerEvents: cs.pointerEvents
-      };
-    });
-    return out.filter(x => x.display !== "none");
-  }
-
-  api.snap = () => ({ body: getBodyState(), openModals: getOpenModals() });
-
-  api._push = (kind, msg, data) => {
-    if(!api.enabled) return;
-    const lineObj = { t: ts(), kind, msg, data: data || null };
-    api.lines.push(lineObj);
-    if(api.lines.length > api.max) api.lines.shift();
-
-    try{
-      console.log(`%c[MODLOG ${lineObj.t}] ${kind}: ${msg}`, "color:#ffe27a;font-weight:700", data || "");
-    }catch{
-      console.log(`[MODLOG ${lineObj.t}] ${kind}: ${msg}`);
-    }
-
-    if(api.showUI) api._renderUI();
-  };
-
-  api.log = (msg, data) => api._push("LOG", msg, data);
-  api.call = (fnName, args, extra) => {
-    const stack = (new Error()).stack || "";
-    api._push("CALL", `${fnName}(${(args||[]).map(a => safeStr(a)).join(", ")})`, {
-      ...api.snap(),
-      ...(extra || {}),
-      stack: stack.split("\n").slice(0,6).join("\n")
-    });
-  };
-
-  api.clear = () => { api.lines = []; api._renderUI(true); };
-  api.export = () => api.lines
-    .map(x => `[${x.t}] ${x.kind}: ${x.msg} ${x.data ? safeStr(x.data) : ""}`)
-    .join("\n");
-
-  api._renderUI = () => {
-    if(!api.showUI) return;
-    if(!document.body) return;
-
-    if(!api.ui){
-      const box = document.createElement("div");
-      box.id = "modlog-ui";
-      box.style.cssText =
-        "position:fixed;left:12px;bottom:12px;width:min(520px,calc(100vw - 24px));max-height:40vh;z-index:999999;" +
-        "background:rgba(0,0,0,.72);border:1px solid rgba(255,255,255,.18);border-radius:12px;" +
-        "padding:10px;font:12px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;color:#fff;overflow:auto;";
-
-      const head = document.createElement("div");
-      head.style.cssText = "display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap;";
-
-      const title = document.createElement("div");
-      title.textContent = "MODLOG (modales)";
-      title.style.cssText = "font-weight:800;color:#ffe27a;margin-right:auto;";
-
-      const btnCss = "padding:6px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;";
-
-      const btnCopy = document.createElement("button");
-      btnCopy.type = "button";
-      btnCopy.textContent = "Copiar";
-      btnCopy.style.cssText = btnCss;
-      btnCopy.onclick = async () => {
-        const txt = api.export();
-        try{ await navigator.clipboard.writeText(txt); api.log("📋 Logs copiados"); }catch{ api.log("⚠ No se pudo copiar"); }
-      };
-
-      const btnClear = document.createElement("button");
-      btnClear.type = "button";
-      btnClear.textContent = "Limpiar";
-      btnClear.style.cssText = btnCss;
-      btnClear.onclick = () => api.clear();
-
-      const btnHide = document.createElement("button");
-      btnHide.type = "button";
-      btnHide.textContent = "Ocultar";
-      btnHide.style.cssText = btnCss;
-      btnHide.onclick = () => { box.style.display = "none"; api.log("UI oculta"); };
-
-      head.appendChild(title);
-      head.appendChild(btnCopy);
-      head.appendChild(btnClear);
-      head.appendChild(btnHide);
-
-      const pre = document.createElement("pre");
-      pre.id = "modlog-pre";
-      pre.style.cssText = "margin:0;white-space:pre-wrap;word-break:break-word;";
-
-      box.appendChild(head);
-      box.appendChild(pre);
-
-      document.body.appendChild(box);
-      api.ui = box;
-    }
-
-    const pre = api.ui.querySelector("#modlog-pre");
-    if(pre){
-      pre.textContent = api.lines.map(x => `[${x.t}] ${x.kind}: ${x.msg}`).join("\n");
-    }
-  };
-
-  return api;
-})();
-
 
 
 // ================= MATCH UI SCOREBOARD =================
@@ -253,7 +106,6 @@ function renderScore(tr, st){
 }
 
 async function refrescarSoloMatches(torneoId, matchIds = []) {
-  // ✅ si no me pasan ids, refresco todos los que están pintados en la tabla
   if (!Array.isArray(matchIds) || matchIds.length === 0) {
     matchIds = Array.from(MATCH_ROW.keys());
   }
@@ -267,56 +119,66 @@ async function refrescarSoloMatches(torneoId, matchIds = []) {
   const all = Array.isArray(r.matches) ? r.matches : [];
   const byId = new Map(all.map(m => [String(m.MatchId), m]));
 
-  // 🚀 OPTIMIZACIÓN: Mapeo de nombres para quitar el "TBD"
   const inscritos = window.PARTICIPANTES_CACHE || [];
   const nameMap = {};
   inscritos.forEach(p => {
-    nameMap[p.PlayerId] = p.NombrePokemonGO || p.Nombre || p.PlayerId;
+    nameMap[p.PlayerId] = p.Nick || p.NombrePokemonGO || p.Nombre || p.PlayerId;
   });
 
-  matchIds.forEach(id => {
-    const ref = MATCH_ROW.get(id);
+  // ✅ CORRECCIÓN: Re-calcular los feeders con los datos frescos del servidor
+  const feeders = {};
+  all.forEach(m => {
+    const next = String(m.NextMatchId || "").trim();
+    if (next) {
+      if (!feeders[next]) feeders[next] = [];
+      feeders[next].push(m);
+    }
+  });
+  for (let k in feeders) {
+    feeders[k].sort((a, b) => Number(a.Slot || 0) - Number(b.Slot || 0));
+  }
+
+  // Definimos la función de ayuda visual dentro del refresco
+  function buildWaitHtml(fMatch) {
+     if(!fMatch) return `<span style="color:rgba(255,255,255,0.3); font-style:italic;">TBD</span>`;
+     const nA = fMatch.PlayerAId ? (nameMap[fMatch.PlayerAId] || "TBD") : "TBD";
+     const nB = fMatch.PlayerBId ? (nameMap[fMatch.PlayerBId] || "TBD") : "TBD";
+     if(nA === "TBD" && nB === "TBD") return `<span style="color:rgba(255,255,255,0.3); font-style:italic; font-size:0.85em;">Esperando llave...</span>`;
+     return `<span style="color:rgba(255,255,255,0.45); font-style:italic; font-size:0.82em;">G. de ${escapeHtml(nA)} vs ${escapeHtml(nB)}</span>`;
+  }
+
+  // ✅ IMPORTANTE: Ahora recorremos TODOS los matches cargados en la tabla actual,
+  // no solo los que cambiaron, para asegurar que las ayudas grises se actualicen.
+  MATCH_ROW.forEach((ref, id) => {
     const m = byId.get(id);
-    if (!ref || !m) return;
+    if (!m) return;
 
     const { tr, box } = ref;
 
-    // 🚀 1. ACTUALIZAR IDs Y NOMBRES DE LA PRÓXIMA RONDA
     const aId = String(m.PlayerAId || "");
     const bId = String(m.PlayerBId || "");
     box.dataset.aid = aId;
     box.dataset.bid = bId;
 
-    const aName = aId ? (nameMap[aId] || aId) : "TBD";
-    const bName = bId ? (nameMap[bId] || bId) : "TBD";
+    // ✅ Re-calculamos los nombres o las ayudas visuales grises
+    const f = feeders[m.MatchId] || [];
+    const aNameHtml = aId ? escapeHtml(nameMap[aId] || aId) : buildWaitHtml(f[0]);
+    const bNameHtml = bId ? escapeHtml(nameMap[bId] || bId) : buildWaitHtml(f[1]);
 
     const nameEls = tr.querySelectorAll(".m-name");
     if(nameEls.length >= 2){
-      nameEls[0].textContent = aName;
-      nameEls[1].textContent = bName;
+      nameEls[0].innerHTML = aNameHtml;
+      nameEls[1].innerHTML = bNameHtml;
     }
 
-    // 2. ACTUALIZAR DATA LOCAL
+    // Actualizar estados internos del match (marcadores, bloqueos, etc)
     box.dataset.scorea = String(Number(m.ScoreA ?? 0));
     box.dataset.scoreb = String(Number(m.ScoreB ?? 0));
     box.dataset.status = String(m.Status || "");
     box.dataset.winnerid = String(m.WinnerId || "");
-
     box.dataset.matchstatus = String(m.MatchStatus || "");
     box.dataset.location = String(m.Location || "");
 
-    // 3. ACTUALIZAR ESTADO DE UBICACIÓN
-    const locEl = tr.querySelector('[data-mloc="1"]');
-    if (locEl) locEl.value = String(m.Location || "");
-
-    const msEl = tr.querySelector('[data-mstatus="1"]');
-    if (msEl) {
-      const ms = normMatchStatus(m);
-      msEl.value = ms;
-      applyOpsVisual(tr, ms);
-    }
-
-    // 4. ACTUALIZAR ESTADO DEL SCORE
     const st = getOrInitMatchState(id);
     st.a = Number(m.ScoreA ?? 0);
     st.b = Number(m.ScoreB ?? 0);
@@ -330,24 +192,6 @@ async function refrescarSoloMatches(torneoId, matchIds = []) {
       st.winnerId = "";
     }
 
-    // 🚀 5. HABILITAR BOTONES SI LOS JUGADORES YA LLEGARON
-    const missingPlayers = (!aId || !bId);
-    
-    // Botones de acción (+, -, Ganador, Subir Marcador)
-    const actionBtns = tr.querySelectorAll('[data-scorebtn], [data-pushscore="1"], [data-winbtn]');
-    actionBtns.forEach(b => {
-       // Se habilitan si ya hay 2 jugadores y el match NO ha terminado
-       b.disabled = missingPlayers || st.locked;
-    });
-
-    // Botón de editar
-    const editBtn = tr.querySelector('[data-edit="1"]');
-    if(editBtn) {
-       // El botón de editar solo requiere que haya jugadores para poder alterar el resultado
-       editBtn.disabled = missingPlayers;
-    }
-
-    // 6. RENDERIZAR VISUALMENTE
     renderScore(tr, st);
     applyRowVisual(tr, st);
     applyButtonsVisual(tr, st);
@@ -1044,6 +888,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const btn  = form.querySelector("button");
 
+  // ✅ NUEVO: Auto-login si ya hay datos guardados en el navegador
+  const savedUser = localStorage.getItem("pokeadmin_user");
+  const savedPin = localStorage.getItem("pokeadmin_pin");
+  const savedRole = localStorage.getItem("pokeadmin_role");
+
+  if (savedUser && savedPin) {
+    ROLE = savedRole || "";
+    CURRENT_USER = savedUser;
+    ADMIN_USER = savedUser;
+    ADMIN_PIN = savedPin;
+
+    document.getElementById("login").style.display = "none";
+    document.getElementById("panel").style.display = "block";
+
+    cargar();
+    torneoCargarLista().then(() => torneoActualizar());
+  }
+
   form.addEventListener("submit", function(e) {
     e.preventDefault();
     if (btn.disabled) return;
@@ -1074,6 +936,11 @@ document.addEventListener("DOMContentLoaded", () => {
         ADMIN_USER = user;     // ✅ compat
         ADMIN_PIN = pin;
 
+        // ✅ NUEVO: Guardar credenciales en el navegador al loguearse con éxito
+        localStorage.setItem("pokeadmin_user", user);
+        localStorage.setItem("pokeadmin_pin", pin);
+        localStorage.setItem("pokeadmin_role", res.role || "");
+
         document.getElementById("login").style.display = "none";
         document.getElementById("panel").style.display = "block";
 
@@ -1082,13 +949,23 @@ document.addEventListener("DOMContentLoaded", () => {
         await torneoActualizar();       // ✅ pinta status y matches del seleccionado
       })
     .catch((e) => {
-  console.error(e);
-  alert("⚠ Error: " + (e?.message || e));
-  btn.disabled = false;
-  btn.textContent = "Ingresar";
-});
-
+      console.error(e);
+      alert("⚠ Error: " + (e?.message || e));
+      btn.disabled = false;
+      btn.textContent = "Ingresar";
+    });
   });
+
+  // ✅ NUEVO: Botón de cerrar sesión
+  const btnLogout = document.getElementById("btnLogout");
+  if (btnLogout) {
+    btnLogout.addEventListener("click", () => {
+      localStorage.removeItem("pokeadmin_user");
+      localStorage.removeItem("pokeadmin_pin");
+      localStorage.removeItem("pokeadmin_role");
+      location.reload(); // Recarga la página para volver a mostrar el login
+    });
+  }
 });
 
 /* =============================
@@ -1619,11 +1496,12 @@ function dexListToNames(raw){
     }
   }
 
-  const nameMap = {};
+ const nameMap = {};
   inscritos.forEach(p => {
-    nameMap[p.PlayerId] = p.NombrePokemonGO || p.Nombre || p.PlayerId;
+    // Le damos prioridad al Nick
+    nameMap[p.PlayerId] = p.Nick || p.NombrePokemonGO || p.Nombre || p.PlayerId;
   });
-
+// REEMPLAZA POR ESTO:
 // matches (Cargados desde el dashboard en 1 sola llamada)
   const matches = (dashboard.matches || []);
 
@@ -1635,18 +1513,81 @@ function dexListToNames(raw){
     return;
   }
 
+  // ✅ NUEVO: Calcular la ronda máxima
+  let maxRound = 1;
+  matches.forEach(m => {
+    const r = Number(m.Round || 1);
+    if (r > maxRound) maxRound = r;
+  });
+
+  // REEMPLÁZALO POR ESTO:
+  // ✅ NUEVO: Función para determinar el nombre de la ronda
+  function getRoundName(r, max) {
+    r = Number(r || 1);
+    max = Number(max || r);
+    if (max <= 1) return "Final";
+    if (r === max) return "Final";
+    if (r === max - 1) return "Semifinal";
+    if (r === max - 2) return "Cuartos";
+    if (r === max - 3) return "Octavos";
+    return String(r); // Rondas previas salen solo como número
+  }
+
+  // ✅ Calcular de dónde vienen los jugadores (Llaves anteriores) para el texto gris
+  const feeders = {};
+  matches.forEach(m => {
+    const next = String(m.NextMatchId || "").trim();
+    if (next) {
+      if (!feeders[next]) feeders[next] = [];
+      feeders[next].push(m);
+    }
+  });
+  for (let k in feeders) {
+    feeders[k].sort((a, b) => Number(a.Slot || 0) - Number(b.Slot || 0));
+  }
+
   matches
     .sort((a,b)=> (Number(a.Round)-Number(b.Round)) || (Number(a.Slot)-Number(b.Slot)))
     .forEach(m => {
       const aId = safe(m.PlayerAId);
       const bId = safe(m.PlayerBId);
-      const aName = aId ? (nameMap[aId] || aId) : "TBD";
-      const bName = bId ? (nameMap[bId] || bId) : "TBD";
+      
+      const f = feeders[m.MatchId] || [];
+      const feederA = f[0];
+      const feederB = f[1];
+
+      function buildWaitHtml(fMatch) {
+         if(!fMatch) return `<span style="color:rgba(255,255,255,0.3); font-style:italic;">TBD</span>`;
+         const nA = fMatch.PlayerAId ? (nameMap[fMatch.PlayerAId] || "TBD") : "TBD";
+         const nB = fMatch.PlayerBId ? (nameMap[fMatch.PlayerBId] || "TBD") : "TBD";
+         if(nA === "TBD" && nB === "TBD") return `<span style="color:rgba(255,255,255,0.3); font-style:italic; font-size:0.85em;">Esperando llave...</span>`;
+         return `<span style="color:rgba(255,255,255,0.45); font-style:italic; font-size:0.82em;">G. de ${escapeHtml(nA)} vs ${escapeHtml(nB)}</span>`;
+      }
+
+      const aNameHtml = aId ? escapeHtml(nameMap[aId] || aId) : buildWaitHtml(feederA);
+      const bNameHtml = bId ? escapeHtml(nameMap[bId] || bId) : buildWaitHtml(feederB);
+
       const boThisMatch = boForMatch_(m);
 // ✅ Operación (status/ubicación) para UI
 const opStatus = normMatchStatus(m); // scheduled/running/paused/finished/cancelled
 const location = String(m.Location ?? m.location ?? "");
 
+// ✅ Generar opciones de ubicación basadas en la configuración del torneo
+const tablesCount = Number(c.tablesCount || 0);
+const hasMain = isTrue(c.hasMainStage);
+
+let locOptions = `<option value="">-- Ubicación --</option>`;
+if (hasMain) {
+  locOptions += `<option value="Escenario Principal" ${location === "Escenario Principal" ? "selected" : ""}>Escenario Principal</option>`;
+}
+for (let i = 1; i <= tablesCount; i++) {
+  const mName = `Mesa ${i}`;
+  locOptions += `<option value="${mName}" ${location === mName ? "selected" : ""}>${mName}</option>`;
+}
+// Respaldo: por si había una ubicación escrita a mano previamente
+if (location && location !== "Escenario Principal" && !location.startsWith("Mesa ")) {
+  locOptions += `<option value="${escapeHtml(location)}" selected>${escapeHtml(location)}</option>`;
+}
 
     const done = safe(m.Status) === "done";
 const disabled = (!aId || !bId); // ✅ NO bloquees por done, porque Editar debe quedar disponible
@@ -1661,10 +1602,12 @@ if(done){
 }
 
 
+     const roundName = getRoundName(m.Round, maxRound);
+
       const tr = document.createElement("tr");
 tr.innerHTML = `
   <td>${escapeHtml(safe(m.MatchId))}</td>
-  <td>${escapeHtml(safe(m.Round))}</td>
+  <td><span style="color: #ffe27a; font-weight: bold;">${escapeHtml(roundName)}</span></td>
 
   <td>
     <div class="match-actions"
@@ -1684,7 +1627,7 @@ data-location="${escapeHtml(location)}">
       <div class="match-grid">
         <!-- A -->
         <div class="m-player">
-          <div class="m-name">${escapeHtml(aName)}</div>
+          <div class="m-name">${aNameHtml}</div>
           <button class="btn-gold btn-win" data-winbtn="A" ${disabled ? "disabled" : ""}>Ganador A</button>
         </div>
 
@@ -1707,7 +1650,7 @@ data-location="${escapeHtml(location)}">
 
         <!-- B -->
         <div class="m-player">
-          <div class="m-name">${escapeHtml(bName)}</div>
+          <div class="m-name">${bNameHtml}</div>
           <button class="btn-gold btn-win" data-winbtn="B" ${disabled ? "disabled" : ""}>Ganador B</button>
         </div>
         </div>
@@ -1715,10 +1658,9 @@ data-location="${escapeHtml(location)}">
       <div class="match-ops" data-matchops="1">
         <span class="chip chip-op" data-mchip="1">${escapeHtml(matchStatusLabel(opStatus))}</span>
 
-        <input class="m-loc" data-mloc="1"
-          placeholder="Ubicación (Mesa 4)"
-          value="${escapeHtml(location)}"
-        />
+      <select class="m-loc" data-mloc="1" style="background: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 4px;">
+          ${locOptions}
+        </select>
 
         <select class="m-opstatus" data-mstatus="1">
           <option value="scheduled" ${opStatus==="scheduled" ? "selected" : ""}>Programado</option>
@@ -1818,7 +1760,7 @@ renderScore(tr, st);
   }
 
   if(locEl){
-    locEl.addEventListener("blur", () => {
+    locEl.addEventListener("change", () => {
       const torneoId = getSelectedTorneoId();
       const location = String(locEl.value || "").trim();
       
@@ -1999,7 +1941,6 @@ renderScore(tr, st);
 
 }
 
-/* ===== BOTONES TORNEO + TABS ===== */
 
 /* ===== BOTONES TORNEO + TABS ===== */
 document.addEventListener("DOMContentLoaded", () => {
@@ -2262,6 +2203,33 @@ if(btnDelete) btnDelete.onclick = async () => {
   });
 };
 
+
+// ✅ BOTÓN ASIGNAR NÚMEROS DE PARTICIPANTE
+  const btnAsignarNumeros = document.getElementById("btnTorneoAsignarNumeros");
+  if (btnAsignarNumeros) {
+    btnAsignarNumeros.onclick = async () => {
+      const torneoId = getSelectedTorneoId();
+      if (!torneoId) return toast("⚠ Selecciona un torneo", "error");
+
+      const ok = confirm("🔢 ¿Numerar a los participantes de este torneo?\n\nEsto generará un número correlativo para los jugadores activos (ignorando bajas y rechazados).");
+      if (!ok) return;
+
+      await runWithBtn(btnAsignarNumeros, "Numerando…", async () => {
+        const r = await torneoPOST({
+          accion: "torneo_admin_assign_numbers",
+          user: CURRENT_USER,
+          pin: ADMIN_PIN,
+          torneoId
+        });
+
+        if (!r.ok) return toast("⚠ " + (r.error || "Error al numerar"), "error");
+
+        toast(`✅ Listo: ${r.total} participantes numerados correctamente.`);
+        // Refrescamos los datos para que el JSON de exportación tome los nuevos números
+        await torneoActualizar(); 
+      });
+    };
+  }
 
  if(btnAct) btnAct.onclick = async () => {
   await runWithBtn(btnAct, "Actualizando…", async () => {
@@ -2610,6 +2578,93 @@ function pokemonName(p){
   return (n.es_419 || n.es_ES || n.en || "").trim();
 }
 
+// --- SISTEMA DE AURA OSCURA (SHADOW FALLBACK) ---
+function normalizeIconId_(token){
+  const s = String(token || "").trim();
+  if(!s) return "";
+  const m = s.match(/^(\d{1,4}(?:_[a-z0-9]+)?)\b/i);
+  return m ? m[1] : s;
+}
+
+function isShadowIconId_(id){
+  return /_a1$/i.test(String(id || "").trim());
+}
+
+function fallbackIconIdForMissingVariant(iconId){
+  const s = String(iconId||"").trim();
+  if(!s) return "";
+  const m1 = s.match(/^(.*?)(?:_a1|_a2|_s)$/i);
+  if(m1) return m1[1];
+  const m2 = s.match(/^(.*?)(?:_b1|_b2)$/i);
+  if(m2) return m2[1];
+  const m3 = s.match(/^0*(\d{1,4})/);
+  return m3 ? String(Number(m3[1])) : "";
+}
+
+function onPokeIconLoad_(img){
+  const wrap = img?.closest?.(".poke-icon-wrap");
+  if(!wrap) return;
+  const isShadow = img.dataset.shadow === "1";
+  const didFallback = img.dataset.didFallback === "1";
+  if(isShadow && !didFallback){
+    wrap.classList.remove("shadow-fallback");
+  }
+}
+
+function onPokeIconError_(img){
+  const wrap = img?.closest?.(".poke-icon-wrap");
+  const optId = img?.dataset?.optid || "";
+  const fb = img?.dataset?.fallbackid || "";
+  const isShadow = img?.dataset?.shadow === "1";
+
+  // Evita bucles de error
+  if(img.dataset.didFallback === "1"){
+    img.removeAttribute("src");
+    img.style.visibility = "hidden";
+    return;
+  }
+
+  // Si hay fallback, lo usamos y activamos el aura si era shadow
+  if(fb && fb !== optId){
+    img.dataset.didFallback = "1";
+    if(isShadow && wrap){
+      wrap.classList.add("shadow-fallback");
+    }
+    img.src = iconUrl(fb);
+    return;
+  }
+
+  // Si no hay fallback, se oculta
+  img.removeAttribute("src");
+  img.style.visibility = "hidden";
+}
+
+// Renderizador unificado para el panel
+function renderPanelPokeIcon_(iconId) {
+  const rawId = normalizeIconId_(iconId);
+  if(!rawId) return `<span class="tiny muted">—</span>`;
+
+  const title = _iconTitle_(rawId) || rawId;
+  const isShadow = isShadowIconId_(rawId);
+  const firstUrl = iconUrl(rawId);
+  const fallbackId = fallbackIconIdForMissingVariant(rawId) || "";
+
+  return `
+    <span class="poke-icon-wrap" title="${escapeHtml(title)}" style="display:inline-block;">
+      <img
+        src="${firstUrl}"
+        alt="${escapeHtml(title)}"
+        loading="lazy"
+        data-optid="${escapeHtml(rawId)}"
+        data-fallbackid="${escapeHtml(fallbackId)}"
+        data-shadow="${isShadow ? "1" : "0"}"
+        onload="onPokeIconLoad_(this)"
+        onerror="onPokeIconError_(this)"
+      />
+    </span>
+  `;
+}
+
 function pNormalizeText(s){
   return String(s || "")
     .toLowerCase()
@@ -2634,15 +2689,15 @@ function kindLabelFromIconId(iconId){
 function buildVariantEntries(p){
   const dex = String(p.dex);
   const baseName = pokemonName(p);
+  const types = p.types || [];
+  const baseCategory = p.category || "normal";
   const out = [];
 
-  // En tu json nuevo, lo más común es tener:
-  // p.uicons.recommended = { normal, shadow, purified, shiny, dynamax, gigamax, mega:[...] }
   const rec = p?.uicons?.recommended || {};
 
-  const pushOne = (kind, iconId, megaIdx=null) => {
+  const pushOne = (kind, iconId, megaIdx=null, regionName="") => {
     if(!iconId) return;
-    const label =
+    let label =
       kind === "normal" ? "Normal" :
       kind === "shadow" ? "Oscuro" :
       kind === "purified" ? "Purificado" :
@@ -2652,15 +2707,18 @@ function buildVariantEntries(p){
       kind === "mega" ? (megaIdx ? `Mega ${megaIdx}` : "Mega") :
       kind;
 
-    const text = `#${dex} ${baseName} · ${label}`;
-    const search = pNormalizeText(`${dex} ${baseName} ${label} ${kind}`);
-    const e = { id:String(iconId), dex, baseName, kind, label, text, search };
+    let finalName = baseName;
+    if(regionName) finalName += ` (${regionName})`; // Agrega "Alola", "Galar", etc.
+
+    const text = `#${dex} ${finalName} · ${label}`;
+    const search = pNormalizeText(`${dex} ${finalName} ${label} ${kind} ${regionName}`);
+    
+    const e = { id:String(iconId), dex, baseName: finalName, kind, label, text, search, types, baseCategory };
     out.push(e);
   };
 
-  // Normal (si no existe rec.normal, usamos dex)
+  // 1. Cargamos las formas normales recomendadas
   pushOne("normal", rec.normal || dex);
-
   pushOne("shadow", rec.shadow);
   pushOne("purified", rec.purified);
   pushOne("shiny", rec.shiny);
@@ -2669,6 +2727,61 @@ function buildVariantEntries(p){
 
   const megaArr = Array.isArray(rec.mega) ? rec.mega : [];
   megaArr.forEach((mid, i) => pushOne("mega", mid, i+1));
+
+  // 2. ✨ MAGIA: Extraer TODAS las formas regionales usando el Pokedex
+  const relevant = p?.uicons?.relevantIconIds || [];
+  if (relevant.length > 0) {
+    
+    // Diccionario inteligente para detectar región según el número de Pokedex (Dex)
+    const getRegionName = (d, fNum) => {
+      const dNum = Number(d);
+      const f = Number(fNum);
+      
+      // Caso especial: Meowth tiene forma Alola y Galar (f < 100 es Alola en Niantic)
+      if (dNum === 52) return f < 100 ? "Alola" : "Galar";
+      if (dNum === 79 || dNum === 80) return "Galar"; // Slowpoke y Slowbro
+      
+      const alola = [19,20,26,27,28,37,38,50,51,53,74,75,76,88,89,103,105];
+      const galar = [77,78,83,110,122,144,145,146,199,222,263,264,554,555,562,618];
+      const hisui = [58,59,100,101,157,211,215,503,549,570,571,628,705,706,713,724];
+      const paldea = [128,194]; // Tauros, Wooper
+      
+      if (alola.includes(dNum)) return "Alola";
+      if (galar.includes(dNum)) return "Galar";
+      if (hisui.includes(dNum)) return "Hisui";
+      if (paldea.includes(dNum)) return "Paldea";
+      
+      if (dNum === 487) return "Origen"; // Giratina
+      if ([641, 642, 645, 905].includes(dNum)) return "Tótem"; // Fuerza de la Naturaleza
+      
+      // Si es un Pikachu con gorra, Castform clima, etc... 
+      // Devolvemos vacío ("") para que NO ensucie el nombre con "Forma 25"
+      return ""; 
+    };
+
+    const addedForms = new Set();
+    
+    relevant.forEach(iconId => {
+      // Capturamos las formas _fXXXX
+      const match = iconId.match(/_f(\d+)/);
+      if (match) {
+        const formNum = match[1];
+        if (!addedForms.has(formNum)) {
+          addedForms.add(formNum);
+          
+          const regionName = getRegionName(dex, formNum);
+          const baseFormId = `${dex}_f${formNum}`;
+          
+          // Verificamos si la forma existe realmente
+          if (relevant.some(id => id.startsWith(baseFormId))) {
+             pushOne("normal", baseFormId, null, regionName);
+             if (relevant.includes(`${baseFormId}_a1`)) pushOne("shadow", `${baseFormId}_a1`, null, regionName);
+             if (relevant.includes(`${baseFormId}_a2`)) pushOne("purified", `${baseFormId}_a2`, null, regionName);
+          }
+        }
+      }
+    });
+  }
 
   return out;
 }
@@ -2793,45 +2906,67 @@ function bindPokemonAutocomplete(map, inputId, dropId, chipsBoxId, hiddenId, chi
   const hidden = document.getElementById(hiddenId);
   if(!input || !drop || !hidden) return;
 
-  input.addEventListener("input", () => {
-    const q = pNormalizeText(input.value.trim());
-    drop.innerHTML = "";
-
+input.addEventListener("input", () => {
+    const q = _pNorm_(input.value);
     if(!q){
       drop.style.display = "none";
+      delete input.dataset.iconId;
       return;
     }
 
-    const matches = POKEMON_VARIANT_LIST
-      .filter(e => e.search.includes(q))
-      .slice(0, 30);
+    // ✨ PREPARAR REGLAS COMPLETAS DEL TORNEO ACTUAL
+    let allowT = [], allowC = [], allowP = [];
+    let banT = [], banC = [], banP = [];
+    let hasRules = false;
 
-    if(matches.length === 0){
-      drop.style.display = "none";
-      return;
+    if (typeof LAST_TORNEO_CFG !== "undefined" && LAST_TORNEO_CFG) {
+      hasRules = true;
+      const split = (str) => String(str || "").split(",").map(s => s.trim().toLowerCase()).filter(Boolean);
+      
+      // Extraemos las listas de Permitidos y Baneados
+      allowT = split(LAST_TORNEO_CFG.allowedTypes);
+      allowC = split(LAST_TORNEO_CFG.allowedCategories);
+      allowP = split(LAST_TORNEO_CFG.allowedPokemon);
+      
+      banT = split(LAST_TORNEO_CFG.bannedTypes);
+      banC = split(LAST_TORNEO_CFG.bannedCategories);
+      banP = split(LAST_TORNEO_CFG.bannedPokemon);
     }
 
-    matches.forEach(e => {
-      if(map.has(e.id)) return;
+    const items = (POKEMON_VARIANT_LIST || [])
+      .filter(x => {
+         // 1. Filtro de búsqueda por texto (lo que el usuario tipea)
+         if (!x.search.includes(q)) return false;
+         
+         // 2. Filtro de reglas (Si no hay reglas configuradas, pasan todos)
+         if (!hasRules) return true;
+         
+         const xId = String(x.id).toLowerCase();
+         const xDex = String(x.dex);
+         const xTypes = (x.types || []).map(t => t.toLowerCase());
+         // Consideramos la categoría base (ej: legendario) y la forma (ej: shadow, mega)
+         const xCats = [String(x.baseCategory).toLowerCase(), String(x.kind).toLowerCase()];
+         
+         // A) Excepciones PERMITIDAS directas (Tienen prioridad absoluta, ej. permitir a un legendario baneado)
+         if (allowP.includes(xId) || allowP.includes(xDex)) return true;
+         
+         // B) BANEOS directos (Por ID específico o número de Dex)
+         if (banP.includes(xId) || banP.includes(xDex)) return false;
+         
+         // C) Baneos globales por TIPO o CATEGORÍA
+         if (xTypes.some(t => banT.includes(t))) return false;
+         if (xCats.some(c => banC.includes(c))) return false;
+         
+         // D) REGLAS DE BLANQUEO (Whitelist): Si se definieron Tipos/Categorías permitidas,
+         // el Pokémon está obligado a cumplir al menos con una.
+         if (allowT.length > 0 && !xTypes.some(t => allowT.includes(t))) return false;
+         if (allowC.length > 0 && !xCats.some(c => allowC.includes(c))) return false;
+         
+         return true; // Si sobrevivió a todos los filtros, está permitido ✅
+      })
+      .slice(0, 14);
 
-      const div = document.createElement("div");
-      div.className = "poke-item";
-      div.innerHTML = `
-        <img src="${iconUrl(e.id)}" alt="" style="width:26px;height:26px;margin-right:8px;border-radius:8px;">
-        <span>${escapeHtml(e.text)}</span>
-      `;
-
-      div.onclick = () => {
-        map.set(e.id, e);
-        renderPokemonChips(map, chipsBoxId, hiddenId, chipExtraClass);
-        input.value = "";
-        drop.style.display = "none";
-      };
-
-      drop.appendChild(div);
-    });
-
-    drop.style.display = "block";
+    render(items);
   });
 
   document.addEventListener("click", (e) => {
@@ -4247,6 +4382,75 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+// ======================================================
+// ✅ IMPORTAR JSON (NUEVO CÓDIGO)
+// ======================================================
+document.addEventListener("DOMContentLoaded", () => {
+  const btnImportJson = document.getElementById("btnImportJson");
+  const fileImportJson = document.getElementById("fileImportJson");
+
+  if (btnImportJson && fileImportJson) {
+    // Disparar el input file al hacer clic en el botón
+    btnImportJson.addEventListener("click", () => {
+      const torneoId = getSelectedTorneoId();
+      if (!torneoId) return toast("⚠ Selecciona un torneo", "error");
+      fileImportJson.click();
+    });
+
+    // Procesar el archivo al seleccionarlo
+    fileImportJson.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async (ev) => {
+        try {
+          const jsonText = ev.target.result;
+          const parsed = JSON.parse(jsonText);
+          
+          // Soporta tanto la estructura "players" como "participants" dependiendo del JSON
+          const players = parsed.players || parsed.participants || [];
+          
+          if (!Array.isArray(players) || players.length === 0) {
+            return toast("⚠ El JSON no contiene una lista de jugadores válida.", "error");
+          }
+
+          const torneoId = getSelectedTorneoId();
+          const ok = confirm(`¿Importar ${players.length} jugadores desde el backup hacia el torneo actual?`);
+          
+          if (!ok) {
+            fileImportJson.value = ""; 
+            return;
+          }
+
+          await runWithBtn(btnImportJson, "Importando...", async () => {
+            const r = await torneoPOST({
+              accion: "torneo_import_json",
+              user: CURRENT_USER,
+              pin: ADMIN_PIN,
+              torneoId: torneoId,
+              players: players
+            });
+
+            if (!r.ok) return toast("⚠ " + (r.error || "Error al importar"), "error");
+
+            toast(`✅ Importados: ${r.imported} de ${r.totalEnJson} jugadores (omitidos si ya existían).`);
+            fileImportJson.value = ""; // Resetea el input para uso futuro
+            await torneoActualizar(); // Refresca la tabla visualmente
+          });
+
+        } catch (error) {
+          toast("⚠ Error al leer el archivo JSON. Verifica que sea un backup válido.", "error");
+          console.error(error);
+          fileImportJson.value = "";
+        }
+      };
+      
+      reader.readAsText(file);
+    });
+  }
+});
+
 // ===============================
 // ✅ PARTICIPANTES (MODAL ADMIN)
 // ===============================
@@ -4358,12 +4562,9 @@ function _renderParticipants_(rows, counts) {
     const estado   = String(row.Estado || "").trim();
 
     const party = _partyFromRow_(row);
-    const partyHtml = `
+  const partyHtml = `
       <div class="p-party">
-        ${party.map(id => id
-          ? `<img src="${iconUrl(id)}" title="${escapeHtml(_iconTitle_(id))}" alt="${escapeHtml(_iconTitle_(id))}">`
-          : `<span class="tiny muted">—</span>`
-        ).join("")}
+        ${party.map(id => renderPanelPokeIcon_(id)).join("")}
       </div>
     `;
 
@@ -4600,8 +4801,15 @@ function openParticipantEditor_(mode, playerId){
   const m = document.getElementById("participantEditModal");
   if(!m) return;
 
-  const row = _findRowByPlayerId_(playerId);
-  if(!row) return toast("⚠ Participante no encontrado", "error");
+  const isAdd = (mode === "add");
+  const isReplace = (mode === "replace");
+  
+  let row = null;
+  // Solo buscamos la fila si no estamos creando uno nuevo
+  if(!isAdd){
+    row = _findRowByPlayerId_(playerId);
+    if(!row) return toast("⚠ Participante no encontrado", "error");
+  }
 
   const titulo = document.getElementById("peTitle");
   const sub = document.getElementById("peSub");
@@ -4610,18 +4818,21 @@ function openParticipantEditor_(mode, playerId){
 
   m.dataset.mode = String(mode||"edit");
   m.dataset.torneoId = P_TORNEO_ID;
-  m.dataset.playerId = String(playerId||"").trim();
+  m.dataset.playerId = isAdd ? "" : String(playerId||"").trim();
 
-  const isReplace = (m.dataset.mode === "replace");
-
-  if(titulo) titulo.textContent = isReplace ? "Reemplazar participante (mantiene PlayerId)" : "Editar participante";
-  if(sub) sub.textContent = `Torneo ${P_TORNEO_ID} · PlayerId ${playerId}`;
+  if(titulo) {
+     if(isAdd) titulo.textContent = "Agregar nuevo participante";
+     else if(isReplace) titulo.textContent = "Reemplazar participante (mantiene PlayerId)";
+     else titulo.textContent = "Editar participante";
+  }
+  
+  if(sub) sub.textContent = isAdd ? `Torneo ${P_TORNEO_ID} · Nuevo` : `Torneo ${P_TORNEO_ID} · PlayerId ${playerId}`;
 
   const pidInfo = document.getElementById("pePlayerIdInfo");
-  if(pidInfo) pidInfo.textContent = `PlayerId: ${playerId}`;
+  if(pidInfo) pidInfo.textContent = isAdd ? "PlayerId: (Se generará automáticamente al guardar)" : `PlayerId: ${playerId}`;
 
   // Prefill
-  if(isReplace){
+  if(isReplace || isAdd){
     document.getElementById("peNombre").value = "";
     document.getElementById("peNick").value = "";
     document.getElementById("peCodigo").value = "";
@@ -4635,11 +4846,15 @@ function openParticipantEditor_(mode, playerId){
     for(let i=1;i<=6;i++) _setPokemonInput_("peP"+i, String(row["P"+i]||"").trim());
   }
 
-  document.getElementById("peResetAsistencia").checked = isReplace; // por defecto en reemplazo, resetea
+  // Si estamos agregando, ocultamos la opción de resetear asistencia porque no aplica
+  const chkReset = document.getElementById("peResetAsistencia");
+  if(chkReset) {
+      chkReset.checked = isReplace; 
+      chkReset.parentElement.style.display = isAdd ? "none" : "block";
+  }
 
   peModalOpen_();
 }
-
 async function _saveParticipant_(){
   const m = document.getElementById("participantEditModal");
   if(!m) return;
@@ -4648,11 +4863,13 @@ async function _saveParticipant_(){
   const playerId = String(m.dataset.playerId||"").trim();
   const mode = String(m.dataset.mode||"edit");
   const isReplace = (mode === "replace");
+  const isAdd = (mode === "add");
 
   const nombre = String(document.getElementById("peNombre").value||"").trim();
   const nick   = String(document.getElementById("peNick").value||"").trim();
-  const codigo = String(document.getElementById("peCodigo").value||"").trim();
-  const campfire = String(document.getElementById("peCampfire").value||"").trim();
+  // Limpiamos todo lo que no sea número
+  const codigo = String(document.getElementById("peCodigo").value||"").replace(/\D/g, '');
+  const campfire = String(document.getElementById("peCampfire").value||"").replace(/\D/g, '');
 
   const warn = document.getElementById("peWarn");
   const setWarn = (msg) => {
@@ -4661,8 +4878,30 @@ async function _saveParticipant_(){
     warn.style.display = msg ? "block" : "none";
   };
 
-  if(!torneoId || !playerId) return toast("⚠ Falta torneoId / playerId", "error");
+  if(!torneoId) return toast("⚠ Falta torneoId", "error");
+  if(!isAdd && !playerId) return toast("⚠ Falta playerId", "error");
   if(!nombre || !nick || !codigo) return setWarn("Nombre, Nick y Código son obligatorios.");
+
+  // ✨ Validaciones de longitud
+  if(codigo.length !== 12) return setWarn("El Código de Entrenador debe tener exactamente 12 números.");
+  if(campfire && campfire.length !== 9) return setWarn("El número de Celular debe tener exactamente 9 números.");
+
+  // ✨ Filtro Anti-Duplicados
+  const isDuplicate = P_ROWS.find(r => 
+    r.PlayerId !== playerId && // No compararse consigo mismo
+    !_isBaja_(r) && // Ignorar a los que fueron dados de baja
+    (String(r.Codigo).replace(/\D/g, '') === codigo || 
+    (campfire && String(r.Campfire).replace(/\D/g, '') === campfire))
+  );
+
+  if (isDuplicate) {
+    if (String(isDuplicate.Codigo).replace(/\D/g, '') === codigo) {
+      return setWarn(`Ese Código ya está registrado por: ${isDuplicate.NombrePokemonGO || isDuplicate.Nombre}.`);
+    }
+    if (String(isDuplicate.Campfire).replace(/\D/g, '') === campfire) {
+      return setWarn(`Ese Celular ya está registrado por: ${isDuplicate.NombrePokemonGO || isDuplicate.Nombre}.`);
+    }
+  }
 
   const party = [];
   for(let i=1;i<=6;i++){
@@ -4676,19 +4915,18 @@ async function _saveParticipant_(){
 
   setWarn("");
 
-  const resetAsis = document.getElementById("peResetAsistencia").checked;
+  const resetAsis = document.getElementById("peResetAsistencia") ? document.getElementById("peResetAsistencia").checked : false;
 
   const payload = {
-    accion: "torneo_admin_update_inscrito",
+    accion: isAdd ? "torneo_admin_add_inscrito" : "torneo_admin_update_inscrito",
     user: CURRENT_USER,
     pin: ADMIN_PIN,
     torneoId,
-    playerId,
+    playerId, 
     nombre, nick, codigo, campfire,
     party,
-    // 🔁 en reemplazo forzamos estado "Inscrito"
-    ...(isReplace ? { estado:"Inscrito" } : {}),
-    ...(resetAsis ? { resetAsistencia:true } : {})
+    ...((isReplace || isAdd) ? { estado:"Inscrito" } : {}),
+    ...((resetAsis && !isAdd) ? { resetAsistencia:true } : {})
   };
 
   const btn = document.getElementById("btnPeSave");
@@ -4701,11 +4939,11 @@ async function _saveParticipant_(){
       return toast("⚠ " + (r?.error || "Error guardando"), "error");
     }
 
-    toast("✅ Participante actualizado");
+    toast(isAdd ? "✅ Participante agregado con éxito" : "✅ Participante actualizado");
     peModalClose_();
 
     await _loadParticipants_(torneoId);
-    await torneoActualizar(); // para refrescar status/matches si lo usas
+    await torneoActualizar(); 
   }catch(e){
     console.error(e);
     toast("⚠ Error guardando", "error");
@@ -4713,7 +4951,6 @@ async function _saveParticipant_(){
     setBtnLoading(btn, false);
   }
 }
-
 async function _deleteParticipant_(playerId){
   if(P_GENERATED){
     return toast("⚠ Bracket ya generado: usa Reemplazar", "error");
@@ -4723,7 +4960,7 @@ async function _deleteParticipant_(playerId){
   if(!torneoId) return toast("⚠ Selecciona un torneo", "error");
 
   const row = _findRowByPlayerId_(playerId);
-  const name = row ? (row.NombrePokemonGO || row.Nombre || row.Nick || playerId) : playerId;
+  const name = row ? (row.Nick || row.NombrePokemonGO || row.Nombre || playerId) : playerId;
 
   if(!confirm(`¿Eliminar a ${name}?\n\nEsto BORRA la fila (solo si el bracket NO está generado).`)) return;
 
@@ -4752,6 +4989,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if(!P_TORNEO_ID) return;
     await _loadParticipants_(P_TORNEO_ID);
   };
+
+  // ✨ PEGA ESTO: Evento para abrir el modal de Agregar Participante
+  const btnAdd = document.getElementById("btnPAdd");
+  if(btnAdd) btnAdd.onclick = () => openParticipantEditor_("add", "");
 
   const s = document.getElementById("pSearch");
   if(s) s.addEventListener("input", _applyParticipantsFilter_);
@@ -4848,91 +5089,73 @@ async function descargarBracketExcel() {
   const torneoId = SELECTED_TORNEO_ID;
   if (!torneoId) return toast("Selecciona un torneo primero", "error");
 
-  toast("⏳ Conectando y analizando datos...");
+  toast("⏳ Descargando datos del bracket...");
 
   try {
-    // 1. Obtener datos
+    // 1. Obtener datos del servidor
     const r = await torneoGET("torneo_export_json", { torneoId });
-    if (!r || !r.ok) throw new Error("Error de conexión o datos vacíos.");
+    if (!r || !r.ok) throw new Error("Error al obtener datos");
 
-    // 2. Localizar Matches y Players
-    const matches = r.matches || r.playoffs || r.torneo?.matches || [];
-    const participants = r.players || r.participants || r.torneo?.participants || [];
+    const matches = r.matches || r.playoffs || [];
+    const participants = r.players || r.participants || [];
 
     if (matches.length === 0) return toast("⚠ No hay enfrentamientos generados.", "warn");
 
-    console.log("🔍 DEBUG DATA:", { 
-      matches: matches.length, 
-      matchExample: matches[0], 
-      playerExample: participants[0] 
-    });
-
-    // 3. HERRAMIENTA INTELIGENTE: Busca el valor sin importar mayúsculas/minúsculas
-    const getVal = (obj, ...keys) => {
+    // 2. Función auxiliar para leer campos sin importar mayúsculas/minúsculas
+    const getV = (obj, ...keys) => {
       if (!obj) return "";
-      // Busca la primera llave que exista
       for (const k of keys) {
         if (obj[k] !== undefined && obj[k] !== "") return obj[k];
-      }
-      // Si no encuentra, busca insensible a mayúsculas (más lento pero seguro)
-      const objKeys = Object.keys(obj);
-      for (const k of keys) {
-        const foundKey = objKeys.find(ok => ok.toLowerCase() === k.toLowerCase());
+        const foundKey = Object.keys(obj).find(ok => ok.toLowerCase() === k.toLowerCase());
         if (foundKey && obj[foundKey] !== undefined) return obj[foundKey];
       }
       return "";
     };
 
-    // 4. Mapa de Jugadores (Indexamos para búsqueda rápida y limpia)
+    // 3. Crear mapa de nombres y números
     const playerMap = new Map();
+    const playerNumMap = new Map();
+
     participants.forEach(p => {
-      // Buscamos ID y Nombre con todas las variantes posibles
-      const pid = String(getVal(p, "PlayerId", "id", "playerId", "ID")).trim();
-      const pnick = getVal(p, "Nick", "NombrePokemonGO", "nick", "name", "Nombre") || "Sin Nombre";
-      if (pid) playerMap.set(pid, pnick);
+      const pid = String(getV(p, "playerId", "id", "ID")).trim();
+      if (pid) {
+        playerMap.set(pid, getV(p, "nick", "NombrePokemonGO", "Nombre") || "Jugador");
+        playerNumMap.set(pid, getV(p, "numero", "Numero", "participante") || "");
+      }
     });
 
-    // 5. Generar CSV
+    // 4. Generar el contenido del CSV
     const SEP = ";";
     let csv = "sep=;\n";
-    // Encabezados
-    csv += ["Ronda", "MatchId", "ID J1", "Jugador 1", "Score J1", "Score J2", "Jugador 2", "ID J2", "Ganador", "Estado"].join(SEP) + "\n";
+    csv += ["Ronda", "MatchId", "Num J1", "Jugador 1", "Score J1", "Score J2", "Jugador 2", "Num J2", "Ganador", "Estado"].join(SEP) + "\n";
 
     matches.forEach(m => {
-      // Obtener IDs de los enfrentamientos (limpiando espacios)
-      const idA = String(getVal(m, "PlayerAId", "playerAId", "player1Id", "p1")).trim();
-      const idB = String(getVal(m, "PlayerBId", "playerBId", "player2Id", "p2")).trim();
-      const idWin = String(getVal(m, "WinnerId", "winnerId", "winner")).trim();
+      const idA = String(getV(m, "PlayerAId", "playerAId", "p1")).trim();
+      const idB = String(getV(m, "PlayerBId", "playerBId", "p2")).trim();
+      const idWin = String(getV(m, "WinnerId", "winnerId")).trim();
 
-      // Obtener Datos (Ronda puede estar en Round o SwissRound)
-      const ronda = getVal(m, "Round", "round", "SwissRound", "swissRound") || 0;
-      const mid = getVal(m, "MatchId", "matchId", "id");
-      const scoreA = getVal(m, "ScoreA", "scoreA", "score1") || 0;
-      const scoreB = getVal(m, "ScoreB", "scoreB", "score2") || 0;
-      const status = getVal(m, "Status", "status", "state") || "scheduled";
-
-      // Buscar nombres en el mapa
-      const nickA = playerMap.get(idA) || (idA === "BYE" ? "— LIBRE —" : "Desconocido");
-      const nickB = playerMap.get(idB) || (idB === "BYE" ? "— LIBRE —" : "Desconocido");
+      // Nombres simples: si existe en el mapa se pone, si no, se deja el ID o TBD
+      const nickA = playerMap.get(idA) || (idA === "BYE" ? "— LIBRE —" : (idA || "TBD"));
+      const nickB = playerMap.get(idB) || (idB === "BYE" ? "— LIBRE —" : (idB || "TBD"));
       const nickWin = playerMap.get(idWin) || (idWin ? "Desconocido" : "Pendiente");
 
       const fila = [
-        ronda,
-        mid,
-        idA,
+        getV(m, "Round", "round") || 0,
+        getV(m, "MatchId", "id"),
+        playerNumMap.get(idA) || "",
         nickA,
-        scoreA,
-        scoreB,
+        getV(m, "ScoreA", "score1") || 0,
+        getV(m, "ScoreB", "score2") || 0,
         nickB,
-        idB,
+        playerNumMap.get(idB) || "",
         nickWin,
-        status
+        getV(m, "Status", "status", "state") || "scheduled"
       ];
       
       csv += fila.map(v => String(v).replace(/;/g, ',')).join(SEP) + "\n";
     });
 
-    // 6. Descargar
+    // 5. Crear archivo y descargar
     const blob = new Blob(["\ufeff" + csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -4942,14 +5165,13 @@ async function descargarBracketExcel() {
     link.click();
     document.body.removeChild(link);
 
-    toast("✅ Reporte generado correctamente");
+    toast("✅ Excel descargado (Versión Simple)");
 
   } catch (err) {
     console.error("ERROR:", err);
-    alert("Error: " + err.message);
+    toast("Error al generar el archivo", "error");
   }
 }
-
 document.addEventListener("DOMContentLoaded", () => {
   const btnDownloadBracket = document.getElementById("btnDownloadBracket");
   if (btnDownloadBracket) {
@@ -5041,88 +5263,4 @@ async function copyText_(txt){
   }
 }
 
-// ======================================================
-// 🔎 MODLOG WATCHERS (DEBUG)
-// ======================================================
-(function(){
-  const L = window.MODLOG;
-  if(!L) return;
 
-  const wrap = (name) => {
-    const fn = window[name];
-    if(typeof fn !== "function") return;
-    if(fn.__modlogWrapped) return;
-
-    function wrapped(...args){
-      L.call(name, args);
-      return fn.apply(this, args);
-    }
-    wrapped.__modlogWrapped = true;
-    window[name] = wrapped;
-  };
-
-  // 1) Envuelve opens/closes importantes
-  [
-    "modalOpen",
-    "modalClose",
-    "pModalOpen_",
-    "pModalClose_",
-    "peModalOpen_",
-    "peModalClose_",
-    "_syncBodyModalLock_",
-    "openParticipantsModal_"
-  ].forEach(wrap);
-
-  // 2) Log de clicks relevantes (CAPTURE)
-  document.addEventListener("click", (ev) => {
-    if(!L.enabled) return;
-    const t = ev.target;
-
-    const which =
-      t?.closest?.("#btnOpenCreateModal") ? "CLICK #btnOpenCreateModal" :
-      t?.closest?.("#btnTorneoParticipantes") ? "CLICK #btnTorneoParticipantes" :
-      t?.closest?.("[data-close='1']") ? "CLICK [data-close=1]" :
-      t?.closest?.("[data-pclose='1']") ? "CLICK [data-pclose=1]" :
-      t?.closest?.("[data-peclose='1']") ? "CLICK [data-peclose=1]" :
-      "";
-
-    if(which) L.log(which, L.snap());
-  }, true);
-
-  // 3) Observa cambios en body.class (scroll lock)
-  if(document.body){
-    const ob = new MutationObserver((muts) => {
-      for(const m of muts){
-        if(m.attributeName === "class"){
-          L.log("BODY class mutation", L.snap());
-          break;
-        }
-      }
-    });
-    ob.observe(document.body, { attributes:true, attributeFilter:["class"] });
-  }
-
-  // 4) Observa cambios en los modales (display/z-index)
-  const mods = Array.from(document.querySelectorAll(".modal"));
-  const om = new MutationObserver((muts) => {
-    muts.forEach(m => {
-      const el = m.target;
-      if(!(el instanceof HTMLElement)) return;
-      if(!el.classList.contains("modal")) return;
-
-      const cs = getComputedStyle(el);
-      L.log(`MODAL ${el.id || "(sin id)"} style/class mutation`, {
-        display: cs.display,
-        zIndex: cs.zIndex,
-        opacity: cs.opacity,
-        pointerEvents: cs.pointerEvents,
-        snap: L.snap()
-      });
-    });
-  });
-
-  mods.forEach(el => om.observe(el, { attributes:true, attributeFilter:["style","class"] }));
-
-  // init
-  L.log("✅ MODLOG listo", L.snap());
-})();
