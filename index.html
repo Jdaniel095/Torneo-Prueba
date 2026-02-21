@@ -117,6 +117,18 @@
                 <!-- Botón de registro (si está abierto) -->
                 <button id="openModalBtn" class="open-modal-btn" style="display:none;">Registrarme al torneo</button>
 
+                 <!-- Reglas / Prohibiciones / Excepciones -->
+                <div id="rulesCard" class="rules-card" style="display:none;"></div>
+
+              <div id="mainInscritosContainer" style="margin-top: 56px; display: none;">
+                    
+                    <div class="meta-label" style="margin-bottom: 16px; text-align: center;">
+                        JUGADORES INSCRITOS
+                        <span id="mainInscritosCount" style="display: none;"></span>
+                    </div> <div class="prep-grid" id="mainInscritosGrid"></div>
+                    
+                </div>
+
 
                 <!-- ✅ MODAL: EQUIPO DEL JUGADOR (pokes en modal) -->
 <div id="teamModal" class="modal-overlay">
@@ -139,8 +151,7 @@
                 <!-- Selector multi torneo -->
                 <div id="eventTabs" class="event-tabs" style="display:none;"></div>
 
-                <!-- Reglas / Prohibiciones / Excepciones -->
-                <div id="rulesCard" class="rules-card" style="display:none;"></div>
+               
 
                 <!-- ✅ Barra PREPARACIÓN (conteo) debajo de reglas -->
 <div id="prepCountdownBar" class="prep-countdown-bar" style="display:none;">
@@ -359,6 +370,8 @@
                         </div>
 
                         <button id="btnRegister" class="send-all-btn">Enviar registro</button>
+
+                        
                     </div>
                 </div>
 
