@@ -29,11 +29,13 @@
   <div id="panel" class="panel-box" style="display:none">
 
     <!-- Tabs -->
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="tabRegistros">Códigos entrenador</button>
-      <button class="tab-btn" data-tab="tabTorneos">Torneos</button>
+<div class="tabs" style="display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <button class="tab-btn active" data-tab="tabRegistros">Códigos entrenador</button>
+        <button class="tab-btn" data-tab="tabTorneos">Torneos</button>
+      </div>
+      <button id="btnLogout" class="btn-danger btn-mini" style="margin-left: auto;">Cerrar Sesión</button>
     </div>
-
     <!-- =====================================================
          TAB: TORNEOS
     ====================================================== -->
@@ -71,6 +73,10 @@
   🏆 Descargar VS y Bracket
 </button>
 <button id="btnExportJson">⬇ Descargar JSON</button>
+<button class="btn-gold" id="btnImportJson" type="button" style="background:#d97706;">
+  ⬆ Importar JSON
+</button>
+<input type="file" id="fileImportJson" accept=".json" style="display:none;" />
             <button id="btnCerrarManual" class="btn-gold" style="background:#2563eb; border-color:#1d4ed8;">Fase de preparacion</button>
       <button id="btnIniciar30m" class="btn-gold" style="display:none;">Iniciar 30 Minutos</button>
       <button id="btnForceStart" class="btn-red" style="display:none;">Terminar Prep Ya</button>
@@ -410,7 +416,7 @@
   <div>
     <label>Ataques básicos prohibidos (busca y selecciona)</label>
     <div class="poke-wrap">
-      <input id="tBanFastSearch" placeholder="Escribe: Contraataque / Counter / a bocajarro..." autocomplete="off" />
+      <input id="tBanFastSearch" placeholder="Escribe: Contraataque / Counter / a bocajarro..." autocomplete="new-password"/>
       <div id="tBanFastDrop" class="poke-dropdown"></div>
     </div>
     <div id="tBanFastChips" class="poke-chips"></div>
@@ -422,7 +428,7 @@
   <div>
     <label>Ataques cargados prohibidos (busca y selecciona)</label>
     <div class="poke-wrap">
-      <input id="tBanChargedSearch" placeholder="Escribe: Hidrocañón / Hydro Cannon / ..." autocomplete="off" />
+      <input id="tBanChargedSearch" placeholder="Escribe: Hidrocañón / Hydro Cannon / ..." autocomplete="new-password" />
       <div id="tBanChargedDrop" class="poke-dropdown"></div>
     </div>
     <div id="tBanChargedChips" class="poke-chips"></div>
@@ -434,7 +440,7 @@
   <div>
     <label>Pokémon prohibidos (busca y selecciona)</label>
     <div class="poke-wrap">
-      <input id="tBanPokemonSearch" placeholder="Escribe: pika, char, regi..." autocomplete="off" />
+      <input id="tBanPokemonSearch" placeholder="Escribe: pika, char, regi..." autocomplete="new-password" />
       <div id="tBanPokemonDrop" class="poke-dropdown"></div>
     </div>
     <div id="tBanPokemonChips" class="poke-chips"></div>
@@ -445,7 +451,7 @@
   <div>
     <label>Pokémon permitidos (excepciones) (busca y selecciona)</label>
     <div class="poke-wrap">
-      <input id="tAllowedPokemonSearch" placeholder="Ej: registeel, sableye…" autocomplete="off" />
+      <input id="tAllowedPokemonSearch" placeholder="Ej: registeel, sableye…" autocomplete="new-password" />
       <div id="tAllowedPokemonDrop" class="poke-dropdown"></div>
     </div>
     <div id="tAllowedPokemonChips" class="poke-chips"></div>
@@ -599,7 +605,7 @@
               <div id="pCountBaja" class="p-stat-v">0</div>
             </div>
           </div>
-
+<button class="btn-gold" id="btnPAdd" style="margin-left: auto;">➕ Agregar Participante</button>
           <button class="btn-gold" id="pBtnRefresh" type="button" style="height:42px;">🔄</button>
         </div>
       </div>
