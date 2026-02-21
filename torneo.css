@@ -1437,6 +1437,25 @@ hr.section-sep{
 }
 
 /* =========================================================
+   ✅ BADGE: NÚMERO DE PARTICIPANTE (Base)
+========================================================= */
+.badge-numero {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.15);
+    color: #76e8ff; /* Color cyan neón */
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-size: 0.85em; /* Se adapta automáticamente al tamaño del texto padre */
+    font-weight: 900;
+    vertical-align: middle;
+    margin-right: 8px;
+    border: 1px solid rgba(118, 232, 255, 0.3);
+    text-shadow: none;
+    line-height: 1.2;
+    box-shadow: 0 0 5px rgba(118, 232, 255, 0.2);
+}
+
+/* =========================================================
    ✅ SECCIÓN DE CÓDIGO DE ENTRENADOR
 ========================================================= */
 
@@ -2317,4 +2336,16 @@ body.modal-open{
     color: #000;
     box-shadow: 0 0 15px rgba(37, 211, 102, 0.6);
     transform: translateY(-2px);
+}
+
+/* =========================================================
+   Cortar nombres largos con puntos suspensivos (...)
+========================================================= */
+.prep-name {
+    white-space: nowrap;       /* Evita que el texto baje a la siguiente línea */
+    overflow: hidden;          /* Oculta lo que se sale del contenedor */
+    text-overflow: ellipsis;   /* Agrega los puntos suspensivos al final */
+    max-width: 100%;           /* Asegura que no sobrepase su cuadro */
+    display: block;            
+    padding: 0 5px;            /* Un pequeño margen interno para que no pegue a los bordes */
 }
