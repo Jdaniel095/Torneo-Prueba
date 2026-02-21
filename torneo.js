@@ -5142,35 +5142,37 @@ async function loadLocalFallback_() {
     }
 }
 
-/* Init */
+/* Init - Versión Corregida */
 (async function init(){
-  try{
-    // 1) Pinta instantáneo desde caché local (si el usuario ya visitó la web antes)
+  try {
+    // 1) PRIMERO cargamos la base de datos de Pokémon. 
+    // Esto es lo que permite que los IDs se conviertan en nombres.
+    await loadPokemonDB().catch(e => console.warn("Pokemon DB fail:", e));
+    
+    // 2) Una vez que tenemos los nombres en memoria, cargamos los datos del torneo.
+    // Ahora, cuando cacheLoadBootstrap_ intente renderizar, ya conocerá los nombres.
     const hasCache = cacheLoadBootstrap_();
 
-    // 2) Si NO hay caché (primera visita), carga tu JSON estático al instante
+    // 3) Si no hay caché, cargamos el backup local.
     if (!hasCache) {
         await loadLocalFallback_();
     }
 
-    // 3) Cargar bases de datos pesadas sin bloquear la pantalla (sin await)
-    loadPokemonDB().catch(e => console.warn("Pokemon DB fail:", e));
+    // 4) Cargamos los movimientos y el resto de datos en segundo plano.
     loadMovesDB().catch(e => console.warn("Moves DB fail:", e));
 
-    // 4) Pide los datos frescos a Google Apps Script en segundo plano
-    // Esto sobrescribirá la vista inicial silenciosamente cuando termine
+    // 5) Refresco desde el servidor de Google.
     loadAll(true).catch(e => console.warn("Error refrescando torneo:", e));
 
-    // 5) Refresco periódico
+    // 6) Refresco periódico.
     setInterval(() => loadAll(false), 12000);
-  }catch(e){
+    
+  } catch(e) {
     const info = document.getElementById("torneoInfo");
     if(info) info.textContent = "Error cargando torneo";
     showToast("⚠ " + (e?.message || e));
   }
 })();
-
-
 let fitBracketTimer = null;
 let lastKnownScale = 1;
 let lastScrollEl = null;
