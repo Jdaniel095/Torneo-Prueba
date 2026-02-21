@@ -486,9 +486,11 @@ function getMatchPlayerId_(m, side){
 
 function getMatchPlayerName_(m, side){
   if(side === "A"){
-    return String(m?.PlayerAName ?? m?.playerAName ?? m?.NombreA ?? m?.NickA ?? "").trim();
+    // Prioriza NickA antes que NombreA
+    return String(m?.PlayerAName ?? m?.playerAName ?? m?.NickA ?? m?.NombreA ?? "").trim();
   }
-  return String(m?.PlayerBName ?? m?.playerBName ?? m?.NombreB ?? m?.NickB ?? "").trim();
+  // Prioriza NickB antes que NombreB
+  return String(m?.PlayerBName ?? m?.playerBName ?? m?.NickB ?? m?.NombreB ?? "").trim();
 }
 
 function splitTeamTokens_(v){
@@ -2687,6 +2689,7 @@ function roundLabel(r, maxRound){
   if (r === maxRound) return "Final";
   if (r === maxRound - 1) return "Semifinal";
   if (r === maxRound - 2) return "Cuartos";
+  if (r === maxRound - 3) return "Octavos"; // ✅ Agregado: una ronda antes de Cuartos
   return `Ronda ${r}`;
 }
 
@@ -2990,6 +2993,7 @@ if(!metaList.length){
     if(exp?.ok){
       const t = buildTournamentFromExport_(meta, exp);
       t._ver = ver || Number(exp.version || 0) || 0;
+      t.players = exp.players || []; 
       out.push(t);
     }else if(prev){
       // fallback: si falla red, mantenemos lo anterior
@@ -3005,6 +3009,7 @@ if(!metaList.length){
     if(exp0?.ok){
       const t0 = buildTournamentFromExport_(m0, exp0);
       t0._ver = Number(m0.version || 0) || 0;
+      t0.players = exp0.players || []; 
       out.push(t0);
     }
   }
@@ -3022,8 +3027,14 @@ if(!metaList.length){
   renderTabs();
   renderSelected();
 
-  if (isModalOpen()) {
+ if (isModalOpen()) {
     setupModalPokemonFilterForSelectedTournament();
+  }
+
+
+  const torneoActual = TORNEOS.find(x => x.torneoId === SELECTED_ID) || TORNEOS[0];
+  if (torneoActual) {
+    renderMainInscritos(torneoActual);
   }
 
   cacheSaveAll_();
@@ -3045,13 +3056,19 @@ function renderTabs(){
     const badge = t.open ? "🟢" : "🔒";
     return `<button class="${cls}" data-id="${escapeHtml(t.torneoId)}">${escapeHtml(t.title)}${escapeHtml(labelLiga)} ${badge}</button>`;
   }).join("");
-  box.querySelectorAll("button[data-id]").forEach(btn => {
+box.querySelectorAll("button[data-id]").forEach(btn => {
     btn.onclick = () => {
       SELECTED_ID = btn.getAttribute("data-id");
       cacheSaveAll_();
       renderTabs();
       renderSelected();
       setupModalPokemonFilterForSelectedTournament();
+      
+      // ✅ 2. PEGA ESTO AQUÍ: Actualiza los inscritos si cambias de pestaña
+      const torneoActual = TORNEOS.find(x => x.torneoId === SELECTED_ID) || TORNEOS[0];
+      if (torneoActual) {
+        renderMainInscritos(torneoActual);
+      }
     };
   });
 }
@@ -3806,6 +3823,15 @@ function renderSelected(){
   renderRulesCard(t);
   wireTypeIconFallbacks();
 
+
+  if (t) {
+      const listaJugadores = t.players || t.inscritos || [];
+      window.currentInscritos = listaJugadores; 
+      if (typeof renderMainInscritos === "function") {
+          renderMainInscritos(t);
+      }
+  }
+
 // --- ACTIVAR FILA DE BOTONES (Bases + WhatsApp) ---
   const row = document.getElementById("extraButtonsRow");
   if (row) {
@@ -3942,6 +3968,7 @@ function renderSelected(){
 
   showBracket_();
   return;
+
 }
 
 
@@ -4629,7 +4656,8 @@ function renderPrepPokeIcon_(iconId) {
 
 
 function renderPrepParticipantCard(p, oppName, showVs, groupId){
-  const name = p.NombrePokemonGO || p.Nick || p.Nombre || "Jugador";
+  const name = p.Nick || p.NombrePokemonGO || p.Nombre || "Jugador";
+  const numBadge = p.Numero ? `<span class="badge-numero">#${escapeHtml(p.Numero)}</span> ` : "";
   const codeNice = fmtTrainerCode12_(p.Codigo || p.codigo || "");
   const team = (getTeamFromInscrito(p) || []).map(x=>String(x||"").trim()).filter(Boolean);
   const slots = [];
@@ -4649,7 +4677,7 @@ const groupHtml = (showVs && gid)
 return `
     <div class="prep-card" data-group="${escapeHtml(gid)}">
       ${groupHtml}
-      <div class="prep-name">${escapeHtml(name)}</div>
+      <div class="prep-name">${numBadge}${escapeHtml(name)}</div>
       <div class="prep-code-row">
         <div class="prep-code">
           <div class="prep-code-label">CÓDIGO ENTRENADOR</div>
@@ -4676,7 +4704,6 @@ return `
     </div>
   `;
 }
-
 function renderPrepParticipants(t){
   const box = $("eventSummary");
   if(!box) return;
@@ -4691,8 +4718,8 @@ function renderPrepParticipants(t){
   const groupMap = buildPlayerGroupMap_(t);
   const showVs  = !!t?.generated; 
   players.sort((a,b) => {
-    const na = String(a.NombrePokemonGO || a.Nick || a.Nombre || "");
-    const nb = String(b.NombrePokemonGO || b.Nick || b.Nombre || "");
+    const na = String(a.Nick || a.NombrePokemonGO || a.Nombre || "");
+    const nb = String(b.Nick || b.NombrePokemonGO || b.Nombre || "");
     if(!showVs){
       return na.localeCompare(nb, "es", { sensitivity:"base" });
     }
@@ -5281,3 +5308,85 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// ✅ Función para renderizar la lista en la página principal (fuera del modal)
+function renderMainInscritos(t) {
+    const container = document.getElementById("mainInscritosContainer");
+    const grid = document.getElementById("mainInscritosGrid");
+    const countSpan = document.getElementById("mainInscritosCount");
+    
+    if (!container || !grid || !countSpan) return;
+
+    // ✅ Ocultar SOLO esta caja si el torneo pasa a Preparación o Batalla
+    if (t && (isPrepActive(t) || isBattlePhase(t))) {
+        container.style.display = "none";
+        return; // Detiene la función para que no siga pintando
+    }
+
+    // Buscar la lista de inscritos
+    let inscritosRaw = [];
+    if (t && Array.isArray(t.inscritos)) {
+        inscritosRaw = t.inscritos;
+    } else if (typeof INSCRITOS !== "undefined" && Array.isArray(INSCRITOS)) {
+        inscritosRaw = INSCRITOS;
+    } else if (window.currentInscritos) {
+        inscritosRaw = window.currentInscritos;
+    }
+
+    // Filtrar aprobados/inscritos
+    const players = inscritosRaw.filter(x => {
+        const st = String(x.Estado || x.estado || "").toLowerCase();
+        return st === "inscrito" || st === "aprobado" || st === "approved";
+    });
+
+    // Ocultar si no hay inscritos
+    if (players.length === 0) {
+        container.style.display = "none";
+        return;
+    }
+
+    // Mostrar contenedor y número
+    container.style.display = "block";
+    countSpan.textContent = players.length;
+
+    try {
+        // Ordenar alfabéticamente
+        players.sort((a, b) => {
+            const na = String(a.Nick || a.NombrePokemonGO || a.Nombre || "");
+            const nb = String(b.Nick || b.NombrePokemonGO || b.Nombre || "");
+            return na.localeCompare(nb, "es", { sensitivity: "base" });
+        });
+
+        // Pintar tarjetas
+        grid.innerHTML = players.map(p => {
+const name = p.Nick || p.NombrePokemonGO || p.Nombre || "Jugador";
+            const numBadge = p.Numero ? `<span class="badge-numero">#${escapeHtml(p.Numero)}</span> ` : "";
+            const team = [p.P1, p.P2, p.P3, p.P4, p.P5, p.P6].map(x => String(x || "").trim());
+            
+        let teamHtml = "";
+            // Generamos exactamente 6 círculos con signo de interrogación para ocultar el equipo
+            for(let i = 0; i < 6; i++) {
+                teamHtml += `
+                    <div style="width: 45px; height: 45px; background: rgba(0,0,0,0.4); border: 2px dashed rgba(255,255,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; color: rgba(255,255,255,0.7); font-weight: bold; margin: 3px;">
+                        ?
+                    </div>
+                `;
+            }
+            
+        
+return `
+    <div class="prep-card">
+        <div class="prep-name" title="${escapeHtml(name)}" style="margin-bottom: 12px; text-align: center; font-size: 20px;">
+            ${numBadge}${name}
+        </div>
+                    <div class="prep-team" style="justify-content: center;">
+                        ${teamHtml}
+                    </div>
+                </div>
+            `;
+        }).join("");
+    } catch(err) {
+        console.error("Error pintando inscritos:", err);
+        grid.innerHTML = "<p style='color:red;'>Error al cargar lista.</p>";
+    }
+}
