@@ -1652,24 +1652,29 @@ tr.match-cancelled{
 }
 
 /* =========================================
-   DISEÑO DE POKÉMON EN EL MODAL
+   DISEÑO DE POKÉMON EN EL MODAL + AURA OSCURA
 ========================================= */
 .p-party {
   display: flex;
   gap: 6px;
   justify-content: center;
-  align-items: flex-start; /* Alinea todo arriba */
+  align-items: flex-start; 
   flex-wrap: wrap;
 }
 
-.p-party > div {
+/* Cambiamos '> div' por la nueva clase del span */
+.p-party .poke-icon-wrap {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 44px; /* Ancho fijo para que no se deforme */
+  justify-content: center;
+  width: 44px; 
 }
 
 .p-party img {
+  position: relative;
+  z-index: 2; /* 👈 OBLIGA A LA IMAGEN A ESTAR AL FRENTE */
   width: 36px;
   height: 36px;
   border-radius: 8px;
@@ -1679,8 +1684,31 @@ tr.match-cancelled{
   margin-bottom: 3px;
 }
 
-.p-party span {
-  font-size: 9px; /* Letra pequeñita para el nombre */
+
+/* ✨ ESTO INYECTA TU SVG DETRÁS DEL POKÉMON ✨ */
+.shadow-fallback::before {
+  content: "";
+  position: absolute;
+  /* Centrado vertical y horizontal respecto a la imagen */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  /* AJUSTE DE TAMAÑO: Reducimos del 180% a un valor más ajustado a la caja */
+  width: 48px;  
+  height: 48px; 
+  
+  background-image: url('purple-flame.svg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.95;
+}
+
+.p-party span:not(.poke-icon-wrap) {
+  font-size: 9px; 
   color: rgba(255, 255, 255, 0.7);
   text-align: center;
   white-space: nowrap;
